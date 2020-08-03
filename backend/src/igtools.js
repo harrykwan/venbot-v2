@@ -1,3 +1,5 @@
+const getInbox = require("tools-for-instagram/src/getInbox");
+
 require("tools-for-instagram");
 
 function timeout(ms) {
@@ -6,21 +8,26 @@ function timeout(ms) {
 
 
 
+const logincred = {
+    inputLogin: 'kclmusic0_0',
+    inputPassword: '23999hkhk',
+    inputProxy: false,
+};
 
+
+let ig;
 (async () => {
-    let ig = await login({
-        inputLogin: 'harrykwan0_0',
-        inputPassword: '23999hkhk',
-        inputProxy: false,
-    });
+    ig = await login(logincred);
     await setAntiBanMode(ig);
-    // let posts = await getUserRecentPosts(ig, "yph_ay");
-    // var temppostcodes = []
-    // console.log(posts.map(x => {
-    //     temppostcodes.push(x.code)
-    //     return x.code
-    // }))
-
+    let inbox = await getInbox(ig)
+    inbox = inbox.map(x => {
+        return {
+            user: JSON.stringify(x.users),
+            message: x.lastMessage
+        }
+    })
+    console.log(inbox)
+    // let likers = await getRecentPostLikersByUsername(ig, 'cynthia._.lkk');
     // for (var j = 0; j < temppostcodes.length; j++) {
     //     await likeUrl(ig, 'https://www.instagram.com/p/' + temppostcodes[j] + '/');
     // }
@@ -33,19 +40,14 @@ function timeout(ms) {
     //     }, "yay!" + j);
     // }
 
-    let inbox = await getInbox(ig);
-    console.log(inbox)
-    let sendDm = await replyDirectMessage(ig, {
-        threadId: inbox[0].threadId
-    }, "yay!");
+    // let inbox = await getInbox(ig);
+    // console.log(inbox)
+    // let sendDm = await replyDirectMessage(ig, {
+    //     threadId: inbox[0].threadId
+    // }, "yay!");
 
-    // let comments = await getPostCommentsById(ig, posts[0].pk);
-    // comments.forEach(comment => {
-    //     console.log(comment.text);
-    // });
 
-    // let likers = await getRecentPostLikers(ig, posts[0]);
-    // let likers = await getRecentPostLikersByUsername(ig, 'cynthia._.lkk');
+
     // console.log(likers)
     // myfollowers = await getFollowers(ig, 'yph_ay');
     // let followers = await getMyLastFollowers(ig);
@@ -56,6 +58,51 @@ function timeout(ms) {
     // .. Implement your code here
     // let info = await getUserInfo(ig, "yph_ay");
     // console.log("User information" + info);
-
+    // myfollowers = await getFollowers(ig, userid);
     // ..
+    // let info = await spider.getUserLikers("yph_ay");
+    // console.log(info);
 })();
+
+
+async function getpost(userid, callback) {
+    let posts = await getUserRecentPosts(ig, userid);
+    if (callback)
+        callback(posts)
+}
+
+
+async function getcls(postnum, userid, callback) {
+    postnum = parseInt(postnum)
+    let allcls = {}
+    let posts = await getUserRecentPosts(ig, userid);
+    console.log(postnum)
+    let post = posts[postnum]
+    let likers = await getRecentPostLikers(ig, post);
+    likers.forEach(like => {
+        console.log(like)
+        if (!allcls[like.username])
+            allcls[like.username] = {}
+        allcls[like.username].data = like
+        allcls[like.username].type = "L"
+    });
+
+    let comments = await getPostCommentsById(ig, post.pk);
+    comments.forEach(comment => {
+        console.log(comment)
+        if (!allcls[comment.user.username])
+            allcls[comment.user.username] = {}
+        allcls[comment.user.username].data = comment.user
+        if (allcls[comment.user.username].type == "L" || allcls[comment.user.username] == "CL")
+            allcls[comment.user.username].type = "CL"
+        else
+            allcls[comment.user.username].type = "C"
+    });
+    console.log(allcls)
+    console.log('ok')
+    if (callback)
+        callback(allcls)
+}
+
+exports.getcls = getcls
+exports.getpost = getpost

@@ -1,15 +1,14 @@
 const AWS = require('aws-sdk');
-const BUCKET_NAME = '';
-const IAM_USER_KEY = '';
-const IAM_USER_SECRET = '';
+const BUCKET_NAME = 'venbot-ig-follower';
+const IAM_USER_KEY = 'AKIA5B4TJTXLAJ32KOEY';
+const IAM_USER_SECRET = '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';
 
 AWS.config.update({
-    region: 'ap-east-1',
+    region: 'ap-southeast-1',
     accessKeyId: IAM_USER_KEY,
     secretAccessKey: IAM_USER_SECRET
 });
 
-const Busboy = require('busboy');
 
 let s3bucket = new AWS.S3({
     // accessKeyId: IAM_USER_KEY,
@@ -61,47 +60,6 @@ function getphotofroms3(x, req, res) {
 
 
 
-function uploadroute(req, res, next) {
-    // This grabs the additional parameters so in this case passing in
-    // "element1" with a value.
-    // const element1 = req.body.element1;
-
-    var busboy = new Busboy({
-        headers: req.headers
-    });
-
-    // The file upload has completed
-    busboy.on('finish', function () {
-        console.log('Upload finished');
-        // console.log(req.file)
-        const file = req.files.myfile1;
-        // console.log(file);
-
-        // Begins the upload to the AWS S3
-        uploadToS3(file, res);
-    });
-
-    req.pipe(busboy);
-}
-
-function cvupload(req, res, next) {
-    var busboy = new Busboy({
-        headers: req.headers
-    });
-
-    // The file upload has completed
-    busboy.on('finish', function () {
-        console.log('Upload finished');
-        // console.log(req.file)
-        const file = req.files.file;
-        // console.log(file);
-
-        // Begins the upload to the AWS S3
-        uploadToS3(file, res);
-    });
-
-    req.pipe(busboy);
-}
 
 function createtable() {
     var params = {
@@ -186,9 +144,7 @@ function readitem(uid, req, res, callback) {
 
 
 exports.uploadToS3 = uploadToS3
-exports.upload = uploadroute
 exports.getphoto = getphotofroms3
 exports.createtable = createtable
 exports.createitem = createitem
 exports.readitem = readitem
-exports.cvupload = cvupload
