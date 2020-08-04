@@ -1,5 +1,5 @@
 const getInbox = require("tools-for-instagram/src/getInbox");
-
+require('dotenv').config();
 require("tools-for-instagram");
 
 function timeout(ms) {
@@ -9,8 +9,8 @@ function timeout(ms) {
 
 
 const logincred = {
-    inputLogin: 'kclmusic0_0',
-    inputPassword: '23999hkhk',
+    inputLogin: process.env.IGUSER,
+    inputPassword: process.env.IGPW,
     inputProxy: false,
 };
 

@@ -2,9 +2,12 @@ const express = require('express')
 const awsapi = require('./src/aws')
 const igtoolsapi = require('./src/igtools')
 const fs = require('fs')
+require('dotenv').config();
 
 const app = express()
-const port = 3000
+console.log(process.env);
+const port = process.env.PORT || 3000;
+
 
 app.use(express.static('public', {
     root: __dirname

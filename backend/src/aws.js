@@ -1,7 +1,8 @@
 const AWS = require('aws-sdk');
+require('dotenv').config();
 const BUCKET_NAME = 'venbot-ig-follower';
-const IAM_USER_KEY = 'AKIA5B4TJTXLAJ32KOEY';
-const IAM_USER_SECRET = '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';
+const IAM_USER_KEY = process.env.IAM_USER_KEY;
+const IAM_USER_SECRET = process.env.IAM_USER_SECRET;
 
 AWS.config.update({
     region: 'ap-southeast-1',
