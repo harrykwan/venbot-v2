@@ -113,4 +113,20 @@ app.get('/cls', (req, res) => {
     })
 })
 
+
+
+
+app.get('/login', (req, res) => {
+    res.sendFile('public/login.html', {
+        root: __dirname
+    })
+})
+
+
+app.get('/register', (req, res) => {
+    res.sendFile('public/register.html', {
+        root: __dirname
+    })
+})
+
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))

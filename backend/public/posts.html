@@ -21,7 +21,29 @@
 </head>
 
 <body class="sidebar-noneoverflow">
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-app.js"></script>
 
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-analytics.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyB5t5_CqA6dbRw8XMWLY9BR7UEWHwTvERs",
+            authDomain: "venbot-54314.firebaseapp.com",
+            databaseURL: "https://venbot-54314.firebaseio.com",
+            projectId: "venbot-54314",
+            storageBucket: "venbot-54314.appspot.com",
+            messagingSenderId: "256268954576",
+            appId: "1:256268954576:web:26faf7ebd4c224e1dbe7d5",
+            measurementId: "G-MHVM09N90D"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+    </script>
     <!--  BEGIN NAVBAR  -->
     <div class="header-container">
         <header class="header navbar navbar-expand-sm">
@@ -1002,10 +1024,13 @@
     <script src="assets/js/app.js"></script>
 
     <script>
-        const nowid = 'cynthia._.lkk'
+        let nowid = ''
 
         $(document).ready(function () {
 
+            const urlParams = new URLSearchParams(window.location.search);
+            let myuserid = urlParams.get('userid');
+            nowid = myuserid
 
             var xhr = new XMLHttpRequest();
             xhr.withCredentials = true;
