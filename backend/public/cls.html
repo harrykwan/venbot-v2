@@ -439,7 +439,7 @@
                                                 <th>Username</th>
                                                 <th>Profile Pic</th>
                                                 <th>Full Name</th>
-                                                <th>Is Private</th>
+                                                <th>Account</th>
                                                 <th class="">Type</th>
                                                 <th class="text-center">Action</th>
                                             </tr>
@@ -542,6 +542,10 @@
         }
 
         function gendata(data, index) {
+            var privateac = 'public'
+            if (data.private) {
+                privateac = 'private'
+            }
             var temphtml = `     <tr>
                                                 <td class="checkbox-column"> ` + index + ` </td>
                                                 <td class="user-name">` + data.username + `</td>
@@ -551,7 +555,7 @@
                                                     </a>
                                                 </td>
                                                 <td>` + data.fullname + `</td>
-                                                <td>` + data.private + `</td>
+                                                <td>` + privateac + `</td>
                                                 <td>
                                                     <div class="d-flex">
                                                         <div class=" align-self-center d-m-success  mr-1 data-marker">
