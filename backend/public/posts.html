@@ -17,15 +17,13 @@
     <link href="plugins/drag-and-drop/dragula/dragula.css" rel="stylesheet" type="text/css" />
     <link href="plugins/drag-and-drop/dragula/example.css" rel="stylesheet" type="text/css" />
     <!-- END PAGE LEVEL STYLES -->
-
-</head>
-
-<body class="sidebar-noneoverflow">
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-app.js"></script>
 
     <!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
+   https://firebase.google.com/docs/web/setup#available-libraries -->
+
+    <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-analytics.js"></script>
 
     <script>
@@ -44,6 +42,10 @@
         firebase.initializeApp(firebaseConfig);
         firebase.analytics();
     </script>
+</head>
+
+<body class="sidebar-noneoverflow">
+
     <!--  BEGIN NAVBAR  -->
     <div class="header-container">
         <header class="header navbar navbar-expand-sm">
@@ -968,6 +970,9 @@
                                     <div class='row'>
 
                                         <div class="col-md-12">
+                                            <div id="loading"
+                                                class="spinner-grow text-info align-self-center loader-lg">
+                                            </div>
                                             <div id='postsarea' class='dragula'>
 
 
@@ -1025,6 +1030,43 @@
 
     <script>
         let nowid = ''
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                // User is signed in.
+                var displayName = user.displayName;
+                var email = user.email;
+                var emailVerified = user.emailVerified;
+                var photoURL = user.photoURL;
+                var isAnonymous = user.isAnonymous;
+                var uid = user.uid;
+                var providerData = user.providerData;
+                // ...
+                console.log(user)
+                if (displayName) {
+                    nowid = displayName
+                    var xhr = new XMLHttpRequest();
+                    xhr.withCredentials = true;
+
+                    xhr.addEventListener("readystatechange", function () {
+                        if (this.readyState === 4) {
+                            console.log(this.responseText);
+                            let postdata = JSON.parse(this.responseText)
+                            console.log(postdata)
+                            genpostdata(postdata)
+                            App.init();
+                        }
+                    });
+
+                    xhr.open("GET", "getposts/" + displayName);
+
+                    xhr.send();
+                }
+            } else {
+                // User is signed out.
+                // ...
+                window.location.href = "login"
+            }
+        });
 
         $(document).ready(function () {
 
@@ -1032,22 +1074,25 @@
             let myuserid = urlParams.get('userid');
             nowid = myuserid
 
-            var xhr = new XMLHttpRequest();
-            xhr.withCredentials = true;
+            if (nowid) {
+                var xhr = new XMLHttpRequest();
+                xhr.withCredentials = true;
 
-            xhr.addEventListener("readystatechange", function () {
-                if (this.readyState === 4) {
-                    console.log(this.responseText);
-                    let postdata = JSON.parse(this.responseText)
-                    console.log(postdata)
-                    genpostdata(postdata)
-                    App.init();
-                }
-            });
+                xhr.addEventListener("readystatechange", function () {
+                    if (this.readyState === 4) {
+                        console.log(this.responseText);
+                        let postdata = JSON.parse(this.responseText)
+                        console.log(postdata)
+                        genpostdata(postdata)
+                        App.init();
+                    }
+                });
 
-            xhr.open("GET", "getposts/" + nowid);
+                xhr.open("GET", "getposts/" + nowid);
 
-            xhr.send();
+                xhr.send();
+            }
+
         });
 
 
@@ -1088,6 +1133,7 @@
                 temphtml += genpostitem(x)
             })
             document.getElementById('postsarea').innerHTML = temphtml
+            document.getElementById('loading').hidden = true
         }
 
         function selectpost(nowid, pk) {

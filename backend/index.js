@@ -114,10 +114,21 @@ app.get('/cls', (req, res) => {
 })
 
 
-
+app.get('/', (req, res) => {
+    res.sendFile('public/login.html', {
+        root: __dirname
+    })
+})
 
 app.get('/login', (req, res) => {
     res.sendFile('public/login.html', {
+        root: __dirname
+    })
+})
+
+
+app.get('/igsetup', (req, res) => {
+    res.sendFile('public/igsetup.html', {
         root: __dirname
     })
 })

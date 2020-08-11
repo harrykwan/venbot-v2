@@ -19,14 +19,14 @@ let ig;
 (async () => {
     ig = await login(logincred);
     await setAntiBanMode(ig);
-    let inbox = await getInbox(ig)
-    inbox = inbox.map(x => {
-        return {
-            user: JSON.stringify(x.users),
-            message: x.lastMessage
-        }
-    })
-    console.log(inbox)
+    // let inbox = await getInbox(ig)
+    // inbox = inbox.map(x => {
+    //     return {
+    //         user: JSON.stringify(x.users),
+    //         message: x.lastMessage
+    //     }
+    // })
+    // console.log(inbox)
     // let likers = await getRecentPostLikersByUsername(ig, 'cynthia._.lkk');
     // for (var j = 0; j < temppostcodes.length; j++) {
     //     await likeUrl(ig, 'https://www.instagram.com/p/' + temppostcodes[j] + '/');
