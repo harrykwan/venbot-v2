@@ -5,6 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "aws-sdk": "^2.724.0",
+    "body-parser": "^1.19.0",
+    "crypto-js": "^4.0.0",
     "express": "^4.17.1",
     "tools-for-instagram": "^1.8.11"
   },

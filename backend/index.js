@@ -1,12 +1,23 @@
 const express = require('express')
+const bodyParser = require("body-parser");
 const awsapi = require('./src/aws')
 const igtoolsapi = require('./src/igtools')
 const fs = require('fs')
 require('dotenv').config();
-
-const app = express()
-console.log(process.env);
+// console.log(process.env);
 const port = process.env.PORT || 3000;
+const logincred = {
+    inputLogin: process.env.IGUSER,
+    inputPassword: process.env.IGPW,
+    inputProxy: false,
+};
+const app = express()
+
+
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
+app.use(bodyParser.json());
 
 
 app.use(express.static('public', {
@@ -31,6 +42,15 @@ app.get('/getlikelist/:postid', (req, res) => {
         res.send(result)
     })
 })
+
+app.post('/login', async (req, res) => {
+    var username = req.body.username;
+    var password = req.body.password;
+    let tempuser = await igtoolsapi.login(username, password)
+    var ciphertext = CryptoJS.AES.encrypt(username, password).toString();
+})
+
+
 
 
 

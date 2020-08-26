@@ -1,4 +1,3 @@
-const getInbox = require("tools-for-instagram/src/getInbox");
 require('dotenv').config();
 require("tools-for-instagram");
 
@@ -15,10 +14,15 @@ const logincred = {
 };
 
 
-let ig;
+
+// let ig, ig2;
 (async () => {
-    ig = await login(logincred);
-    await setAntiBanMode(ig);
+    // ig = await login(logincred);
+    // await setAntiBanMode(ig);
+    // ig2 = await login(logincred2);
+    // await setAntiBanMode(ig2);
+    // console.log(ig)
+
     // let inbox = await getInbox(ig)
     // inbox = inbox.map(x => {
     //     return {
@@ -50,7 +54,6 @@ let ig;
 
     // console.log(likers)
     // myfollowers = await getFollowers(ig, 'yph_ay');
-    // let followers = await getMyLastFollowers(ig);
     // console.log(followers[0].is_new_follower);
     // console.log(myfollowers)
     //Show the last liker of the array
@@ -64,8 +67,25 @@ let ig;
     // console.log(info);
 })();
 
+async function login(username, pw) {
+    let igac = await login({
+        inputLogin: username,
+        inputPassword: pw,
+        inputProxy: false,
+    });
+    await setAntiBanMode(igac)
+    return igac
+}
 
-async function getpost(userid, callback) {
+async function follow(ig, userid) {
+    return await likeUrl(ig, 'https://www.instagram.com/p/' + posturl + '/');
+}
+
+async function unfollow(ig, userid) {
+    return await likeUrl(ig, 'https://www.instagram.com/p/' + posturl + '/');
+}
+
+async function getpost(ig, userid, callback) {
     let posts = await getUserRecentPosts(ig, userid);
     if (callback)
         callback(posts)
@@ -106,3 +126,5 @@ async function getcls(postnum, userid, callback) {
 
 exports.getcls = getcls
 exports.getpost = getpost
+exports.follow = follow
+exports.unfollow = unfollow
