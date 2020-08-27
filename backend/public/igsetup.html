@@ -22,7 +22,7 @@
 
     <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-analytics.js"></script>
-
+    <script src="http://crypto-js.googlecode.com/svn/tags/3.1/build/rollups/aes.js"></script>
     <script>
         // Your web app's Firebase configuration
         var firebaseConfig = {
@@ -51,7 +51,7 @@
                     <div class="form-content">
 
                         <h1 class="">Instagram account setup</h1>
-                        <p class="signup-link">Enter your Instagram username</p>
+                        <p class="signup-link">Enter your Instagram username and password</p>
                         <form class="text-left">
                             <div class="form">
 
@@ -64,7 +64,20 @@
                                     </svg>
                                     <input id="username" name="username" type="text" value=""
                                         placeholder="Instagram username">
+
                                 </div>
+                                <div id="password-field" class="field-wrapper input">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="feather feather-lock">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                    </svg>
+                                    <input id="password" name="password" type="text" value=""
+                                        placeholder="Instagram password">
+                                </div>
+
+                                <br><br>
                                 <div class="d-sm-flex justify-content-between">
                                     <div class="field-wrapper">
                                         <button onclick="updateuser()" class="btn btn-primary" value="">Connect</button>
@@ -116,14 +129,18 @@
             } else {
                 // User is signed out.
                 // ...
+                window.location.href = "login"
             }
         });
 
         function updateuser() {
             var user = firebase.auth().currentUser;
             var igusername = document.getElementById('username').value
+            var encrypted = CryptoJS.AES.encrypt(igusername, document.getElementById('password').value);
+
             user.updateProfile({
-                displayName: igusername
+                displayName: igusername,
+                photoURL: encrypted
             }).then(function () {
                 // Update successful.
                 console.log('ok')

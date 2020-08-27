@@ -63,6 +63,15 @@ app.post('/login', async (req, res) => {
 })
 
 
+app.post('/follow', async (req, res) => {
+    var username = req.body.username;
+    var password = req.body.password;
+    let tempuser = await igtoolsapi.login(username, password)
+    var ciphertext = CryptoJS.AES.encrypt(username, password).toString();
+    alllogin[ciphertext] = tempuser
+})
+
+
 
 
 
