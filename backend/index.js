@@ -13,6 +13,13 @@ const logincred = {
 };
 const app = express()
 
+let alllogin = {};
+
+(async () => {
+    const defaultig = await login(logincred);
+    await setAntiBanMode(defaultig);
+    alllogin.default = defaultig
+})();
 
 app.use(bodyParser.urlencoded({
     extended: false
@@ -26,28 +33,33 @@ app.use(express.static('public', {
 
 
 app.get('/searchtag/:tag', (req, res) => {
-    igsearch.searchtag(req.params.tag, function (result) {
+    igsearch.searchtag(alllogin.default, req.params.tag, function (result) {
         res.send(result)
     })
 })
 
 app.get('/searchuser/:userid', (req, res) => {
-    igsearch.searchuser(req.params.userid, function (result) {
+    igsearch.searchuser(alllogin.default, req.params.userid, function (result) {
         res.send(result)
     })
 })
 
 app.get('/getlikelist/:postid', (req, res) => {
-    igpost.getlikelist(req.params.postid, function (result) {
+    igpost.getlikelist(alllogin.default, req.params.postid, function (result) {
         res.send(result)
     })
 })
+
+
+
+
 
 app.post('/login', async (req, res) => {
     var username = req.body.username;
     var password = req.body.password;
     let tempuser = await igtoolsapi.login(username, password)
     var ciphertext = CryptoJS.AES.encrypt(username, password).toString();
+    alllogin[ciphertext] = tempuser
 })
 
 
@@ -84,7 +96,7 @@ function uploadtos3(filename, body) {
 
 
 app.get('/getposts/:userid', (req, res) => {
-    igtoolsapi.getpost(req.params.userid, function (data) {
+    igtoolsapi.getpost(alllogin.default, req.params.userid, function (data) {
         data = data.map((x, index) => {
             if (x.carousel_media) {
                 return {
@@ -115,7 +127,7 @@ app.get('/getposts/:userid', (req, res) => {
 
 
 app.get('/getcls/:userid/:pk', (req, res) => {
-    igtoolsapi.getcls(req.params.pk, req.params.userid, function (data) {
+    igtoolsapi.getcls(alllogin.default, req.params.pk, req.params.userid, function (data) {
         res.send(data)
         uploadtos3(req.params.userid + '_post' + req.params.pk + '.json', JSON.stringify(data, null, 2))
     })

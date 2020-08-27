@@ -92,7 +92,7 @@ async function getpost(ig, userid, callback) {
 }
 
 
-async function getcls(postnum, userid, callback) {
+async function getcls(ig, postnum, userid, callback) {
     postnum = parseInt(postnum)
     let allcls = {}
     let posts = await getUserRecentPosts(ig, userid);
