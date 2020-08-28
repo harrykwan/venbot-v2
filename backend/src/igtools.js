@@ -1,3 +1,6 @@
+const followUser = require('tools-for-instagram/src/followUser');
+const unfollowUser = require('tools-for-instagram/src/unfollowUser');
+
 require('dotenv').config();
 require("tools-for-instagram");
 
@@ -67,22 +70,25 @@ const logincred = {
     // console.log(info);
 })();
 
-async function login(username, pw) {
-    let igac = await login({
+async function mylogin(username, pw) {
+    return await login({
         inputLogin: username,
         inputPassword: pw,
         inputProxy: false,
     });
-    await setAntiBanMode(igac)
-    return igac
+
 }
 
-async function follow(ig, userid) {
-    return await likeUrl(ig, 'https://www.instagram.com/p/' + posturl + '/');
+async function myantiban(ig) {
+    return await setAntiBanMode(ig)
 }
 
-async function unfollow(ig, userid) {
-    return await likeUrl(ig, 'https://www.instagram.com/p/' + posturl + '/');
+async function myfollow(ig, userid) {
+    return await followUser(ig, userid)
+}
+
+async function myunfollow(ig, userid) {
+    return await unfollowUser(ig, userid);
 }
 
 async function getpost(ig, userid, callback) {
@@ -126,5 +132,7 @@ async function getcls(ig, postnum, userid, callback) {
 
 exports.getcls = getcls
 exports.getpost = getpost
-exports.follow = follow
-exports.unfollow = unfollow
+exports.follow = myfollow
+exports.unfollow = myunfollow
+exports.login = mylogin
+exports.antiban = myantiban

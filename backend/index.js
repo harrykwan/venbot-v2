@@ -2,7 +2,10 @@ const express = require('express')
 const bodyParser = require("body-parser");
 const awsapi = require('./src/aws')
 const igtoolsapi = require('./src/igtools')
-const fs = require('fs')
+var CryptoJS = require("crypto-js");
+const fs = require('fs');
+const followUser = require('tools-for-instagram/src/followUser');
+const setAntiBanMode = require('tools-for-instagram/src/setAntiBanMode');
 require('dotenv').config();
 // console.log(process.env);
 const port = process.env.PORT || 3000;
@@ -51,24 +54,56 @@ app.get('/getlikelist/:postid', (req, res) => {
 })
 
 
-
-
-
 app.post('/login', async (req, res) => {
-    var username = req.body.username;
-    var password = req.body.password;
-    let tempuser = await igtoolsapi.login(username, password)
-    var ciphertext = CryptoJS.AES.encrypt(username, password).toString();
-    alllogin[ciphertext] = tempuser
+    var myusername = req.body.username;
+    var mypassword = req.body.password;
+    var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
+    const tempigac = await login({
+        inputLogin: myusername,
+        inputPassword: mypassword,
+        inputProxy: false,
+    });;
+    alllogin[myusername] = tempigac
+    await setAntiBanMode(tempigac)
+    res.send('ok')
 })
 
 
 app.post('/follow', async (req, res) => {
-    var username = req.body.username;
-    var password = req.body.password;
-    let tempuser = await igtoolsapi.login(username, password)
-    var ciphertext = CryptoJS.AES.encrypt(username, password).toString();
-    alllogin[ciphertext] = tempuser
+    var myusername = req.body.username;
+    var mypassword = req.body.password;
+    var followuserid = req.body.followuserid;
+    var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
+    if (!alllogin.hasOwnProperty(myusername)) {
+        console.log('login')
+        const tempigac = await login({
+            inputLogin: myusername,
+            inputPassword: mypassword,
+            inputProxy: false,
+        });;
+        alllogin[myusername] = tempigac
+        // await setAntiBanMode(tempigac)
+    }
+    await followUser(alllogin[myusername], followuserid)
+    res.send('ok')
+})
+
+app.post('/unfollow', async (req, res) => {
+    var myusername = req.body.username;
+    var mypassword = req.body.password;
+    var unfollowuserid = req.body.unfollowuserid;
+    var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
+    if (!alllogin.hasOwnProperty(myusername)) {
+        const tempigac = await login({
+            inputLogin: myusername,
+            inputPassword: mypassword,
+            inputProxy: false,
+        });;
+        alllogin[myusername] = tempigac
+        // await setAntiBanMode(tempigac)
+    }
+    await unfollowUser(alllogin[myusername], unfollowuserid)
+    res.send('ok')
 })
 
 
