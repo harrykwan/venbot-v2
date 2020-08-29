@@ -130,6 +130,18 @@ async function getcls(ig, postnum, userid, callback) {
         callback(allcls)
 }
 
+
+async function gethashtaglikers(postnum, callback) {
+    let posts = await topHashtagList(alllogin.default, req.params.tag);
+    let likers = await getRecentPostLikers(ig, posts[postnum]);
+    let templikeusers = []
+    likers.forEach(like => {
+        // console.log(like)
+        templikeusers.push(like.username)
+    });
+    callback(templikeusers)
+}
+
 exports.getcls = getcls
 exports.getpost = getpost
 exports.follow = myfollow
