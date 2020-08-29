@@ -1,5 +1,6 @@
 const followUser = require('tools-for-instagram/src/followUser');
 const unfollowUser = require('tools-for-instagram/src/unfollowUser');
+const topHashtagList = require('tools-for-instagram/src/topHashtagList');
 
 require('dotenv').config();
 require("tools-for-instagram");
@@ -131,8 +132,9 @@ async function getcls(ig, postnum, userid, callback) {
 }
 
 
-async function gethashtaglikers(postnum, callback) {
-    let posts = await topHashtagList(alllogin.default, req.params.tag);
+async function gethashtaglikers(ig, tag, postnum, callback) {
+    let posts = await topHashtagList(ig, tag);
+    console.log(posts[postnum])
     let likers = await getRecentPostLikers(ig, posts[postnum]);
     let templikeusers = []
     likers.forEach(like => {
@@ -148,3 +150,4 @@ exports.follow = myfollow
 exports.unfollow = myunfollow
 exports.login = mylogin
 exports.antiban = myantiban
+exports.gethashtaglikers = gethashtaglikers

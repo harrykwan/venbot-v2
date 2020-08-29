@@ -40,10 +40,11 @@ app.use(express.static('public', {
 }))
 
 
-app.get('/searchtag/:tag', (req, res) => {
+app.get('/searchtag/:tag/:postnum', async(req, res) => {
     try {
-        let posts = await topHashtagList(alllogin.default, req.params.tag);
-
+        await igtoolsapi.gethashtaglikers(alllogin.default,req.params.tag,req.params.postnum,function(result){
+            res.send(result)
+        })
     } catch (e) {
         res.send(e)
     }
@@ -122,7 +123,7 @@ app.post('/updatefollower', async (req, res) => {
                 inputLogin: myusername,
                 inputPassword: mypassword,
                 inputProxy: false,
-            });;
+            });
             alllogin[myusername] = tempigac
             // await setAntiBanMode(tempigac)
         }
