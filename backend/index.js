@@ -2,10 +2,11 @@ const express = require('express')
 const bodyParser = require("body-parser");
 const awsapi = require('./src/aws')
 const igtoolsapi = require('./src/igtools')
-var CryptoJS = require("crypto-js");
+const CryptoJS = require("crypto-js");
 const fs = require('fs');
 const followUser = require('tools-for-instagram/src/followUser');
 const setAntiBanMode = require('tools-for-instagram/src/setAntiBanMode');
+require('./src/schedule')
 require('dotenv').config();
 // console.log(process.env);
 const port = process.env.PORT || 3000;
@@ -40,9 +41,9 @@ app.use(express.static('public', {
 }))
 
 
-app.get('/searchtag/:tag/:postnum', async(req, res) => {
+app.get('/searchtag/:tag/:postnum', async (req, res) => {
     try {
-        await igtoolsapi.gethashtaglikers(alllogin.default,req.params.tag,req.params.postnum,function(result){
+        await igtoolsapi.gethashtaglikers(alllogin.default, req.params.tag, req.params.postnum, function (result) {
             res.send(result)
         })
     } catch (e) {
@@ -114,9 +115,10 @@ app.post('/unfollow', async (req, res) => {
     }
 })
 
-app.post('/updatefollower', async (req, res) => {
+app.post('/getfollower', async (req, res) => {
     try {
         var myusername = req.body.username;
+        var mypassword = req.body.password;
         var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
         if (!alllogin.hasOwnProperty(myusername)) {
             const tempigac = await login({
@@ -127,7 +129,10 @@ app.post('/updatefollower', async (req, res) => {
             alllogin[myusername] = tempigac
             // await setAntiBanMode(tempigac)
         }
-        await getFollowing(alllogin[myusername], myusername);
+        await getFollowers(alllogin[myusername], myusername);
+        let followers = await readFollowers(alllogin[myusername], myusername);
+        let followerslist = followers.map(x => x.username)
+        res.send(followerslist)
     } catch (e) {
         res.send(e)
     }

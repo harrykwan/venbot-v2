@@ -1,7 +1,6 @@
-import schedule from 'node-schedule'
+const schedule = require('node-schedule')
+schedule.scheduleJob('0 0 * * *', () => {
 
-schedule.scheduleJob('0 0 * * *', () => { 
-    
 
-    
+
 }) // run everyday at midnight
