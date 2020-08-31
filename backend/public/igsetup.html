@@ -136,15 +136,36 @@
         function updateuser() {
             var user = firebase.auth().currentUser;
             var igusername = document.getElementById('username').value
-            var encrypted = CryptoJS.AES.encrypt(igusername, document.getElementById('password').value);
+            var igpassword = document.getElementById('password').value
+
+            // var encrypted = CryptoJS.AES.encrypt(igusername, igpassword);
 
             user.updateProfile({
                 displayName: igusername,
-                photoURL: encrypted
+                // photoURL: encrypted
             }).then(function () {
                 // Update successful.
-                console.log('ok')
-                window.location.href = "posts?userid=" + igusername
+                var data = JSON.stringify({
+                    "username": "harryiscoding",
+                    "password": "23999hkhk"
+                });
+
+                var xhr = new XMLHttpRequest();
+                xhr.withCredentials = true;
+
+                xhr.addEventListener("readystatechange", function () {
+                    if (this.readyState === 4) {
+                        console.log(this.responseText);
+                        console.log('ok')
+                        window.location.href = "posts?userid=" + igusername
+                    }
+                });
+
+                xhr.open("POST", "loginig");
+                xhr.setRequestHeader("Content-Type", "application/json");
+
+                xhr.send(data);
+
             }).catch(function (error) {
                 // An error happened.
                 console.log(error)

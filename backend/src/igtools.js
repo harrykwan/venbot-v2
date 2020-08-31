@@ -5,19 +5,24 @@ const topHashtagList = require('tools-for-instagram/src/topHashtagList');
 require('dotenv').config();
 require("tools-for-instagram");
 
+let alllogin = {};
+console.log('ig tools start')
+
+function setalllogin(key, value) {
+    alllogin[key] = value
+}
+
+function getalllogin(key) {
+    return alllogin[key]
+}
+
+function checkallloginuserexist(key) {
+    return alllogin.hasOwnProperty(key)
+}
+
 function timeout(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-
-
-
-const logincred = {
-    inputLogin: process.env.IGUSER,
-    inputPassword: process.env.IGPW,
-    inputProxy: false,
-};
-
-
 
 // let ig, ig2;
 (async () => {
@@ -136,12 +141,13 @@ async function gethashtaglikers(ig, tag, postnum, callback) {
     let posts = await topHashtagList(ig, tag);
     console.log(posts[postnum])
     let likers = await getRecentPostLikers(ig, posts[postnum]);
-    let templikeusers = []
-    likers.forEach(like => {
-        // console.log(like)
-        templikeusers.push(like.username)
-    });
-    callback(templikeusers)
+    // let templikeusers = []
+    // likers.forEach(like => {
+    //     // console.log(like)
+    //     templikeusers.push(like.username)
+    // });
+    // callback(templikeusers)
+    callback(likers)
 }
 
 exports.getcls = getcls
@@ -151,3 +157,8 @@ exports.unfollow = myunfollow
 exports.login = mylogin
 exports.antiban = myantiban
 exports.gethashtaglikers = gethashtaglikers
+
+exports.getalllogin = getalllogin
+exports.setalllogin = setalllogin
+exports.checkallloginuserexist = checkallloginuserexist
+exports.timeout = timeout

@@ -1075,22 +1075,22 @@
             nowid = myuserid
 
             if (nowid) {
-                var xhr = new XMLHttpRequest();
-                xhr.withCredentials = true;
+                // var xhr = new XMLHttpRequest();
+                // xhr.withCredentials = true;
 
-                xhr.addEventListener("readystatechange", function () {
-                    if (this.readyState === 4) {
-                        console.log(this.responseText);
-                        let postdata = JSON.parse(this.responseText)
-                        console.log(postdata)
-                        genpostdata(postdata)
-                        App.init();
-                    }
-                });
+                // xhr.addEventListener("readystatechange", function () {
+                //     if (this.readyState === 4) {
+                //         console.log(this.responseText);
+                //         let postdata = JSON.parse(this.responseText)
+                //         console.log(postdata)
+                //         genpostdata(postdata)
+                //         App.init();
+                //     }
+                // });
 
-                xhr.open("GET", "getposts/" + nowid);
+                // xhr.open("GET", "getposts/" + nowid);
 
-                xhr.send();
+                // xhr.send();
             }
 
         });
