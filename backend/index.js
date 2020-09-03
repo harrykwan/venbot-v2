@@ -4,10 +4,12 @@ const awsapi = require('./src/aws')
 const igtoolsapi = require('./src/igtools')
 const CryptoJS = require("crypto-js");
 const date = require('date-and-time');
+const rimraf = require("rimraf");
 const fs = require('fs');
 const localjson = require('./src/localjson')
 const followUser = require('tools-for-instagram/src/followUser');
 const setAntiBanMode = require('tools-for-instagram/src/setAntiBanMode');
+
 require('./src/schedule')
 require('dotenv').config();
 // console.log(process.env);
@@ -23,9 +25,13 @@ const app = express()
 try {
 
     (async () => {
-        const defaultig = await login(logincred);
-        // await setAntiBanMode(defaultig);
-        igtoolsapi.setalllogin('default', defaultig) // alllogin.default = defaultig
+        //clear cookies
+        rimraf("./cookies", async function () {
+            const defaultig = await login(logincred);
+            // await setAntiBanMode(defaultig);
+            igtoolsapi.setalllogin('default', defaultig) // alllogin.default = defaultig
+        });
+
     })();
 } catch (e) {
     console.log(e)
@@ -59,16 +65,26 @@ app.get('/searchtag/:tag/:postnum', async (req, res) => {
 app.post('/loginig', async (req, res) => {
     var myusername = req.body.username;
     var mypassword = req.body.password;
-    var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
+    // var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
+    var decrypted = CryptoJS.AES.decrypt(mypassword, myusername).toString(CryptoJS.enc.Utf8);
+    console.log(myusername)
+    console.log(mypassword)
+    console.log(decrypted)
     if (!igtoolsapi.checkallloginuserexist(myusername)) {
         console.log('login')
         const tempigac = await login({
             inputLogin: myusername,
-            inputPassword: mypassword,
+            inputPassword: decrypted,
             inputProxy: false,
         });;
         // alllogin[myusername] = tempigac
         igtoolsapi.setalllogin(myusername, tempigac)
+        awsapi.createitem('iguser', {
+            username: myusername,
+            password: mypassword
+        }, undefined, undefined, function (data) {
+            loginfromaws(myusername)
+        })
         // await setAntiBanMode(tempigac)
         // await setAntiBanMode(tempigac)
     }
@@ -77,6 +93,21 @@ app.post('/loginig', async (req, res) => {
     res.send('ok')
 })
 
+function loginfromaws(username) {
+    awsapi.readitem('iguser', 'username', username, undefined, undefined, function (data) {
+        var password = data.Item.password
+        var decrypted = CryptoJS.AES.decrypt(password, username).toString(CryptoJS.enc.Utf8);
+        const tempigac = await login({
+            inputLogin: username,
+            inputPassword: decrypted,
+            inputProxy: false,
+        });;
+        // alllogin[myusername] = tempigac
+        igtoolsapi.setalllogin(username, tempigac)
+    })
+}
+
+
 
 app.post('/follow', async (req, res) => {
     try {
@@ -84,7 +115,7 @@ app.post('/follow', async (req, res) => {
         var myusername = req.body.username;
         // var mypassword = req.body.password;
         var followuserid = req.body.followuserid;
-        var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
+        // var ciphertext = CryptoJS.AES.encrypt(mypassword, myusername).toString();
         // if (!alllogin.hasOwnProperty(myusername)) {
         if (!igtoolsapi.checkallloginuserexist(myusername)) {
             console.log('login')
@@ -109,7 +140,7 @@ app.post('/unfollow', async (req, res) => {
         var myusername = req.body.username;
         // var mypassword = req.body.password;
         var unfollowuserid = req.body.unfollowuserid;
-        var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
+        // var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
         // if (!alllogin.hasOwnProperty(myusername)) {
         if (!igtoolsapi.checkallloginuserexist(myusername)) {
             const tempigac = await login({

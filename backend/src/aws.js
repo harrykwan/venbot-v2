@@ -62,15 +62,15 @@ function getphotofroms3(x, req, res) {
 
 
 
-function createtable() {
+function createtable(tablename, keyname) {
     var params = {
-        TableName: "userprofiledata",
+        TableName: tablename,
         KeySchema: [{
-            AttributeName: "uid",
+            AttributeName: keyname,
             KeyType: "HASH"
         }],
         AttributeDefinitions: [{
-            AttributeName: "uid",
+            AttributeName: keyname,
             AttributeType: "S"
         }],
         ProvisionedThroughput: {
@@ -88,9 +88,9 @@ function createtable() {
     });
 }
 
-function createitem(item, req, res) {
-    var table = "userprofiledata";
+// createtable('iguser', 'username')
 
+function createitem(table, item, req, res, callback) {
     var params = {
         TableName: table,
         Item: item
@@ -104,6 +104,9 @@ function createitem(item, req, res) {
             if (res) {
                 res.send(data)
             }
+            if (callback) {
+                callback(data)
+            }
             console.log("Added item:", data);
         }
     });
@@ -114,14 +117,13 @@ function createitem(item, req, res) {
 //     testdata: "testdata"
 // })
 
-function readitem(uid, req, res, callback) {
-    var table = "userprofiledata";
+function readitem(table, key, value, req, res, callback) {
 
+    var tempjson = {}
+    tempjson[key] = value
     var params = {
         TableName: table,
-        Key: {
-            "uid": uid,
-        }
+        Key: tempjson
     };
 
     docClient.get(params, function (err, data) {

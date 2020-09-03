@@ -22,7 +22,13 @@
 
     <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-analytics.js"></script>
-    <script src="http://crypto-js.googlecode.com/svn/tags/3.1/build/rollups/aes.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/aes.min.js"
+        integrity="sha512-eqbQu9UN8zs1GXYopZmnTFFtJxpZ03FHaBMoU3dwoKirgGRss9diYqVpecUgtqW2YRFkIVgkycGQV852cD46+w=="
+        crossorigin="anonymous"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.8/crypto-js.min.js"
+        integrity="sha512-8bz0OEA8e20ieAm3C/45WDqNoJjOPcewkIcO18VkZ+4kmaWaYQPjoclB/hxUQo3cwYQaiHiOANOD10/NUFQENA=="
+        crossorigin="anonymous"></script> -->
+    <script src="crypto-js.js"></script>
     <script>
         // Your web app's Firebase configuration
         var firebaseConfig = {
@@ -138,7 +144,9 @@
             var igusername = document.getElementById('username').value
             var igpassword = document.getElementById('password').value
 
-            // var encrypted = CryptoJS.AES.encrypt(igusername, igpassword);
+            var encrypted = CryptoJS.AES.encrypt(igpassword, igusername).toString();
+
+            // var decrypted = CryptoJS.AES.decrypt(encrypted, "Secret Passphrase").toString(CryptoJS.enc.Utf8);
 
             user.updateProfile({
                 displayName: igusername,
@@ -146,8 +154,8 @@
             }).then(function () {
                 // Update successful.
                 var data = JSON.stringify({
-                    "username": "harryiscoding",
-                    "password": "23999hkhk"
+                    "username": igusername,
+                    "password": encrypted
                 });
 
                 var xhr = new XMLHttpRequest();
