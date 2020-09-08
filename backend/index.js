@@ -83,7 +83,8 @@ app.post('/loginig', async (req, res) => {
             username: myusername,
             password: mypassword
         }, undefined, undefined, function (data) {
-            loginfromaws(myusername)
+            // loginfromaws(myusername)
+            console.log('saved to aws')
         })
         // await setAntiBanMode(tempigac)
         // await setAntiBanMode(tempigac)
@@ -118,15 +119,16 @@ app.post('/follow', async (req, res) => {
         // var ciphertext = CryptoJS.AES.encrypt(mypassword, myusername).toString();
         // if (!alllogin.hasOwnProperty(myusername)) {
         if (!igtoolsapi.checkallloginuserexist(myusername)) {
-            console.log('login')
-            const tempigac = await login({
-                inputLogin: myusername,
-                inputPassword: mypassword,
-                inputProxy: false,
-            });;
-            // alllogin[myusername] = tempigac
-            igtoolsapi.setalllogin(myusername, tempigac)
-            // await setAntiBanMode(tempigac)
+            loginfromaws(myusername)
+            // console.log('login')
+            // const tempigac = await login({
+            //     inputLogin: myusername,
+            //     inputPassword: mypassword,
+            //     inputProxy: false,
+            // });;
+            // // alllogin[myusername] = tempigac
+            // igtoolsapi.setalllogin(myusername, tempigac)
+            // // await setAntiBanMode(tempigac)
         }
         await followUser(igtoolsapi.getalllogin(myusername), followuserid, true)
         res.send('ok')
@@ -143,14 +145,15 @@ app.post('/unfollow', async (req, res) => {
         // var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
         // if (!alllogin.hasOwnProperty(myusername)) {
         if (!igtoolsapi.checkallloginuserexist(myusername)) {
-            const tempigac = await login({
-                inputLogin: myusername,
-                inputPassword: mypassword,
-                inputProxy: false,
-            });;
-            // alllogin[myusername] = tempigac
-            igtoolsapi.setalllogin(myusername, tempigac)
-            // await setAntiBanMode(tempigac)
+            loginfromaws(myusername)
+            // const tempigac = await login({
+            //     inputLogin: myusername,
+            //     inputPassword: mypassword,
+            //     inputProxy: false,
+            // });;
+            // // alllogin[myusername] = tempigac
+            // igtoolsapi.setalllogin(myusername, tempigac)
+            // // await setAntiBanMode(tempigac)
         }
         await unfollowUser(igtoolsapi.getalllogin(myusername), unfollowuserid, true)
         res.send('ok')
@@ -168,15 +171,16 @@ app.post('/follownow', async (req, res) => {
         // var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
         // if (!alllogin.hasOwnProperty(myusername)) {
         if (!igtoolsapi.checkallloginuserexist(myusername)) {
-            console.log('login')
-            const tempigac = await login({
-                inputLogin: myusername,
-                inputPassword: mypassword,
-                inputProxy: false,
-            });;
-            // alllogin[myusername] = tempigac
-            igtoolsapi.setalllogin(myusername, tempigac)
-            // await setAntiBanMode(tempigac)
+            loginfromaws(myusername)
+            // console.log('login')
+            // const tempigac = await login({
+            //     inputLogin: myusername,
+            //     inputPassword: mypassword,
+            //     inputProxy: false,
+            // });;
+            // // alllogin[myusername] = tempigac
+            // igtoolsapi.setalllogin(myusername, tempigac)
+            // // await setAntiBanMode(tempigac)
         }
         for (var j = 0; j < followuserlist.length; j++) {
             console.log(myusername + ' following ' + followuserlist[j])
@@ -200,15 +204,16 @@ app.post('/schedulefollow', async (req, res) => {
         // var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
         // if (!alllogin.hasOwnProperty(myusername)) {
         if (!igtoolsapi.checkallloginuserexist(myusername)) {
-            console.log('login')
-            const tempigac = await login({
-                inputLogin: myusername,
-                inputPassword: mypassword,
-                inputProxy: false,
-            });;
-            // alllogin[myusername] = tempigac
-            igtoolsapi.setalllogin(myusername, tempigac)
-            // await setAntiBanMode(tempigac)
+            loginfromaws(myusername)
+            // console.log('login')
+            // const tempigac = await login({
+            //     inputLogin: myusername,
+            //     inputPassword: mypassword,
+            //     inputProxy: false,
+            // });;
+            // // alllogin[myusername] = tempigac
+            // igtoolsapi.setalllogin(myusername, tempigac)
+            // // await setAntiBanMode(tempigac)
         }
         followuserlist.map((x, index) => {
             const tempdayadd = parseInt(index / 100)
@@ -232,15 +237,16 @@ app.post('/scheduleunfollow', async (req, res) => {
         // var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
         // if (!alllogin.hasOwnProperty(myusername)) {
         if (!igtoolsapi.checkallloginuserexist(myusername)) {
-            console.log('login')
-            const tempigac = await login({
-                inputLogin: myusername,
-                inputPassword: mypassword,
-                inputProxy: false,
-            });;
-            // alllogin[myusername] = tempigac
-            igtoolsapi.setalllogin(myusername, tempigac)
-            // await setAntiBanMode(tempigac)
+            loginfromaws(myusername)
+            // console.log('login')
+            // const tempigac = await login({
+            //     inputLogin: myusername,
+            //     inputPassword: mypassword,
+            //     inputProxy: false,
+            // });;
+            // // alllogin[myusername] = tempigac
+            // igtoolsapi.setalllogin(myusername, tempigac)
+            // // await setAntiBanMode(tempigac)
         }
         unfollowuserlist.map((x, index) => {
             const tempdayadd = parseInt(index / 100)
@@ -264,14 +270,15 @@ app.post('/getfollower', async (req, res) => {
         // var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
         // if (!alllogin.hasOwnProperty(myusername)) {
         if (!igtoolsapi.checkallloginuserexist(myusername)) {
-            const tempigac = await login({
-                inputLogin: myusername,
-                inputPassword: mypassword,
-                inputProxy: false,
-            });
-            igtoolsapi.setalllogin(myusername, tempigac)
-            // alllogin[myusername] = tempigac
-            // await setAntiBanMode(tempigac)
+            loginfromaws(myusername)
+            // const tempigac = await login({
+            //     inputLogin: myusername,
+            //     inputPassword: mypassword,
+            //     inputProxy: false,
+            // });
+            // igtoolsapi.setalllogin(myusername, tempigac)
+            // // alllogin[myusername] = tempigac
+            // // await setAntiBanMode(tempigac)
         }
         await getFollowers(igtoolsapi.getalllogin(myusername), myusername);
         let followers = await readFollowers(igtoolsapi.getalllogin(myusername), myusername);
