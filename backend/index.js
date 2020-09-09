@@ -181,13 +181,13 @@ app.post('/follownow', async (req, res) => {
         // console.log(followuserlist)
         const now = new Date();
         const nowtime = now.getTime()
-        awsapi.uploadJSONToS3(myusername + '-' + tag + '-' + nowtime, followuserlist, function (data) {
-            awsapi.createitem('followrecord', {
-                username: myusername,
-                time: nowtime,
-                filename: myusername + '-' + tag + '-' + nowtime
-            })
-        })
+        // awsapi.uploadJSONToS3(myusername + '-' + tag + '-' + nowtime, followuserlist, function (data) {
+        //     awsapi.createitem('followrecord', {
+        //         username: myusername,
+        //         time: nowtime,
+        //         filename: myusername + '-' + tag + '-' + nowtime
+        //     })
+        // })
         res.send('start')
         for (var j = 0; j < followuserlist.length; j++) {
             console.log(myusername + ' following ' + followuserlist[j])
