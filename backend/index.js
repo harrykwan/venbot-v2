@@ -172,30 +172,30 @@ app.post('/follownow', async (req, res) => {
         var myusername = req.body.username;
         // var mypassword = req.body.password;
         var followuserlist = req.body.followuserlist;
+        var tag = req.body.tag;
         // var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
         // if (!alllogin.hasOwnProperty(myusername)) {
         if (!igtoolsapi.checkallloginuserexist(myusername)) {
             await loginfromaws(myusername)
-            // console.log('login')
-            // const tempigac = await login({
-            //     inputLogin: myusername,
-            //     inputPassword: mypassword,
-            //     inputProxy: false,
-            // });;
-            // // alllogin[myusername] = tempigac
-            // igtoolsapi.setalllogin(myusername, tempigac)
-            // // await setAntiBanMode(tempigac)
         }
         // console.log(followuserlist)
+        const now = new Date();
+        const nowtime = now.getTime()
+        awsapi.uploadJSONToS3(myusername + '-' + tag + '-' + nowtime, followuserlist, function (data) {
+            awsapi.createitem('followrecord', {
+                username: myusername,
+                time: nowtime,
+                filename: myusername + '-' + tag + '-' + nowtime
+            })
+        })
+        res.send('start')
         for (var j = 0; j < followuserlist.length; j++) {
             console.log(myusername + ' following ' + followuserlist[j])
-            res.send('following ' + followuserlist[j])
             await followUser(igtoolsapi.getalllogin(myusername), followuserlist[j], true)
             await igtoolsapi.timeout(1000)
         }
         followuserlist.map((x, index) => {
             const tempdayadd = parseInt(index / 100)
-            const now = new Date();
             const tempdate = date.format(date.addDays(now, tempdayadd + 5), 'DD/MM/YYYY');
             // console.log(tempdate.toString(), myusername.toString(), x.toString())
             localjson.pushunfollowtask(tempdate.toString(), myusername.toString(), x.toString())

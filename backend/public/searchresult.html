@@ -523,10 +523,11 @@
             }
         });
 
+        let mytag, mypostnum;
         $(document).ready(function () {
             const urlParams = new URLSearchParams(window.location.search);
-            let mytag = urlParams.get('tag');
-            let mypostnum = urlParams.get('postnum');
+            mytag = urlParams.get('tag');
+            mypostnum = urlParams.get('postnum');
             gettagresult(mytag, mypostnum)
 
         });
@@ -666,7 +667,8 @@
         function followall() {
             var data = JSON.stringify({
                 "username": nowid,
-                followuserlist: nowdata
+                followuserlist: nowdata,
+                tag: mytag
             });
 
             var xhr = new XMLHttpRequest();

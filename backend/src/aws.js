@@ -45,6 +45,22 @@ function uploadToS3(file, res, callback) {
     });
 }
 
+function uploadJSONToS3(filename, jsondata, callback) {
+    s3.putObject({
+            Bucket: BUCKET_NAME,
+            Key: filename,
+            Body: JSON.stringify(jsondata),
+            ContentType: "application/json"
+        },
+        function (err, data) {
+            console.log(JSON.stringify(err) + " " + JSON.stringify(data));
+            if (callback) {
+                callback(data)
+            }
+        }
+    );
+}
+
 function getphotofroms3(x, req, res) {
     var params = {
         Bucket: BUCKET_NAME,
@@ -89,6 +105,7 @@ function createtable(tablename, keyname) {
 }
 
 // createtable('iguser', 'username')
+// createtable('followrecord', 'username')
 
 function createitem(table, item, req, res, callback) {
     var params = {
@@ -151,3 +168,4 @@ exports.getphoto = getphotofroms3
 exports.createtable = createtable
 exports.createitem = createitem
 exports.readitem = readitem
+exports.uploadJSONToS3 = uploadJSONToS3
