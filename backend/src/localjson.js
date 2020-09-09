@@ -9,9 +9,6 @@ var db = new JsonDB(new Config("schedulelist", true, false, '/'));
 console.log('JSON DATA')
 console.log(db.getData('/'))
 
-
-pushfollowtask('date', 'username', 'targetuser')
-
 function pushfollowtask(date, username, targetuser) {
     try {
         let newdata = {
