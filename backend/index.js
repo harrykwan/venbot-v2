@@ -95,17 +95,21 @@ app.post('/loginig', async (req, res) => {
 })
 
 function loginfromaws(username) {
-    awsapi.readitem('iguser', 'username', username, undefined, undefined, function (data) {
-        var password = data.Item.password
-        var decrypted = CryptoJS.AES.decrypt(password, username).toString(CryptoJS.enc.Utf8);
-        const tempigac = await login({
-            inputLogin: username,
-            inputPassword: decrypted,
-            inputProxy: false,
-        });;
-        // alllogin[myusername] = tempigac
-        igtoolsapi.setalllogin(username, tempigac)
+    const temppromise = new Promise(function (resolve, reject) {
+        awsapi.readitem('iguser', 'username', username, undefined, undefined, async function (data) {
+            var password = data.Item.password
+            var decrypted = CryptoJS.AES.decrypt(password, username).toString(CryptoJS.enc.Utf8);
+            const tempigac = await login({
+                inputLogin: username,
+                inputPassword: decrypted,
+                inputProxy: false,
+            });;
+            // alllogin[myusername] = tempigac
+            igtoolsapi.setalllogin(username, tempigac)
+            resolve('ok')
+        })
     })
+    return temppromise
 }
 
 
@@ -119,7 +123,7 @@ app.post('/follow', async (req, res) => {
         // var ciphertext = CryptoJS.AES.encrypt(mypassword, myusername).toString();
         // if (!alllogin.hasOwnProperty(myusername)) {
         if (!igtoolsapi.checkallloginuserexist(myusername)) {
-            loginfromaws(myusername)
+            await loginfromaws(myusername)
             // console.log('login')
             // const tempigac = await login({
             //     inputLogin: myusername,
@@ -145,7 +149,7 @@ app.post('/unfollow', async (req, res) => {
         // var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
         // if (!alllogin.hasOwnProperty(myusername)) {
         if (!igtoolsapi.checkallloginuserexist(myusername)) {
-            loginfromaws(myusername)
+            await loginfromaws(myusername)
             // const tempigac = await login({
             //     inputLogin: myusername,
             //     inputPassword: mypassword,
@@ -171,7 +175,7 @@ app.post('/follownow', async (req, res) => {
         // var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
         // if (!alllogin.hasOwnProperty(myusername)) {
         if (!igtoolsapi.checkallloginuserexist(myusername)) {
-            loginfromaws(myusername)
+            await loginfromaws(myusername)
             // console.log('login')
             // const tempigac = await login({
             //     inputLogin: myusername,
@@ -182,11 +186,20 @@ app.post('/follownow', async (req, res) => {
             // igtoolsapi.setalllogin(myusername, tempigac)
             // // await setAntiBanMode(tempigac)
         }
+        // console.log(followuserlist)
         for (var j = 0; j < followuserlist.length; j++) {
             console.log(myusername + ' following ' + followuserlist[j])
+            res.send('following ' + followuserlist[j])
             await followUser(igtoolsapi.getalllogin(myusername), followuserlist[j], true)
             await igtoolsapi.timeout(1000)
         }
+        followuserlist.map((x, index) => {
+            const tempdayadd = parseInt(index / 100)
+            const now = new Date();
+            const tempdate = date.format(date.addDays(now, tempdayadd + 5), 'DD/MM/YYYY');
+            // console.log(tempdate.toString(), myusername.toString(), x.toString())
+            localjson.pushunfollowtask(tempdate.toString(), myusername.toString(), x.toString())
+        })
 
         // await followUser(igtoolsapi.getalllogin(myusername), followuserid, true)
         res.send('ok')
@@ -204,7 +217,7 @@ app.post('/schedulefollow', async (req, res) => {
         // var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
         // if (!alllogin.hasOwnProperty(myusername)) {
         if (!igtoolsapi.checkallloginuserexist(myusername)) {
-            loginfromaws(myusername)
+            await loginfromaws(myusername)
             // console.log('login')
             // const tempigac = await login({
             //     inputLogin: myusername,
@@ -220,6 +233,8 @@ app.post('/schedulefollow', async (req, res) => {
             const now = new Date();
             const tempdate = date.format(date.addDays(now, tempdayadd), 'DD/MM/YYYY');
             localjson.pushfollowtask(tempdate, myusername, x)
+            const tempdate2 = date.format(date.addDays(now, tempdayadd + 5), 'DD/MM/YYYY');
+            localjson.pushunfollowtask(tempdate2, myusername, x)
         })
 
         // await followUser(igtoolsapi.getalllogin(myusername), followuserid, true)
@@ -237,7 +252,7 @@ app.post('/scheduleunfollow', async (req, res) => {
         // var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
         // if (!alllogin.hasOwnProperty(myusername)) {
         if (!igtoolsapi.checkallloginuserexist(myusername)) {
-            loginfromaws(myusername)
+            await loginfromaws(myusername)
             // console.log('login')
             // const tempigac = await login({
             //     inputLogin: myusername,
@@ -270,7 +285,7 @@ app.post('/getfollower', async (req, res) => {
         // var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
         // if (!alllogin.hasOwnProperty(myusername)) {
         if (!igtoolsapi.checkallloginuserexist(myusername)) {
-            loginfromaws(myusername)
+            await loginfromaws(myusername)
             // const tempigac = await login({
             //     inputLogin: myusername,
             //     inputPassword: mypassword,

@@ -6,24 +6,37 @@ const {
 } = require('node-json-db/dist/lib/JsonDBConfig');
 
 var db = new JsonDB(new Config("schedulelist", true, false, '/'));
+console.log('JSON DATA')
 console.log(db.getData('/'))
 
+
+pushfollowtask('date', 'username', 'targetuser')
+
 function pushfollowtask(date, username, targetuser) {
-    let newdata = {
-        username: username,
-        targetuser: targetuser
+    try {
+        let newdata = {
+            username: username,
+            targetuser: targetuser
+        }
+        db.push("/" + date + "/followlist[]", newdata, true);
+    } catch (e) {
+        console.log(e)
     }
-    db.push("/" + date + "/followlist[]", newdata, true);
+
 }
 
 
 
-function pushunfollowtask(username, targetuser) {
-    let newdata = {
-        username: username,
-        targetuser: targetuser
+function pushunfollowtask(date, username, targetuser) {
+    try {
+        let newdata = {
+            username: username,
+            targetuser: targetuser
+        }
+        db.push("/" + date + "/unfollowlist[]", newdata, true);
+    } catch (e) {
+        console.log(e)
     }
-    db.push("/" + date + "/unfollowlist[]", newdata, true);
 }
 
 
