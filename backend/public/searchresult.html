@@ -677,6 +677,9 @@
             xhr.addEventListener("readystatechange", function () {
                 if (this.readyState === 4) {
                     console.log(this.responseText);
+                    if (this.responseText == 'start') {
+                        window.location.href = "invoice"
+                    }
                 }
             });
 

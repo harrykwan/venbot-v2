@@ -443,5 +443,26 @@ app.get('/searchresult', (req, res) => {
     })
 })
 
+app.get('/home', (req, res) => {
+    res.sendFile('public/dashboard.html', {
+        root: __dirname
+    })
+})
+
+
+app.get('/searchresult', (req, res) => {
+    res.sendFile('public/dashboard.html', {
+        root: __dirname
+    })
+})
+
+app.get('/invoice', (req, res) => {
+    res.sendFile('public/invoice.html', {
+        root: __dirname
+    })
+})
+
+
+
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
