@@ -105,7 +105,8 @@ function createtable(tablename, keyname) {
 }
 
 // createtable('iguser', 'username')
-// createtable('followrecord', 'username')
+// createtable('followrecord', 'recordid')
+// createtable('crm', 'recordid')
 
 function createitem(table, item, req, res, callback) {
     var params = {

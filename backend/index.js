@@ -200,6 +200,15 @@ app.post('/follownow', async (req, res) => {
             // console.log(tempdate.toString(), myusername.toString(), x.toString())
             localjson.pushunfollowtask(tempdate.toString(), myusername.toString(), x.toString())
         })
+        
+
+        awsapi.createitem('followrecord',{
+            recordid: myusername+'-'+nowtime,
+            username: myusername,
+            data: followuserlist
+        },undefined,undefined,undefined)
+
+
 
         // await followUser(igtoolsapi.getalllogin(myusername), followuserid, true)
         res.send('ok')
@@ -305,6 +314,21 @@ app.post('/getfollower', async (req, res) => {
 })
 
 
+app.post('/addtocrm', async (req, res) => {
+    try {
+        var myusername = req.body.username;
+        var mydata = req.body.data;
+        awsapi.createitem('followrecord',{
+            recordid: myusername+'-'+nowtime,
+            username: myusername,
+            data: mydata
+        },undefined,undefined,function(){
+            res.send('ok')
+        })
+    } catch (e) {
+        res.send(e)
+    }
+})
 
 
 
