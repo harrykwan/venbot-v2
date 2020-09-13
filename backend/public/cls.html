@@ -501,9 +501,10 @@
     <script>
         // var e;
         let myuserid;
+        let mypk;
         $(document).ready(function () {
             const urlParams = new URLSearchParams(window.location.search);
-            let mypk = urlParams.get('pk');
+            mypk = urlParams.get('pk');
             myuserid = urlParams.get('userid');
             console.log(mypk)
             getcls(myuserid, mypk)
@@ -641,7 +642,11 @@
         function addtocrm() {
             var data = JSON.stringify({
                 "username": myuserid,
-                "data": clsdata
+                "data": clsdata,
+                "from": {
+                    "type": "mypost",
+                    "postpk": mypk
+                }
             });
 
             var xhr = new XMLHttpRequest();
