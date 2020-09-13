@@ -448,6 +448,7 @@
 
                                         </tbody>
                                     </table>
+                                    <button onclick="addtocrm()">Add to CRM</button>
                                 </div>
 
                                 <div id="loading" class="spinner-grow text-info align-self-center loader-lg">
@@ -499,14 +500,19 @@
     <script src="plugins/table/datatable/datatables.js"></script>
     <script>
         // var e;
+        let myuserid;
         $(document).ready(function () {
             const urlParams = new URLSearchParams(window.location.search);
             let mypk = urlParams.get('pk');
-            let myuserid = urlParams.get('userid');
+            myuserid = urlParams.get('userid');
             console.log(mypk)
             getcls(myuserid, mypk)
 
         });
+
+
+
+        var clsdata;
 
         function getcls(userid, pk) {
 
@@ -529,6 +535,7 @@
                         })
                     }
                     console.log(mydata)
+                    clsdata = mydata
                     document.getElementById('dataarea').innerHTML = gendataarea(mydata)
                     App.init();
                     gentype2table()
@@ -629,6 +636,28 @@
             });
 
             multiCheck(c2);
+        }
+
+        function addtocrm() {
+            var data = JSON.stringify({
+                "username": myuserid,
+                "data": clsdata
+            });
+
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+
+            xhr.addEventListener("readystatechange", function () {
+                if (this.readyState === 4) {
+                    console.log(this.responseText);
+                    window.location.href = "crm"
+                }
+            });
+
+            xhr.open("POST", "addtocrm");
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            xhr.send(data);
         }
     </script>
     <!-- END PAGE LEVEL SCRIPTS -->
