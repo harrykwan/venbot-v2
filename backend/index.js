@@ -327,10 +327,12 @@ try {
             const nowtime = now.getTime()
             var myusername = req.body.username;
             var mydata = req.body.data;
-            awsapi.createitem('followrecord', {
+            var myfrom = req.body.from;
+            awsapi.createitem('crm', {
                 recordid: myusername + '-' + nowtime,
                 username: myusername,
-                data: mydata
+                data: mydata,
+                from: myfrom
             }, undefined, undefined, function () {
                 res.send('ok')
             })
@@ -426,6 +428,13 @@ try {
         }
     })
 
+    app.get('/getcrm/:userid', (req, res) => {
+        awsapi.scandata('crm', 'username', req.params.userid, function (data) {
+            res.send(data)
+        })
+    })
+
+
     app.get('/posts', (req, res) => {
         res.sendFile('public/posts.html', {
             root: __dirname
@@ -496,11 +505,20 @@ try {
         })
     })
 
+    app.get('/crm', (req, res) => {
+        res.sendFile('public/crm.html', {
+            root: __dirname
+        })
+    })
+
+
+
+
 
 
 
     app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
 
 } catch (e) {
-    console.log(error)
+    console.log(e)
 }

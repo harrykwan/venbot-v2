@@ -39,7 +39,7 @@ function pushunfollowtask(date, username, targetuser) {
 
 
 
-function popunfollowtask(date) {
+function popfollowtask(date) {
     var olddata = db.getData("/" + date + "/followlist[-1]")
     db.delete("/" + date + "/followlist[-1]");
     return olddata
@@ -52,7 +52,7 @@ function popunfollowtask(date) {
     return olddata
 }
 
-exports.popunfollowtask = popunfollowtask
+exports.popfollowtask = popfollowtask
 exports.popunfollowtask = popunfollowtask
 exports.pushfollowtask = pushfollowtask
 exports.pushunfollowtask = pushunfollowtask

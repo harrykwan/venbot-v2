@@ -161,6 +161,61 @@ function readitem(table, key, value, req, res, callback) {
     });
 }
 
+function querydata(table, key, value, callback) {
+    var params = {
+        TableName: table,
+        KeyConditionExpression: "#key = :value",
+        ExpressionAttributeNames: {
+            "#key": key
+        },
+        ExpressionAttributeValues: {
+            ":value": value
+        }
+    };
+
+    docClient.query(params, function (err, data) {
+        if (err) {
+            console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
+        } else {
+            console.log("Query succeeded.");
+            // data.Items.forEach(function (item) {
+            //     console.log(" -", item.year + ": " + item.title);
+            // });
+            if (callback) {
+                callback(data.Items)
+            }
+        }
+    });
+}
+
+function scandata(table, key, value, callback) {
+    var params = {
+        TableName: table,
+        FilterExpression: "#key = :value",
+        ExpressionAttributeNames: {
+            "#key": key
+        },
+        ExpressionAttributeValues: {
+            ":value": value
+        }
+    };
+
+    docClient.scan(params, function (err, data) {
+        if (err) {
+            console.error("Unable to scan. Error:", JSON.stringify(err, null, 2));
+        } else {
+            console.log("scan succeeded.");
+            // data.Items.forEach(function (item) {
+            //     console.log(" -", item.year + ": " + item.title);
+            // });
+            if (callback) {
+                callback(data.Items)
+            }
+        }
+    });
+}
+
+
 // readitem('testuid')
 
 
@@ -169,4 +224,6 @@ exports.getphoto = getphotofroms3
 exports.createtable = createtable
 exports.createitem = createitem
 exports.readitem = readitem
+exports.querydata = querydata
+exports.scandata = scandata
 exports.uploadJSONToS3 = uploadJSONToS3
