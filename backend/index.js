@@ -10,6 +10,7 @@ try {
     const localjson = require('./src/localjson')
     const followUser = require('tools-for-instagram/src/followUser');
     const setAntiBanMode = require('tools-for-instagram/src/setAntiBanMode');
+    const logger = require('logger').createLogger('first_stage_testing.log');
 
     require('./src/schedule')
     require('dotenv').config();
@@ -42,6 +43,7 @@ try {
         })();
     } catch (e) {
         console.log(e)
+        logger.error(e)
     }
 
     app.use(bodyParser.urlencoded({
@@ -58,11 +60,13 @@ try {
     app.get('/searchtag/:tag/:postnum', async (req, res) => {
         try {
             //alllogin.default
+            logger.info('get/searchtag/:tag/:postnum' + JSON.stringify(req.params))
             await igtoolsapi.gethashtaglikers(igtoolsapi.getalllogin('default'), req.params.tag, req.params.postnum, function (result) {
                 res.send(result)
             })
         } catch (e) {
             res.send(e)
+            logger.error(e)
         }
 
     })
@@ -70,38 +74,44 @@ try {
 
 
     app.post('/loginig', async (req, res) => {
-        var myusername = req.body.username;
-        var mypassword = req.body.password;
-        // var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
-        var decrypted = CryptoJS.AES.decrypt(mypassword, myusername).toString(CryptoJS.enc.Utf8);
-        console.log(myusername)
-        console.log(mypassword)
-        console.log(decrypted)
-        if (!igtoolsapi.checkallloginuserexist(myusername)) {
-            console.log('login')
-            const tempigac = await login({
-                inputLogin: myusername,
-                inputPassword: decrypted,
-                inputProxy: false,
-            });;
+        try {
+            logger.info('post/loginig' + JSON.stringify(req.body))
+            var myusername = req.body.username;
+            var mypassword = req.body.password;
+            // var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
+            var decrypted = CryptoJS.AES.decrypt(mypassword, myusername).toString(CryptoJS.enc.Utf8);
+            console.log(myusername)
+            console.log(mypassword)
+            console.log(decrypted)
+            if (!igtoolsapi.checkallloginuserexist(myusername)) {
+                console.log('login')
+                const tempigac = await login({
+                    inputLogin: myusername,
+                    inputPassword: decrypted,
+                    inputProxy: false,
+                });;
+                // alllogin[myusername] = tempigac
+                igtoolsapi.setalllogin(myusername, tempigac)
+                awsapi.createitem('iguser', {
+                    username: myusername,
+                    password: mypassword
+                }, undefined, undefined, function (data) {
+                    // loginfromaws(myusername)
+                    console.log('saved to aws')
+                })
+                // await setAntiBanMode(tempigac)
+                // await setAntiBanMode(tempigac)
+            }
             // alllogin[myusername] = tempigac
-            igtoolsapi.setalllogin(myusername, tempigac)
-            awsapi.createitem('iguser', {
-                username: myusername,
-                password: mypassword
-            }, undefined, undefined, function (data) {
-                // loginfromaws(myusername)
-                console.log('saved to aws')
-            })
-            // await setAntiBanMode(tempigac)
-            // await setAntiBanMode(tempigac)
-        }
-        // alllogin[myusername] = tempigac
 
-        res.send('ok')
+            res.send('ok')
+        } catch (e) {
+            logger.error(e)
+        }
     })
 
     function loginfromaws(username) {
+        logger.info('loginfromaws ' + username)
         const temppromise = new Promise(function (resolve, reject) {
             awsapi.readitem('iguser', 'username', username, undefined, undefined, async function (data) {
                 var password = data.Item.password
@@ -123,7 +133,6 @@ try {
 
     app.post('/follow', async (req, res) => {
         try {
-
             var myusername = req.body.username;
             // var mypassword = req.body.password;
             var followuserid = req.body.followuserid;
@@ -176,6 +185,7 @@ try {
 
     app.post('/follownow', async (req, res) => {
         try {
+            logger.info('post/follownow' + JSON.stringify(req.body))
             var myusername = req.body.username;
             // var mypassword = req.body.password;
             var followuserlist = req.body.followuserlist;
@@ -323,6 +333,7 @@ try {
 
     app.post('/addtocrm', async (req, res) => {
         try {
+            logger.info('post/addtocrm' + JSON.stringify(req.body))
             const now = new Date();
             const nowtime = now.getTime()
             var myusername = req.body.username;
@@ -382,6 +393,7 @@ try {
 
     app.get('/getposts/:userid', (req, res) => {
         try {
+            logger.info('get/getposts/:userid' + JSON.stringify(req.params))
             console.log(req.params.userid)
             igtoolsapi.getpost(igtoolsapi.getalllogin('default'), req.params.userid, function (data) {
                 data = data.map((x, index) => {
@@ -413,22 +425,26 @@ try {
         } catch (e) {
             // console.log(e)
             res.send(e)
+            logger.error(e)
         }
     })
 
 
     app.get('/getcls/:userid/:pk', (req, res) => {
         try {
+            logger.info('get/getcls/:userid/:pk' + JSON.stringify(req.params))
             igtoolsapi.getcls(igtoolsapi.getalllogin('default'), req.params.pk, req.params.userid, function (data) {
                 res.send(data)
                 uploadtos3(req.params.userid + '_post' + req.params.pk + '.json', JSON.stringify(data, null, 2))
             })
         } catch (e) {
             res.send(e)
+            logger.error(e)
         }
     })
 
     app.get('/getcrm/:userid', (req, res) => {
+        logger.info('get/getcrm/:userid' + JSON.stringify(req.params))
         awsapi.scandata('crm', 'username', req.params.userid, function (data) {
             res.send(data)
         })
