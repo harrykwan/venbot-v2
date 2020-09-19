@@ -72,6 +72,21 @@ try {
     })
 
 
+    app.get('/searchtagpost/:tag', async (req, res) => {
+        try {
+            //alllogin.default
+            logger.info('get/searchtag/:tag' + JSON.stringify(req.params))
+            await igtoolsapi.gethashtagposts(igtoolsapi.getalllogin('default'), req.params.tag, function (data) {
+                res.send(data)
+            })
+        } catch (e) {
+            res.send(e)
+            logger.error(e)
+        }
+
+    })
+
+
 
     app.post('/loginig', async (req, res) => {
         try {

@@ -1,0 +1,170 @@
+
+
+
+
+
+info [Sun Sep 20 2020 04:41:11 GMT+0800 (Hong Kong Standard Time)]  get/searchtag/:tag{"tag":"developer"}
+info [Sun Sep 20 2020 04:46:24 GMT+0800 (Hong Kong Standard Time)]  get/searchtag/:tag{"tag":"developer"}
+info [Sun Sep 20 2020 04:52:36 GMT+0800 (Hong Kong Standard Time)]  get/searchtag/:tag{"tag":"developer"}
+info [Sun Sep 20 2020 04:52:51 GMT+0800 (Hong Kong Standard Time)]  get/searchtag/:tag{"tag":"develop"}
+info [Sun Sep 20 2020 04:54:20 GMT+0800 (Hong Kong Standard Time)]  get/searchtag/:tag{"tag":"developer"}
+info [Sun Sep 20 2020 04:54:32 GMT+0800 (Hong Kong Standard Time)]  get/searchtag/:tag{"tag":"developerw"}
+info [Sun Sep 20 2020 04:54:42 GMT+0800 (Hong Kong Standard Time)]  get/searchtag/:tag{"tag":"developwe"}
+info [Sun Sep 20 2020 04:54:48 GMT+0800 (Hong Kong Standard Time)]  get/searchtag/:tag{"tag":"developer"}
+info [Sun Sep 20 2020 04:54:52 GMT+0800 (Hong Kong Standard Time)]  get/searchtag/:tag{"tag":"developere"}
+info [Sun Sep 20 2020 04:59:38 GMT+0800 (Hong Kong Standard Time)]  get/searchtag/:tag{"tag":"developer"}
+info [Sun Sep 20 2020 05:02:26 GMT+0800 (Hong Kong Standard Time)]  get/searchtag/:tag{"tag":"developer"}
+info [Sun Sep 20 2020 06:08:15 GMT+0800 (Hong Kong Standard Time)]  get/searchtag/:tag{"tag":"developer"}
+info [Sun Sep 20 2020 06:09:32 GMT+0800 (Hong Kong Standard Time)]  get/searchtag/:tag{"tag":"developer"}
+info [Sun Sep 20 2020 06:10:18 GMT+0800 (Hong Kong Standard Time)]  get/searchtag/:tag{"tag":"developer"}
+info [Sun Sep 20 2020 06:10:54 GMT+0800 (Hong Kong Standard Time)]  get/searchtag/:tag{"tag":"developer"}
+info [Sun Sep 20 2020 06:12:10 GMT+0800 (Hong Kong Standard Time)]  get/searchtag/:tag{"tag":"developer"}
+info [Sun Sep 20 2020 06:13:29 GMT+0800 (Hong Kong Standard Time)]  get/searchtag/:tag{"tag":"developer"}
+info [Sun Sep 20 2020 06:14:21 GMT+0800 (Hong Kong Standard Time)]  get/searchtag/:tag{"tag":"hongkongfood"}
+info [Sun Sep 20 2020 06:20:10 GMT+0800 (Hong Kong Standard Time)]  get/searchtag/:tag{"tag":"hongkongfoodie"}
+info [Sun Sep 20 2020 06:21:10 GMT+0800 (Hong Kong Standard Time)]  get/searchtag/:tag{"tag":"hongkongfoodie"}
+info [Sun Sep 20 2020 06:27:03 GMT+0800 (Hong Kong Standard Time)]  get/searchtag/:tag{"tag":"developer"}
+error [Sun Sep 20 2020 06:27:14 GMT+0800 (Hong Kong Standard Time)]  IgNetworkError [RequestError]: Error: getaddrinfo ENOTFOUND i.instagram.com
+    at Request.faultTolerantRequest (C:\Users\harry\Documents\venbot-v2\backend\node_modules\instagram-private-api\dist\core\request.js:132:19) {
+  cause: Error: getaddrinfo ENOTFOUND i.instagram.com
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:66:26) {
+    errno: 'ENOTFOUND',
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'i.instagram.com'
+  },
+  error: Error: getaddrinfo ENOTFOUND i.instagram.com
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:66:26) {
+    errno: 'ENOTFOUND',
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'i.instagram.com'
+  },
+  options: {
+    url: '/api/v1/tags/developer/sections/',
+    method: 'POST',
+    form: {
+      _csrftoken: 'beluflbtWIhTUNq0dSGX3IBsRdMv3Rvc',
+      tab: 'top',
+      _uuid: 'f6d15084-4a24-56fb-b540-6c643d23586f',
+      session_id: '2c54e95f-94c1-5305-a2cd-fc763b0fa7e6',
+      page: undefined,
+      next_media_ids: undefined,
+      max_id: undefined
+    },
+    baseUrl: 'https://i.instagram.com/',
+    resolveWithFullResponse: true,
+    simple: false,
+    transform: [Function: requestTransform],
+    jar: RequestJar {
+      _jar: CookieJar {
+        rejectPublicSuffixes: true,
+        store: { idx: {
+          'instagram.com': {
+            '/': {
+              csrftoken: Cookie="csrftoken=beluflbtWIhTUNq0dSGX3IBsRdMv3Rvc; Expires=Sat, 18 Sep 2021 22:21:20 GMT; Max-Age=31449600; Domain=instagram.com; Path=/; Secure; hostOnly=false; aAge=11122ms; cAge=6372467ms",
+              mid: Cookie="mid=X2Zs3gABAAEuyyq-WoW8B_6p1iLy; Expires=Tue, 17 Sep 2030 20:41:02 GMT; Max-Age=315360000; Domain=instagram.com; Path=/; Secure; hostOnly=false; aAge=11122ms; cAge=6372463ms",
+              ds_user: Cookie="ds_user=laujerry12; Expires=Fri, 18 Dec 2020 20:41:06 GMT; Max-Age=7776000; Domain=instagram.com; Path=/; Secure; HttpOnly; hostOnly=false; aAge=11123ms; cAge=6368367ms",
+              rur: Cookie="rur=PRN; Domain=instagram.com; Path=/; Secure; HttpOnly; hostOnly=false; aAge=11123ms; cAge=6368364ms",
+              ds_user_id: Cookie="ds_user_id=41327553721; Expires=Fri, 18 Dec 2020 22:21:20 GMT; Max-Age=7776000; Domain=instagram.com; Path=/; Secure; hostOnly=false; aAge=11123ms; cAge=6368363ms",
+              sessionid: Cookie="sessionid=41327553721%3Aq0KDYJvr4Hs2pR%3A14; Expires=Sun, 19 Sep 2021 20:41:06 GMT; Max-Age=31536000; Domain=instagram.com; Path=/; Secure; HttpOnly; hostOnly=false; aAge=11123ms; cAge=6368362ms",
+              shbid: Cookie="shbid=6906; Expires=Sat, 26 Sep 2020 20:41:06 GMT; Max-Age=604800; Domain=instagram.com; Path=/; Secure; HttpOnly; hostOnly=false; aAge=11123ms; cAge=6367925ms",
+              shbts: Cookie="shbts=1600548066.7154555; Expires=Sat, 26 Sep 2020 20:41:06 GMT; Max-Age=604800; Domain=instagram.com; Path=/; Secure; HttpOnly; hostOnly=false; aAge=11123ms; cAge=6367923ms",
+              urlgen: Cookie="urlgen="{\"92.40.185.110\": 206067\054 \"92.40.185.113\": 206067}:1kJlEO:SQfkWMC_t4ZArPUz7DjQJP-stEk"; Domain=instagram.com; Path=/; Secure; HttpOnly; hostOnly=false; aAge=11123ms; cAge=6361186ms"
+            }
+          }
+        } }
+      }
+    },
+    strictSSL: false,
+    gzip: true,
+    headers: {
+      'User-Agent': 'Instagram 121.0.0.29.119 Android (26/8.0.0; 480dpi; 1080x2032; HUAWEI/HONOR; LLD-L31; HWLLD-H; hi6250; en_US; 185203708)',
+      'X-Ads-Opt-Out': '0',
+      'X-CM-Bandwidth-KBPS': '-1.000',
+      'X-CM-Latency': '-1.000',
+      'X-IG-App-Locale': 'en_US',
+      'X-IG-Device-Locale': 'en_US',
+      'X-Pigeon-Session-Id': '79f3d0a3-b593-5f45-a6c9-84c0e42ad540',
+      'X-Pigeon-Rawclienttime': '1600554423.421',
+      'X-IG-Connection-Speed': '2849kbps',
+      'X-IG-Bandwidth-Speed-KBPS': '-1.000',
+      'X-IG-Bandwidth-TotalBytes-B': '0',
+      'X-IG-Bandwidth-TotalTime-MS': '0',
+      'X-IG-EU-DC-ENABLED': undefined,
+      'X-IG-Extended-CDN-Thumbnail-Cache-Busting-Value': '1000',
+      'X-Bloks-Version-Id': '1b030ce63a06c25f3e4de6aaaf6802fe1e76401bc5ab6e5fb85ed6c2d333e0c7',
+      'X-MID': 'X2Zs3gABAAEuyyq-WoW8B_6p1iLy',
+      'X-IG-WWW-Claim': 'hmac.AR0iFEOPNRfcFRDa9AjDpLT1C8-nSSIbNMO53Uiy06x1Sbv0',
+      'X-Bloks-Is-Layout-RTL': 'false',
+      'X-IG-Connection-Type': 'WIFI',
+      'X-IG-Capabilities': '3brTvwE=',
+      'X-IG-App-ID': '567067343352427',
+      'X-IG-Device-ID': 'f6d15084-4a24-56fb-b540-6c643d23586f',
+      'X-IG-Android-ID': 'android-ef0b69bb449c875a',
+      'Accept-Language': 'en-US',
+      'X-FB-HTTP-Engine': 'Liger',
+      Authorization: undefined,
+      Host: 'i.instagram.com',
+      'Accept-Encoding': 'gzip',
+      Connection: 'close'
+    },
+    callback: [Function: RP$callback],
+    transform2xxOnly: false
+  },
+  response: undefined
+}
+info [Sun Sep 20 2020 06:28:00 GMT+0800 (Hong Kong Standard Time)]  get/searchtag/:tag{"tag":"hongkong"}
+info [Sun Sep 20 2020 06:28:26 GMT+0800 (Hong Kong Standard Time)]  get/searchtag/:tag{"tag":"hongkong"}
+info [Sun Sep 20 2020 06:30:00 GMT+0800 (Hong Kong Standard Time)]  get/searchtag/:tag/:postnum{"tag":"hongkong","postnum":"0"}
+
+info [Sun Sep 20 2020 06:30:50 GMT+0800 (Hong Kong Standard Time)]  get/searchtag/:tag{"tag":"hongkongcoding"}
+info [Sun Sep 20 2020 06:30:55 GMT+0800 (Hong Kong Standard Time)]  get/searchtag/:tag{"tag":"hkcoding"}
+error [Sun Sep 20 2020 06:30:56 GMT+0800 (Hong Kong Standard Time)]  ReferenceError: searchurl is not defined
+    at C:\Users\harry\Documents\venbot-v2\backend\index.js:99:36
+    at Array.map (<anonymous>)
+    at C:\Users\harry\Documents\venbot-v2\backend\index.js:80:38
+    at Object.gethashtagposts (C:\Users\harry\Documents\venbot-v2\backend\src\igtools.js:157:9)
+    at async C:\Users\harry\Documents\venbot-v2\backend\index.js:79:13
+info [Sun Sep 20 2020 06:31:11 GMT+0800 (Hong Kong Standard Time)]  get/searchtag/:tag{"tag":"coder"}
+error [Sun Sep 20 2020 06:31:13 GMT+0800 (Hong Kong Standard Time)]  ReferenceError: searchurl is not defined
+    at C:\Users\harry\Documents\venbot-v2\backend\index.js:99:36
+    at Array.map (<anonymous>)
+    at C:\Users\harry\Documents\venbot-v2\backend\index.js:80:38
+    at Object.gethashtagposts (C:\Users\harry\Documents\venbot-v2\backend\src\igtools.js:157:9)
+    at async C:\Users\harry\Documents\venbot-v2\backend\index.js:79:13
+
+
+info [Sun Sep 20 2020 06:33:40 GMT+0800 (Hong Kong Standard Time)]  get/searchtag/:tag{"tag":"hkcoder"}
+error [Sun Sep 20 2020 06:33:40 GMT+0800 (Hong Kong Standard Time)]  TypeError: Cannot read property 'feed' of undefined
+    at topHashtagList (C:\Users\harry\Documents\venbot-v2\backend\node_modules\tools-for-instagram\src\topHashtagList.js:2:25)
+    at Object.gethashtagposts (C:\Users\harry\Documents\venbot-v2\backend\src\igtools.js:155:27)
+    at C:\Users\harry\Documents\venbot-v2\backend\index.js:79:30
+    at Layer.handle [as handle_request] (C:\Users\harry\Documents\venbot-v2\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\harry\Documents\venbot-v2\backend\node_modules\express\lib\router\route.js:137:13)
+    at Route.dispatch (C:\Users\harry\Documents\venbot-v2\backend\node_modules\express\lib\router\route.js:112:3)
+    at Layer.handle [as handle_request] (C:\Users\harry\Documents\venbot-v2\backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\harry\Documents\venbot-v2\backend\node_modules\express\lib\router\index.js:281:22
+    at param (C:\Users\harry\Documents\venbot-v2\backend\node_modules\express\lib\router\index.js:354:14)
+    at param (C:\Users\harry\Documents\venbot-v2\backend\node_modules\express\lib\router\index.js:365:14)
+    at Function.process_params (C:\Users\harry\Documents\venbot-v2\backend\node_modules\express\lib\router\index.js:410:3)
+    at next (C:\Users\harry\Documents\venbot-v2\backend\node_modules\express\lib\router\index.js:275:10)
+    at SendStream.error (C:\Users\harry\Documents\venbot-v2\backend\node_modules\serve-static\index.js:121:7)
+    at SendStream.emit (events.js:315:20)
+    at SendStream.EventEmitter.emit (domain.js:483:12)
+    at SendStream.error (C:\Users\harry\Documents\venbot-v2\backend\node_modules\send\index.js:270:17)
+    at SendStream.onStatError (C:\Users\harry\Documents\venbot-v2\backend\node_modules\send\index.js:421:12)
+    at next (C:\Users\harry\Documents\venbot-v2\backend\node_modules\send\index.js:735:16)
+    at onstat (C:\Users\harry\Documents\venbot-v2\backend\node_modules\send\index.js:724:14)
+    at FSReqCallback.oncomplete (fs.js:168:21)
+
+info [Sun Sep 20 2020 06:34:16 GMT+0800 (Hong Kong Standard Time)]  get/searchtag/:tag{"tag":"hkcoder"}
+error [Sun Sep 20 2020 06:34:17 GMT+0800 (Hong Kong Standard Time)]  ReferenceError: searchurl is not defined
+    at C:\Users\harry\Documents\venbot-v2\backend\index.js:99:36
+    at Array.map (<anonymous>)
+    at C:\Users\harry\Documents\venbot-v2\backend\index.js:80:38
+    at Object.gethashtagposts (C:\Users\harry\Documents\venbot-v2\backend\src\igtools.js:157:9)
+    at async C:\Users\harry\Documents\venbot-v2\backend\index.js:79:13
+
+info [Sun Sep 20 2020 06:35:22 GMT+0800 (Hong Kong Standard Time)]  get/searchtag/:tag{"tag":"hkcoder"}
+info [Sun Sep 20 2020 06:36:00 GMT+0800 (Hong Kong Standard Time)]  get/searchtag/:tag/:postnum{"tag":"hkcoder","postnum":"8"}

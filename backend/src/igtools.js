@@ -151,6 +151,12 @@ try {
         callback(likers)
     }
 
+    async function gethashtagposts(ig, tag, callback) {
+        let posts = await topHashtagList(ig, tag);
+
+        callback(posts)
+    }
+
     exports.getcls = getcls
     exports.getpost = getpost
     exports.follow = myfollow
@@ -158,7 +164,7 @@ try {
     exports.login = mylogin
     exports.antiban = myantiban
     exports.gethashtaglikers = gethashtaglikers
-
+    exports.gethashtagposts = gethashtagposts
     exports.getalllogin = getalllogin
     exports.setalllogin = setalllogin
     exports.checkallloginuserexist = checkallloginuserexist
