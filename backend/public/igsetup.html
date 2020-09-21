@@ -16,7 +16,7 @@
     <link rel="stylesheet" type="text/css" href="assets/css/forms/theme-checkbox-radio.css">
     <link rel="stylesheet" type="text/css" href="assets/css/forms/switches.css">
     <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-app.js"></script>
-
+    <link href="plugins/notification/snackbar/snackbar.min.css" rel="stylesheet" type="text/css" />
     <!-- TODO: Add SDKs for Firebase products that you want to use
        https://firebase.google.com/docs/web/setup#available-libraries -->
 
@@ -86,8 +86,11 @@
                                 <br><br>
                                 <div class="d-sm-flex justify-content-between">
                                     <div class="field-wrapper">
-                                        <button onclick="updateuser()" class="btn btn-primary" value="">Connect</button>
+                                        <button onclick="updateuser(this)" class="btn btn-primary snackbar-bg-warning"
+                                            value="">Connect</button>
                                     </div>
+
+
                                 </div>
 
                             </div>
@@ -110,14 +113,26 @@
     <script src="assets/js/libs/jquery-3.1.1.min.js"></script>
     <script src="bootstrap/js/popper.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
-
+    <script src="plugins/notification/snackbar/snackbar.min.js"></script>
+    <script src="assets/js/components/notification/custom-snackbar.js"></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
     <script src="assets/js/authentication/form-1.js"></script>
+    <script>
 
+    </script>
     <script>
         document.getElementsByTagName("form")[0].addEventListener("submit", function (event) {
             event.preventDefault()
         });
+
+        $('.snackbar-bg-warning').click(function () {
+            Snackbar.show({
+                text: 'Please Wait',
+                actionTextColor: '#fff',
+                backgroundColor: '#000'
+            });
+        });
+
 
         firebase.auth().onAuthStateChanged(function (user) {
             if (user) {
@@ -139,7 +154,9 @@
             }
         });
 
-        function updateuser() {
+        function updateuser(mybutton) {
+            mybutton.disabled = true
+
             var user = firebase.auth().currentUser;
             var igusername = document.getElementById('username').value
             var igpassword = document.getElementById('password').value
@@ -163,9 +180,48 @@
 
                 xhr.addEventListener("readystatechange", function () {
                     if (this.readyState === 4) {
-                        console.log(this.responseText);
-                        console.log('ok')
-                        window.location.href = "posts?userid=" + igusername
+                        // console.log(this.responseText);
+                        if (this.responseText == 'ok') {
+                            //login success
+                            console.log('login success')
+                            window.location.href = "searchtag"
+                        } else if (this.responseText == "error") {
+                            //login error
+                            console.log('server error')
+                            // Snackbar.show({
+                            //     text: 'Please Wait',
+                            //     duration: 5000,
+                            // });
+                            Snackbar.show({
+                                text: 'Login Fail',
+                                actionTextColor: '#fff',
+                                backgroundColor: '#e2a03f'
+                            });
+                            mybutton.disabled = false
+                        } else if (JSON.parse(this.responseText).error) {
+                            //login error
+                            console.log('login error')
+                            // Snackbar.show({
+                            //     text: 'Please Wait',
+                            //     duration: 5000,
+                            // });
+                            Snackbar.show({
+                                text: 'Login Fail',
+                                actionTextColor: '#fff',
+                                backgroundColor: '#e2a03f'
+                            });
+                            mybutton.disabled = false
+                        } else {
+                            console.log('error')
+                            Snackbar.show({
+                                text: 'Login Fail',
+                                actionTextColor: '#fff',
+                                backgroundColor: '#e2a03f'
+                            });
+                            mybutton.disabled = false
+                        }
+                        // console.log('ok')
+                        // window.location.href = "posts?userid=" + igusername
                     }
                 });
 

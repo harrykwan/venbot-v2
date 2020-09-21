@@ -9,6 +9,7 @@ try {
     const fs = require('fs');
     const localjson = require('./src/localjson')
     const followUser = require('tools-for-instagram/src/followUser');
+    const getFollowers = require('tools-for-instagram/src/getFollowers');
     const setAntiBanMode = require('tools-for-instagram/src/setAntiBanMode');
     const logger = require('logger').createLogger('first_stage_testing.log');
 
@@ -25,7 +26,8 @@ try {
 
 
     try {
-
+        //log ip
+        // request.connection.remoteAddress
         (async () => {
             //clear cookies
             rimraf("./cookies", async function () {
@@ -98,30 +100,38 @@ try {
             console.log(myusername)
             console.log(mypassword)
             console.log(decrypted)
-            if (!igtoolsapi.checkallloginuserexist(myusername)) {
-                console.log('login')
-                const tempigac = await login({
-                    inputLogin: myusername,
-                    inputPassword: decrypted,
-                    inputProxy: false,
-                });;
-                // alllogin[myusername] = tempigac
-                igtoolsapi.setalllogin(myusername, tempigac)
-                awsapi.createitem('iguser', {
-                    username: myusername,
-                    password: mypassword
-                }, undefined, undefined, function (data) {
-                    // loginfromaws(myusername)
-                    console.log('saved to aws')
-                })
-                // await setAntiBanMode(tempigac)
-                // await setAntiBanMode(tempigac)
-            }
+            rimraf("./cookies/" + myusername + '.json', async function () {
+                try {
+                    const tempigac = await login({
+                        inputLogin: myusername,
+                        inputPassword: decrypted,
+                        inputProxy: false,
+                    });;
+                    // alllogin[myusername] = tempigac
+                    igtoolsapi.setalllogin(myusername, tempigac)
+                    awsapi.createitem('iguser', {
+                        username: myusername,
+                        password: mypassword
+                    }, undefined, undefined, function (data) {
+                        // loginfromaws(myusername)
+                        console.log('saved to aws')
+                    })
+                    res.send('ok')
+                } catch (e) {
+                    logger.error(e)
+                    console.log(e)
+                    res.send(e)
+                }
+
+
+            });
+
             // alllogin[myusername] = tempigac
 
-            res.send('ok')
+
         } catch (e) {
             logger.error(e)
+            res.send(e)
         }
     })
 
@@ -321,26 +331,29 @@ try {
 
     app.post('/getfollower', async (req, res) => {
         try {
+            logger.info('get/getfollower' + JSON.stringify(req.body))
             var myusername = req.body.username;
             // var mypassword = req.body.password;
             // var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
             // if (!alllogin.hasOwnProperty(myusername)) {
-            if (!igtoolsapi.checkallloginuserexist(myusername)) {
-                await loginfromaws(myusername)
-                // const tempigac = await login({
-                //     inputLogin: myusername,
-                //     inputPassword: mypassword,
-                //     inputProxy: false,
-                // });
-                // igtoolsapi.setalllogin(myusername, tempigac)
-                // // alllogin[myusername] = tempigac
-                // // await setAntiBanMode(tempigac)
-            }
-            await getFollowers(igtoolsapi.getalllogin(myusername), myusername);
+            // if (!igtoolsapi.checkallloginuserexist(myusername)) {
+            //     await loginfromaws(myusername)
+            //     // const tempigac = await login({
+            //     //     inputLogin: myusername,
+            //     //     inputPassword: mypassword,
+            //     //     inputProxy: false,
+            //     // });
+            //     // igtoolsapi.setalllogin(myusername, tempigac)
+            //     // // alllogin[myusername] = tempigac
+            //     // // await setAntiBanMode(tempigac)
+            // }
+            await getFollowers(igtoolsapi.getalllogin("default"), myusername);
             let followers = await readFollowers(igtoolsapi.getalllogin(myusername), myusername);
             let followerslist = followers.map(x => x.username)
             res.send(followerslist)
         } catch (e) {
+            console.log(e)
+            logger.error(e)
             res.send(e)
         }
     })
@@ -439,7 +452,7 @@ try {
             })
         } catch (e) {
             // console.log(e)
-            res.send(e)
+            res.send('error')
             logger.error(e)
         }
     })

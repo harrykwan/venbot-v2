@@ -542,28 +542,51 @@
 
             xhr.addEventListener("readystatechange", function () {
                 if (this.readyState === 4) {
+                    var data = JSON.stringify({
+                        "username": nowid
+                    });
+
+                    var xhr = new XMLHttpRequest();
+                    xhr.withCredentials = true;
+
+                    xhr.addEventListener("readystatechange", function () {
+                        if (this.readyState === 4) {
+                            // console.log(this.responseText);
+                            const myfollower = JSON.parse(this.responseText)
+                            var mydata = []
+                            // console.log(myfollower, myresult)
+                            for (var x in myresult) {
+                                if (mydata.length < 100) {
+                                    if (!myfollower.includes(myresult[x].username)) {
+                                        mydata.push({
+                                            username: myresult[x].username,
+                                            fullname: myresult[x].full_name,
+                                            propic: myresult[x].profile_pic_url,
+                                            private: myresult[x].is_private,
+                                            type: "L"
+                                        })
+                                        nowdata.push(myresult[x].username)
+                                    }
+
+                                }
+
+                            }
+                            console.log(mydata)
+                            document.getElementById('dataarea').innerHTML = gendataarea(mydata)
+                            App.init();
+                            gentype2table()
+                            document.getElementById('loading').hidden = true
+                        }
+                    });
+
+                    xhr.open("POST", "getfollower");
+                    xhr.setRequestHeader("Content-Type", "application/json");
+
+                    xhr.send(data);
                     // console.log(this.responseText);
                     let myresult = JSON.parse(this.responseText)
                     // console.log(myresult)
-                    var mydata = []
-                    for (var x in myresult) {
-                        if (mydata.length < 100) {
-                            mydata.push({
-                                username: myresult[x].username,
-                                fullname: myresult[x].full_name,
-                                propic: myresult[x].profile_pic_url,
-                                private: myresult[x].is_private,
-                                type: "L"
-                            })
-                            nowdata.push(myresult[x].username)
-                        }
 
-                    }
-                    console.log(mydata)
-                    document.getElementById('dataarea').innerHTML = gendataarea(mydata)
-                    App.init();
-                    gentype2table()
-                    document.getElementById('loading').hidden = true
                 }
             });
 
