@@ -247,7 +247,13 @@
             const likect = x.like_count
             const postusername = x.user.username
             const postuserfullname = x.user.full_name
-            const caption = x.caption.text || ''
+            let caption
+            if (x.caption) {
+              caption = x.caption.text
+            } else {
+              caption = ''
+            }
+            // const caption = x.caption.text || ''
             let img
             if (x.image_versions2) {
               img = x.image_versions2.candidates[0].url

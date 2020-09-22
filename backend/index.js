@@ -106,6 +106,7 @@ try {
                         inputLogin: myusername,
                         inputPassword: decrypted,
                         inputProxy: false,
+                        verificationMode: 2
                     });;
                     // alllogin[myusername] = tempigac
                     igtoolsapi.setalllogin(myusername, tempigac)
@@ -145,6 +146,7 @@ try {
                     inputLogin: username,
                     inputPassword: decrypted,
                     inputProxy: false,
+                    verificationMode: 2
                 });;
                 // alllogin[myusername] = tempigac
                 igtoolsapi.setalllogin(username, tempigac)
