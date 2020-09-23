@@ -79,7 +79,7 @@
                                         <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                                         <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                                     </svg>
-                                    <input id="password" name="password" type="text" value=""
+                                    <input id="password" name="password" type="password" value=""
                                         placeholder="Instagram password">
                                 </div>
 
@@ -88,6 +88,31 @@
                                     <div class="field-wrapper">
                                         <button onclick="updateuser(this)" class="btn btn-primary snackbar-bg-warning"
                                             value="">Connect</button>
+                                    </div>
+
+
+                                </div>
+
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+
+                                <div id="password-field" class="field-wrapper input">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="feather feather-lock">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                    </svg>
+                                    <input id="verifycode" type="text" value="" placeholder="Verify Code">
+                                </div>
+
+                                <div class="d-sm-flex justify-content-between">
+                                    <div class="field-wrapper">
+                                        <button onclick="verifyigclick()" class="btn btn-primary snackbar-bg-warning"
+                                            value="">Verify</button>
                                     </div>
 
 
@@ -185,32 +210,6 @@
                             //login success
                             console.log('login success')
                             window.location.href = "searchtag"
-                        } else if (this.responseText == "error") {
-                            //login error
-                            console.log('server error')
-                            // Snackbar.show({
-                            //     text: 'Please Wait',
-                            //     duration: 5000,
-                            // });
-                            Snackbar.show({
-                                text: 'Login Fail',
-                                actionTextColor: '#fff',
-                                backgroundColor: '#e2a03f'
-                            });
-                            mybutton.disabled = false
-                        } else if (JSON.parse(this.responseText).error) {
-                            //login error
-                            console.log('login error')
-                            // Snackbar.show({
-                            //     text: 'Please Wait',
-                            //     duration: 5000,
-                            // });
-                            Snackbar.show({
-                                text: 'Login Fail',
-                                actionTextColor: '#fff',
-                                backgroundColor: '#e2a03f'
-                            });
-                            mybutton.disabled = false
                         } else {
                             console.log('error')
                             Snackbar.show({
@@ -235,6 +234,45 @@
                 console.log(error)
                 alert('error')
             });
+        }
+
+        function verifyigclick() {
+            var igusername = document.getElementById('username').value
+            var mycode = document.getElementById("verifycode").value
+            verifyig(igusername, mycode)
+        }
+
+        function verifyig(username, code) {
+            var data = JSON.stringify({
+                "username": username,
+                "code": code
+            });
+
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+
+            xhr.addEventListener("readystatechange", function () {
+                if (this.readyState === 4) {
+                    if (this.responseText == 'ok') {
+                        //login success
+                        console.log('login success')
+                        window.location.href = "searchtag"
+                    } else {
+                        console.log('error')
+                        Snackbar.show({
+                            text: 'Verify Fail',
+                            actionTextColor: '#fff',
+                            backgroundColor: '#e2a03f'
+                        });
+                        // mybutton.disabled = false
+                    }
+                }
+            });
+
+            xhr.open("POST", "verifyig");
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            xhr.send(data);
         }
     </script>
 

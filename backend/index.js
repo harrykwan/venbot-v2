@@ -106,7 +106,7 @@ try {
                         inputLogin: myusername,
                         inputPassword: decrypted,
                         inputProxy: false,
-                        verificationMode: 2
+                        // verificationMode: 2
                     });;
                     // alllogin[myusername] = tempigac
                     igtoolsapi.setalllogin(myusername, tempigac)
@@ -136,6 +136,24 @@ try {
         }
     })
 
+
+    app.post('/verifyig', async (req, res) => {
+        try {
+            console.log('verifying!')
+            logger.info('post/verify' + JSON.stringify(req.body))
+            var myusername = req.body.username;
+            var mycode = req.body.code;
+            // var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
+            await igtoolsapi.enterverifycode(myusername, mycode)
+            res.send('ok')
+            console.log('ok')
+        } catch (e) {
+            logger.error(e)
+            res.send('error')
+            console.log('not ok')
+        }
+    })
+
     function loginfromaws(username) {
         logger.info('loginfromaws ' + username)
         const temppromise = new Promise(function (resolve, reject) {
@@ -146,7 +164,7 @@ try {
                     inputLogin: username,
                     inputPassword: decrypted,
                     inputProxy: false,
-                    verificationMode: 2
+                    // verificationMode: 2
                 });;
                 // alllogin[myusername] = tempigac
                 igtoolsapi.setalllogin(username, tempigac)

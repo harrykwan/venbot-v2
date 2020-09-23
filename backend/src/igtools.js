@@ -86,6 +86,11 @@ try {
 
     }
 
+    async function enterverifycode(key, code) {
+        const tempig = alllogin[key];
+        return await tempig.challenge.sendSecurityCode(code);
+    }
+
     async function myantiban(ig) {
         return await setAntiBanMode(ig)
     }
@@ -169,6 +174,7 @@ try {
     exports.setalllogin = setalllogin
     exports.checkallloginuserexist = checkallloginuserexist
     exports.timeout = timeout
+    exports.enterverifycode = enterverifycode
 } catch (e) {
     console.log(e)
 }
