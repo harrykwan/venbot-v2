@@ -88,6 +88,7 @@ try {
 
     async function enterverifycode(key, code) {
         const tempig = alllogin[key];
+        console.log(tempig.challenge.sendSecurityCode)
         return await tempig.challenge.sendSecurityCode(code);
     }
 

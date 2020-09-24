@@ -210,6 +210,10 @@
                             //login success
                             console.log('login success')
                             window.location.href = "searchtag"
+                        } else if (this.responseText == "verify") {
+                            console.log('need verify')
+                            alert('Accout need verify')
+                            sendverifycode(igusername, 'auto')
                         } else {
                             console.log('error')
                             Snackbar.show({
@@ -219,6 +223,7 @@
                             });
                             mybutton.disabled = false
                         }
+
                         // console.log('ok')
                         // window.location.href = "posts?userid=" + igusername
                     }
@@ -257,6 +262,18 @@
                         //login success
                         console.log('login success')
                         window.location.href = "searchtag"
+                    } else if (this.responseText == 'rightcode') {
+                        //login success
+                        console.log('right code')
+                        // window.location.href = "searchtag"
+                    } else if (this.responseText == "wrongcode") {
+                        // alert('wrong code')
+                        console.log('wrong code')
+                        Snackbar.show({
+                            text: 'Verify Fail',
+                            actionTextColor: '#fff',
+                            backgroundColor: '#e2a03f'
+                        });
                     } else {
                         console.log('error')
                         Snackbar.show({
@@ -266,6 +283,28 @@
                         });
                         // mybutton.disabled = false
                     }
+                }
+            });
+
+            xhr.open("POST", "verifyig");
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            xhr.send(data);
+        }
+
+        function sendverifycode(username, mode) {
+            var data = JSON.stringify({
+                "username": username,
+                "mode": mode
+            });
+
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+
+            xhr.addEventListener("readystatechange", function () {
+                if (this.readyState === 4) {
+                    console.log(this.responseText);
+
                 }
             });
 

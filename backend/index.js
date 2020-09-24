@@ -12,6 +12,9 @@ try {
     const getFollowers = require('tools-for-instagram/src/getFollowers');
     const setAntiBanMode = require('tools-for-instagram/src/setAntiBanMode');
     const logger = require('logger').createLogger('first_stage_testing.log');
+    const login_custom = require('./src/login_custom')
+
+    let tempigaclist = {}
 
     require('./src/schedule')
     require('dotenv').config();
@@ -35,6 +38,7 @@ try {
                     const defaultig = await login(logincred);
                     // await setAntiBanMode(defaultig);
                     igtoolsapi.setalllogin('default', defaultig) // alllogin.default = defaultig
+
                 } catch (e) {
                     console.log(e)
                 }
@@ -102,7 +106,13 @@ try {
             console.log(decrypted)
             rimraf("./cookies/" + myusername + '.json', async function () {
                 try {
-                    const tempigac = await login({
+                    // const tempigac = await login({
+
+                    login_custom.setsendcodecallback(function (ig) {
+                        tempigaclist[myusername] = ig
+                        res.send('verify')
+                    })
+                    const tempigac = await login_custom.login({
                         inputLogin: myusername,
                         inputPassword: decrypted,
                         inputProxy: false,
@@ -138,21 +148,55 @@ try {
 
 
     app.post('/verifyig', async (req, res) => {
-        try {
-            console.log('verifying!')
-            logger.info('post/verify' + JSON.stringify(req.body))
-            var myusername = req.body.username;
-            var mycode = req.body.code;
-            // var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
-            await igtoolsapi.enterverifycode(myusername, mycode)
-            res.send('ok')
-            console.log('ok')
-        } catch (e) {
-            logger.error(e)
-            res.send('error')
-            console.log('not ok')
-        }
+        // try {
+        console.log('verifying!')
+        logger.info('post/verifyig' + JSON.stringify(req.body))
+        var myusername = req.body.username;
+        var mycode = req.body.code;
+        // var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
+
+        // await igtoolsapi.enterverifycode(myusername, mycode)
+        // res.send('ok')
+        // console.log('ok')
+        login_custom.setwrongcodecallback(function () {
+            console.log('wrong code')
+            res.send('wrongcode')
+        })
+        login_custom.setrightcodecallback(function () {
+            console.log('rightcode')
+            res.send('rightcode')
+        })
+        login_custom.inputcode(tempigaclist[myusername], mycode)
+        // } catch (e) {
+        //     logger.error(e)
+        //     res.send('error')
+        //     console.log('not ok')
+        // }
+
     })
+
+    app.post('/sendverifycode', async (req, res) => {
+        // try {
+        console.log('send verify code!')
+        logger.info('post/sendverifycode' + JSON.stringify(req.body))
+        var myusername = req.body.username;
+        var mymode = req.body.mode
+        // var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
+
+        // await igtoolsapi.enterverifycode(myusername, mycode)
+        // res.send('ok')
+        // console.log('ok')
+
+        login_custom.sendcode(tempigaclist[myusername], mymode)
+        // } catch (e) {
+        //     logger.error(e)
+        //     res.send('error')
+        //     console.log('not ok')
+        // }
+    })
+
+
+
 
     function loginfromaws(username) {
         logger.info('loginfromaws ' + username)
