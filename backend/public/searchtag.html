@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-  <title>CORK Admin Template - Helpdesk Landing Page</title>
+  <title>Venbot</title>
   <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
   <!-- BEGIN GLOBAL MANDATORY STYLES -->
   <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
@@ -31,7 +31,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="pages_contact_us.html">Contact Us</a>
+            <!-- <a class="nav-link" href="pages_contact_us.html">Contact Us</a> -->
           </li>
         </ul>
       </div>
@@ -215,86 +215,81 @@
           <div class="row">
             <div
               class="col-lg-5 mx-auto col-lg-6 col-md-6 site-content-inner text-md-left text-center copyright align-self-center">
-              <p class="mt-md-0 mt-4 mb-0">2020 &copy; <a target="_blank" href="https://designreset.com/cork">Design
-                  Reset</a>.</p>
-            </div>
-            <div
-              class="col-xl-5 mx-auto col-lg-6 col-md-6 site-content-inner text-md-right text-center align-self-center">
-              <p class="mb-0">1355 Market Street, Suit 900 San Francisco, CA 94103</p>
+              <p class="mt-md-0 mt-4 mb-0">2020 &copy; Venbot
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <script>
-    document.getElementById('searchtaginput').onchange = function () {
-      const searchurl = "searchresult?tag=" + this.value + "&postnum="
-      console.log(searchurl)
-      // window.location.href = "searchresult?tag=" + this.value + "&postnum=0"
-      loadingstart()
-      var xhr = new XMLHttpRequest();
-      xhr.withCredentials = true;
+    <script>
+      document.getElementById('searchtaginput').onchange = function () {
+        const searchurl = "searchresult?tag=" + this.value + "&postnum="
+        console.log(searchurl)
+        // window.location.href = "searchresult?tag=" + this.value + "&postnum=0"
+        loadingstart()
+        var xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
 
-      xhr.addEventListener("readystatechange", function () {
+        xhr.addEventListener("readystatechange", function () {
 
-        if (this.readyState === 4) {
-          // console.log(this.responseText);
-          var resultdata = JSON.parse(this.responseText)
-          const newdata = resultdata.map((x, index) => {
-            // console.log(x)
-            const likect = x.like_count
-            const postusername = x.user.username
-            const postuserfullname = x.user.full_name
-            let caption
-            if (x.caption) {
-              caption = x.caption.text
-            } else {
-              caption = ''
-            }
-            // const caption = x.caption.text || ''
-            let img
-            if (x.image_versions2) {
-              img = x.image_versions2.candidates[0].url
-            } else {
-              img = x.carousel_media[0].image_versions2.candidates[
-                1].url
-            }
-            const tempdata = {
-              likect: likect,
-              postuserfullname: postuserfullname,
-              postusername: postusername,
-              caption: caption,
-              img: img,
-              searchurl: searchurl + index
-            }
-            return tempdata
-            // const img = x.image_versions2.candidates[0].url || x.carousel_media[0].image_versions2.candidates[
-            // 0].url
-            // console.log(likect, postuserfullname, postusername, caption, img)
-          })
-          console.log(newdata)
-          gentophashbody(newdata)
-        }
-      });
+          if (this.readyState === 4) {
+            // console.log(this.responseText);
+            var resultdata = JSON.parse(this.responseText)
+            const newdata = resultdata.map((x, index) => {
+              // console.log(x)
+              const likect = x.like_count
+              const postusername = x.user.username
+              const postuserfullname = x.user.full_name
+              let caption
+              if (x.caption) {
+                caption = x.caption.text
+              } else {
+                caption = ''
+              }
+              // const caption = x.caption.text || ''
+              let img
+              if (x.image_versions2) {
+                img = x.image_versions2.candidates[0].url
+              } else {
+                img = x.carousel_media[0].image_versions2.candidates[
+                  1].url
+              }
+              const tempdata = {
+                likect: likect,
+                postuserfullname: postuserfullname,
+                postusername: postusername,
+                caption: caption,
+                img: img,
+                searchurl: searchurl + index
+              }
+              return tempdata
+              // const img = x.image_versions2.candidates[0].url || x.carousel_media[0].image_versions2.candidates[
+              // 0].url
+              // console.log(likect, postuserfullname, postusername, caption, img)
+            })
+            console.log(newdata)
+            gentophashbody(newdata)
+          }
+        });
 
-      xhr.open("GET", "searchtagpost/" + this.value);
+        xhr.open("GET", "searchtagpost/" + this.value);
 
-      xhr.send();
-    }
+        xhr.send();
+      }
 
-    function loadingstart() {
-      document.getElementById('tophashbody').innerHTML = `   <div id="loading" class="spinner-grow text-info align-self-center loader-lg">
+      function loadingstart() {
+        document.getElementById('tophashbody').innerHTML = `   <div id="loading" class="spinner-grow text-info align-self-center loader-lg">
                                 </div>`
-    }
+      }
 
-    function loadingstop() {
+      function loadingstop() {
 
-    }
+      }
 
-    function gencardpost(data) {
-      const template = `<div class="card component-card_4 col-md-6" onclick="window.location.href='` + data.searchurl + `'" >
+      function gencardpost(data) {
+        const template = `<div class="card component-card_4 col-md-6" onclick="window.location.href='` + data
+          .searchurl + `'" >
                         <div class="card-body">
                           <div class="user-profile">
                             <img src="` + data.img + `" class="" style="width: 100%" alt="">
@@ -309,28 +304,28 @@
                           </div>
                         </div>
                       </div>`
-      return template
-    }
+        return template
+      }
 
-    function gentophashbody(data) {
-      let temphtml = ''
-      data.map(x => {
-        temphtml += gencardpost(x)
-      })
-      document.getElementById("tophashbody").innerHTML = temphtml
-    }
-  </script>
+      function gentophashbody(data) {
+        let temphtml = ''
+        data.map(x => {
+          temphtml += gencardpost(x)
+        })
+        document.getElementById("tophashbody").innerHTML = temphtml
+      }
+    </script>
 
 
-  <!-- BEGIN GLOBAL MANDATORY STYLES -->
-  <script src="assets/js/libs/jquery-3.1.1.min.js"></script>
-  <script src="bootstrap/js/popper.min.js"></script>
-  <script src="bootstrap/js/bootstrap.min.js"></script>
-  <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <script src="assets/js/libs/jquery-3.1.1.min.js"></script>
+    <script src="bootstrap/js/popper.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <!-- END GLOBAL MANDATORY STYLES -->
 
-  <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
-  <script src="assets/js/pages/helpdesk.js"></script>
-  <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+    <script src="assets/js/pages/helpdesk.js"></script>
+    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 </body>
 
 </html>

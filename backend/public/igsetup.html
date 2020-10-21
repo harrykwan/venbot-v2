@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>CORK Admin Template - Password Recovery Login Page</title>
+    <title>Venbto</title>
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
@@ -258,6 +258,7 @@
 
             xhr.addEventListener("readystatechange", function () {
                 if (this.readyState === 4) {
+                    console.log(this.responseText)
                     if (this.responseText == 'ok') {
                         //login success
                         console.log('login success')
@@ -308,7 +309,7 @@
                 }
             });
 
-            xhr.open("POST", "verifyig");
+            xhr.open("POST", "sendverifycode");
             xhr.setRequestHeader("Content-Type", "application/json");
 
             xhr.send(data);

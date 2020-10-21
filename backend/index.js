@@ -28,6 +28,7 @@ try {
     const app = express()
 
 
+
     try {
         //log ip
         // request.connection.remoteAddress
@@ -39,6 +40,10 @@ try {
                     // await setAntiBanMode(defaultig);
                     igtoolsapi.setalllogin('default', defaultig) // alllogin.default = defaultig
 
+                    const defaultig2 = await login(logincred);
+
+                    console.log(defaultig)
+                    console.log(defaultig2)
                 } catch (e) {
                     console.log(e)
                 }
@@ -158,14 +163,15 @@ try {
         // await igtoolsapi.enterverifycode(myusername, mycode)
         // res.send('ok')
         // console.log('ok')
-        login_custom.setwrongcodecallback(function () {
-            console.log('wrong code')
-            res.send('wrongcode')
-        })
         login_custom.setrightcodecallback(function () {
             console.log('rightcode')
             res.send('rightcode')
         })
+        login_custom.setwrongcodecallback(function () {
+            console.log('wrong code')
+            res.send('wrongcode')
+        })
+
         login_custom.inputcode(tempigaclist[myusername], mycode)
         // } catch (e) {
         //     logger.error(e)
@@ -294,12 +300,22 @@ try {
             //         filename: myusername + '-' + tag + '-' + nowtime
             //     })
             // })
+            awsapi.createitem('followrecord', {
+                recordid: myusername + '-' + nowtime,
+                username: myusername,
+                data: followuserlist
+            }, undefined, undefined, undefined)
+
             res.send('start')
+
             for (var j = 0; j < followuserlist.length; j++) {
                 console.log(myusername + ' following ' + followuserlist[j])
                 await followUser(igtoolsapi.getalllogin(myusername), followuserlist[j], true)
                 await igtoolsapi.timeout(1000)
             }
+
+
+
             followuserlist.map((x, index) => {
                 const tempdayadd = parseInt(index / 100)
                 const tempdate = date.format(date.addDays(now, tempdayadd + 5), 'DD/MM/YYYY');
@@ -307,19 +323,13 @@ try {
                 localjson.pushunfollowtask(tempdate.toString(), myusername.toString(), x.toString())
             })
 
-
-            awsapi.createitem('followrecord', {
-                recordid: myusername + '-' + nowtime,
-                username: myusername,
-                data: followuserlist
-            }, undefined, undefined, undefined)
-
-
+            console.log('follow finish')
 
             // await followUser(igtoolsapi.getalllogin(myusername), followuserid, true)
-            res.send('ok')
+            // res.send('ok')
         } catch (e) {
-            // console.log(e)
+            console.log(e)
+            logger.error(e)
             res.send(e)
         }
     })
