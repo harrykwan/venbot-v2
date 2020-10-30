@@ -1,0 +1,62 @@
+
+info [Wed Oct 21 2020 16:24:44 GMT+0800 (Hong Kong Standard Time)]  post/loginig{"username":"joseph0601_wkh","password":"U2FsdGVkX1+bmFHWEx6r8Zy7jGg0yeeBvvho6CHn6gk="}
+info [Wed Oct 21 2020 16:27:59 GMT+0800 (Hong Kong Standard Time)]  post/loginig{"username":"joseph0601_wkh","password":"U2FsdGVkX1+9nJUSz8t9Yg/nu7y6NhcPMnAlE1DERW0="}
+error [Wed Oct 21 2020 16:28:03 GMT+0800 (Hong Kong Standard Time)]  TypeError: verifyagaincallback is not a function
+    at C:\Users\harry\Documents\venbot-v2\backend\src\login_custom.js:336:9
+    at tryCatcher (C:\Users\harry\Documents\venbot-v2\backend\node_modules\bluebird\js\release\util.js:16:23)
+    at C:\Users\harry\Documents\venbot-v2\backend\node_modules\bluebird\js\release\catch_filter.js:17:41
+    at tryCatcher (C:\Users\harry\Documents\venbot-v2\backend\node_modules\bluebird\js\release\util.js:16:23)
+    at Promise._settlePromiseFromHandler (C:\Users\harry\Documents\venbot-v2\backend\node_modules\bluebird\js\release\promise.js:547:31)
+    at Promise._settlePromise (C:\Users\harry\Documents\venbot-v2\backend\node_modules\bluebird\js\release\promise.js:604:18)
+    at Promise._settlePromise0 (C:\Users\harry\Documents\venbot-v2\backend\node_modules\bluebird\js\release\promise.js:649:10)
+    at Promise._settlePromises (C:\Users\harry\Documents\venbot-v2\backend\node_modules\bluebird\js\release\promise.js:725:18)
+    at _drainQueueStep (C:\Users\harry\Documents\venbot-v2\backend\node_modules\bluebird\js\release\async.js:93:12)
+    at _drainQueue (C:\Users\harry\Documents\venbot-v2\backend\node_modules\bluebird\js\release\async.js:86:9)
+    at Async._drainQueues (C:\Users\harry\Documents\venbot-v2\backend\node_modules\bluebird\js\release\async.js:102:5)
+    at Immediate.Async.drainQueues [as _onImmediate] (C:\Users\harry\Documents\venbot-v2\backend\node_modules\bluebird\js\release\async.js:15:14)
+    at processImmediate (internal/timers.js:456:21)
+
+info [Wed Oct 21 2020 16:31:59 GMT+0800 (Hong Kong Standard Time)]  post/loginig{"username":"joseph0601_wkh","password":"U2FsdGVkX18xn2dNhcmLIve4uMIR9N//bI3TZkzEIQc="}
+error [Wed Oct 21 2020 16:32:02 GMT+0800 (Hong Kong Standard Time)]  TypeError: Cannot set property 'antiBanMode' of undefined
+    at Object.login (C:\Users\harry\Documents\venbot-v2\backend\src\login_custom.js:191:24)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+    at runNextTicks (internal/process/task_queues.js:66:3)
+    at processImmediate (internal/timers.js:429:9)
+    at async C:\Users\harry\Documents\venbot-v2\backend\index.js:120:38
+info [Wed Oct 21 2020 16:32:07 GMT+0800 (Hong Kong Standard Time)]  post/sendverifycode{"username":"joseph0601_wkh","mode":"auto"}
+info [Wed Oct 21 2020 16:32:21 GMT+0800 (Hong Kong Standard Time)]  post/verifyig{"username":"joseph0601_wkh","code":"683564"}
+
+info [Wed Oct 21 2020 16:37:06 GMT+0800 (Hong Kong Standard Time)]  post/loginig{"username":"joseph0601_wkh","password":"U2FsdGVkX1/i8mEfAklq+/UzX++W4v08eApYOpsaaQs="}
+error [Wed Oct 21 2020 16:37:10 GMT+0800 (Hong Kong Standard Time)]  TypeError: Cannot set property 'antiBanMode' of undefined
+    at Object.login (C:\Users\harry\Documents\venbot-v2\backend\src\login_custom.js:191:24)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+    at runNextTicks (internal/process/task_queues.js:66:3)
+    at processImmediate (internal/timers.js:429:9)
+    at async C:\Users\harry\Documents\venbot-v2\backend\index.js:120:38
+info [Wed Oct 21 2020 16:37:11 GMT+0800 (Hong Kong Standard Time)]  post/sendverifycode{"username":"joseph0601_wkh","mode":"auto"}
+info [Wed Oct 21 2020 16:37:31 GMT+0800 (Hong Kong Standard Time)]  post/verifyig{"username":"joseph0601_wkh","code":"683564"}
+info [Wed Oct 21 2020 16:39:11 GMT+0800 (Hong Kong Standard Time)]  post/sendverifycode{"username":"joseph0601_wkh","mode":"auto"}
+
+info [Wed Oct 21 2020 16:42:20 GMT+0800 (Hong Kong Standard Time)]  post/loginig{"username":"joseph0601_wkh","password":"U2FsdGVkX18vkZoWrxYJrK1ClGNKAbrr8OTU55x4A1g="}
+error [Wed Oct 21 2020 16:42:22 GMT+0800 (Hong Kong Standard Time)]  ReferenceError: API is not defined
+    at tryToLogin (C:\Users\harry\Documents\venbot-v2\backend\src\login_custom.js:324:14)
+    at Object.login (C:\Users\harry\Documents\venbot-v2\backend\src\login_custom.js:189:24)
+    at async C:\Users\harry\Documents\venbot-v2\backend\index.js:120:38
+info [Wed Oct 21 2020 16:42:37 GMT+0800 (Hong Kong Standard Time)]  post/verifyig{"username":"joseph0601_wkh","code":"161629"}
+
+info [Wed Oct 21 2020 16:43:21 GMT+0800 (Hong Kong Standard Time)]  post/loginig{"username":"joseph0601_wkh","password":"U2FsdGVkX18fptR/QpvhRH+00Azp/JLH+hHNchjH4jo="}
+error [Wed Oct 21 2020 16:43:26 GMT+0800 (Hong Kong Standard Time)]  TypeError: Cannot set property 'antiBanMode' of undefined
+    at Object.login (C:\Users\harry\Documents\venbot-v2\backend\src\login_custom.js:191:24)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+    at runNextTicks (internal/process/task_queues.js:66:3)
+    at processImmediate (internal/timers.js:429:9)
+    at async C:\Users\harry\Documents\venbot-v2\backend\index.js:120:38
+info [Wed Oct 21 2020 16:43:27 GMT+0800 (Hong Kong Standard Time)]  post/sendverifycode{"username":"joseph0601_wkh","mode":"auto"}
+info [Wed Oct 21 2020 16:43:42 GMT+0800 (Hong Kong Standard Time)]  post/verifyig{"username":"joseph0601_wkh","code":"161629"}
+info [Wed Oct 21 2020 16:45:27 GMT+0800 (Hong Kong Standard Time)]  post/sendverifycode{"username":"joseph0601_wkh","mode":"auto"}
+
+
+info [Fri Oct 30 2020 18:20:58 GMT+0800 (Hong Kong Standard Time)]  post/logindefaultig{"username":"dimgorsystem","password":"U2FsdGVkX198n8714NHGtwkRvlvbK+YnVjn1xF6MFoc="}
+info [Fri Oct 30 2020 18:21:08 GMT+0800 (Hong Kong Standard Time)]  get/searchtag/:tag{"tag":"adsf"}
+info [Fri Oct 30 2020 18:21:39 GMT+0800 (Hong Kong Standard Time)]  get/searchtag/:tag{"tag":"harrykwan"}
+info [Fri Oct 30 2020 18:21:49 GMT+0800 (Hong Kong Standard Time)]  get/searchtag/:tag{"tag":"asdf"}

@@ -321,6 +321,8 @@ async function tryToLogin(inputLogin, inputPassword, inputProxy, verificationMod
     }).catch(Api.IgCheckpointError, async () => {
         sendcodecallback(clone(ig))
         // inputcodecallback()
+    }).catch(Api.IgNoCheckpointError, async () => {
+        sendcodecallback(clone(ig))
     }).catch(Api.IgLoginRequiredError, () => {
         if (hasCookies) {
             console.log("Invalid cookies");
@@ -333,7 +335,8 @@ async function tryToLogin(inputLogin, inputPassword, inputProxy, verificationMod
         console.log("Incorrect password");
         return "incorrectPassword";
     }).catch(Api.IgResponseError, () => {
-        verifyagaincallback(hasCookies, silentMode, inputLogin, inputPassword, inputProxy, verificationMode)
+        // verifyagaincallback(hasCookies, silentMode, inputLogin, inputPassword, inputProxy, verificationMode)
+        sendcodecallback(clone(ig))
     });
     return result;
 }

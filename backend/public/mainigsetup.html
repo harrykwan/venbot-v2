@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <title>Venbto</title>
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/plugins.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/authentication/form-1.css" rel="stylesheet" type="text/css" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <link rel="stylesheet" type="text/css" href="assets/css/forms/theme-checkbox-radio.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/forms/switches.css">
+    <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-app.js"></script>
+    <link href="plugins/notification/snackbar/snackbar.min.css" rel="stylesheet" type="text/css" />
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+       https://firebase.google.com/docs/web/setup#available-libraries -->
+
+    <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-analytics.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/aes.min.js"
+        integrity="sha512-eqbQu9UN8zs1GXYopZmnTFFtJxpZ03FHaBMoU3dwoKirgGRss9diYqVpecUgtqW2YRFkIVgkycGQV852cD46+w=="
+        crossorigin="anonymous"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.8/crypto-js.min.js"
+        integrity="sha512-8bz0OEA8e20ieAm3C/45WDqNoJjOPcewkIcO18VkZ+4kmaWaYQPjoclB/hxUQo3cwYQaiHiOANOD10/NUFQENA=="
+        crossorigin="anonymous"></script> -->
+    <script src="crypto-js.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyB5t5_CqA6dbRw8XMWLY9BR7UEWHwTvERs",
+            authDomain: "venbot-54314.firebaseapp.com",
+            databaseURL: "https://venbot-54314.firebaseio.com",
+            projectId: "venbot-54314",
+            storageBucket: "venbot-54314.appspot.com",
+            messagingSenderId: "256268954576",
+            appId: "1:256268954576:web:26faf7ebd4c224e1dbe7d5",
+            measurementId: "G-MHVM09N90D"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+    </script>
+</head>
+
+<body class="form">
+
+
+    <div class="form-container">
+        <div class="form-form">
+            <div class="form-form-wrap">
+                <div class="form-container">
+                    <div class="form-content">
+
+                        <h1 class="">Instagram account setup</h1>
+                        <p class="signup-link">Enter your Instagram username and password</p>
+                        <form class="text-left">
+                            <div class="form">
+
+                                <div id="email-field" class="field-wrapper input">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="feather feather-at-sign">
+                                        <circle cx="12" cy="12" r="4"></circle>
+                                        <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path>
+                                    </svg>
+                                    <input id="username" name="username" type="text" value=""
+                                        placeholder="Instagram username">
+
+                                </div>
+                                <div id="password-field" class="field-wrapper input">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="feather feather-lock">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                    </svg>
+                                    <input id="password" name="password" type="password" value=""
+                                        placeholder="Instagram password">
+                                </div>
+
+                                <br><br>
+                                <div class="d-sm-flex justify-content-between">
+                                    <div class="field-wrapper">
+                                        <button onclick="updateuser(this)" class="btn btn-primary snackbar-bg-warning"
+                                            value="">Connect</button>
+                                    </div>
+
+
+                                </div>
+
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+
+                                <div id="password-field" class="field-wrapper input">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="feather feather-lock">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                    </svg>
+                                    <input id="verifycode" type="text" value="" placeholder="Verify Code">
+                                </div>
+
+                                <div class="d-sm-flex justify-content-between">
+                                    <div class="field-wrapper">
+                                        <button onclick="verifyigclick()" class="btn btn-primary snackbar-bg-warning"
+                                            value="">Verify</button>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </form>
+                        <p class="terms-conditions">© 2020 All Rights Reserved. <a href="index.html">CORK</a> is a
+                            product of Designreset. <a href="javascript:void(0);">Cookie Preferences</a>, <a
+                                href="javascript:void(0);">Privacy</a>, and <a href="javascript:void(0);">Terms</a>.</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-image">
+            <div class="l-image">
+            </div>
+        </div>
+    </div>
+
+    <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
+    <script src="assets/js/libs/jquery-3.1.1.min.js"></script>
+    <script src="bootstrap/js/popper.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="plugins/notification/snackbar/snackbar.min.js"></script>
+    <script src="assets/js/components/notification/custom-snackbar.js"></script>
+    <!-- END GLOBAL MANDATORY SCRIPTS -->
+    <script src="assets/js/authentication/form-1.js"></script>
+    <script>
+
+    </script>
+    <script>
+        document.getElementsByTagName("form")[0].addEventListener("submit", function (event) {
+            event.preventDefault()
+        });
+
+        $('.snackbar-bg-warning').click(function () {
+            Snackbar.show({
+                text: 'Please Wait',
+                actionTextColor: '#fff',
+                backgroundColor: '#000'
+            });
+        });
+
+
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                // User is signed in.
+                var displayName = user.displayName;
+                var email = user.email;
+                var emailVerified = user.emailVerified;
+                var photoURL = user.photoURL;
+                var isAnonymous = user.isAnonymous;
+                var uid = user.uid;
+                var providerData = user.providerData;
+                // ...
+                console.log(user)
+
+            } else {
+                // User is signed out.
+                // ...
+                window.location.href = "login"
+            }
+        });
+
+        function updateuser(mybutton) {
+            mybutton.disabled = true
+
+            var user = firebase.auth().currentUser;
+            var igusername = document.getElementById('username').value
+            var igpassword = document.getElementById('password').value
+
+            var encrypted = CryptoJS.AES.encrypt(igpassword, igusername).toString();
+
+            // var decrypted = CryptoJS.AES.decrypt(encrypted, "Secret Passphrase").toString(CryptoJS.enc.Utf8);
+
+            user.updateProfile({
+                displayName: igusername,
+                // photoURL: encrypted
+            }).then(function () {
+                // Update successful.
+                var data = JSON.stringify({
+                    "username": igusername,
+                    "password": encrypted
+                });
+
+                var xhr = new XMLHttpRequest();
+                xhr.withCredentials = true;
+
+                xhr.addEventListener("readystatechange", function () {
+                    if (this.readyState === 4) {
+                        // console.log(this.responseText);
+                        if (this.responseText == 'ok') {
+                            //login success
+                            console.log('login success')
+                            window.location.href = "searchtag"
+                        } else if (this.responseText == "verify") {
+                            console.log('need verify')
+                            alert('Accout need verify')
+                            sendverifycode(igusername, 'auto')
+                        } else {
+                            console.log('error')
+                            Snackbar.show({
+                                text: 'Login Fail',
+                                actionTextColor: '#fff',
+                                backgroundColor: '#e2a03f'
+                            });
+                            mybutton.disabled = false
+                        }
+
+                        // console.log('ok')
+                        // window.location.href = "posts?userid=" + igusername
+                    }
+                });
+
+                xhr.open("POST", "logindefaultig");
+                xhr.setRequestHeader("Content-Type", "application/json");
+
+                xhr.send(data);
+
+            }).catch(function (error) {
+                // An error happened.
+                console.log(error)
+                alert('error')
+            });
+        }
+
+        function verifyigclick() {
+            var igusername = document.getElementById('username').value
+            var mycode = document.getElementById("verifycode").value
+            verifyig(igusername, mycode)
+        }
+
+        function verifyig(username, code) {
+            var data = JSON.stringify({
+                "username": username,
+                "code": code
+            });
+
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+
+            xhr.addEventListener("readystatechange", function () {
+                if (this.readyState === 4) {
+                    console.log(this.responseText)
+                    if (this.responseText == 'ok') {
+                        //login success
+                        console.log('login success')
+                        window.location.href = "searchtag"
+                    } else if (this.responseText == 'rightcode') {
+                        //login success
+                        console.log('right code')
+                        // window.location.href = "searchtag"
+                    } else if (this.responseText == "wrongcode") {
+                        // alert('wrong code')
+                        console.log('wrong code')
+                        Snackbar.show({
+                            text: 'Verify Fail',
+                            actionTextColor: '#fff',
+                            backgroundColor: '#e2a03f'
+                        });
+                    } else {
+                        console.log('error')
+                        Snackbar.show({
+                            text: 'Verify Fail',
+                            actionTextColor: '#fff',
+                            backgroundColor: '#e2a03f'
+                        });
+                        // mybutton.disabled = false
+                    }
+                }
+            });
+
+            xhr.open("POST", "verifyig");
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            xhr.send(data);
+        }
+
+        function sendverifycode(username, mode) {
+            var data = JSON.stringify({
+                "username": username,
+                "mode": mode
+            });
+
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+
+            xhr.addEventListener("readystatechange", function () {
+                if (this.readyState === 4) {
+                    console.log(this.responseText);
+
+                }
+            });
+
+            xhr.open("POST", "sendverifycode");
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            xhr.send(data);
+        }
+    </script>
+
+</body>
+
+</html>

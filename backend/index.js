@@ -35,18 +35,18 @@ try {
         (async () => {
             //clear cookies
             rimraf("./cookies", async function () {
-                try {
-                    const defaultig = await login(logincred);
-                    // await setAntiBanMode(defaultig);
-                    igtoolsapi.setalllogin('default', defaultig) // alllogin.default = defaultig
+                // try {
+                //     const defaultig = await login(logincred);
+                //     // await setAntiBanMode(defaultig);
+                //     igtoolsapi.setalllogin('default', defaultig) // alllogin.default = defaultig
 
-                    const defaultig2 = await login(logincred);
+                //     const defaultig2 = await login(logincred);
 
-                    console.log(defaultig)
-                    console.log(defaultig2)
-                } catch (e) {
-                    console.log(e)
-                }
+                //     console.log(defaultig)
+                //     console.log(defaultig2)
+                // } catch (e) {
+                //     console.log(e)
+                // }
 
 
             });
@@ -136,7 +136,7 @@ try {
                 } catch (e) {
                     logger.error(e)
                     console.log(e)
-                    res.send(e)
+                    // res.send(e)
                 }
 
 
@@ -150,6 +150,60 @@ try {
             res.send(e)
         }
     })
+
+
+    app.post('/logindefaultig', async (req, res) => {
+        try {
+            logger.info('post/logindefaultig' + JSON.stringify(req.body))
+            var myusername = req.body.username;
+            var mypassword = req.body.password;
+            // var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
+            var decrypted = CryptoJS.AES.decrypt(mypassword, myusername).toString(CryptoJS.enc.Utf8);
+            console.log(myusername)
+            console.log(mypassword)
+            console.log(decrypted)
+            rimraf("./cookies/" + myusername + '.json', async function () {
+                try {
+                    // const tempigac = await login({
+
+                    login_custom.setsendcodecallback(function (ig) {
+                        tempigaclist[myusername] = ig
+                        res.send('verify')
+                    })
+                    const tempigac = await login_custom.login({
+                        inputLogin: myusername,
+                        inputPassword: decrypted,
+                        inputProxy: false,
+                        // verificationMode: 2
+                    });;
+                    // alllogin[myusername] = tempigac
+                    igtoolsapi.setalllogin("default", tempigac)
+                    awsapi.createitem('iguser', {
+                        username: myusername,
+                        password: mypassword
+                    }, undefined, undefined, function (data) {
+                        // loginfromaws(myusername)
+                        console.log('saved to aws')
+                    })
+                    res.send('ok')
+                } catch (e) {
+                    logger.error(e)
+                    console.log(e)
+                    // res.send(e)
+                }
+
+
+            });
+
+            // alllogin[myusername] = tempigac
+
+
+        } catch (e) {
+            logger.error(e)
+            res.send(e)
+        }
+    })
+
 
 
     app.post('/verifyig', async (req, res) => {
@@ -234,7 +288,7 @@ try {
             // var ciphertext = CryptoJS.AES.encrypt(mypassword, myusername).toString();
             // if (!alllogin.hasOwnProperty(myusername)) {
             if (!igtoolsapi.checkallloginuserexist(myusername)) {
-                await loginfromaws(myusername)
+                // await loginfromaws(myusername)
                 // console.log('login')
                 // const tempigac = await login({
                 //     inputLogin: myusername,
@@ -260,7 +314,8 @@ try {
             // var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
             // if (!alllogin.hasOwnProperty(myusername)) {
             if (!igtoolsapi.checkallloginuserexist(myusername)) {
-                await loginfromaws(myusername)
+                // await loginfromaws(myusername)
+
                 // const tempigac = await login({
                 //     inputLogin: myusername,
                 //     inputPassword: mypassword,
@@ -342,7 +397,8 @@ try {
             // var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
             // if (!alllogin.hasOwnProperty(myusername)) {
             if (!igtoolsapi.checkallloginuserexist(myusername)) {
-                await loginfromaws(myusername)
+                // await loginfromaws(myusername)
+
                 // console.log('login')
                 // const tempigac = await login({
                 //     inputLogin: myusername,
@@ -377,7 +433,8 @@ try {
             // var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
             // if (!alllogin.hasOwnProperty(myusername)) {
             if (!igtoolsapi.checkallloginuserexist(myusername)) {
-                await loginfromaws(myusername)
+                // await loginfromaws(myusername)
+
                 // console.log('login')
                 // const tempigac = await login({
                 //     inputLogin: myusername,
@@ -628,6 +685,13 @@ try {
             root: __dirname
         })
     })
+
+    app.get('/mainigsetup', (req, res) => {
+        res.sendFile('public/mainigsetup.html', {
+            root: __dirname
+        })
+    })
+
 
 
 
