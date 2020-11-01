@@ -17,7 +17,35 @@
     <!--  BEGIN CUSTOM STYLE FILE  -->
     <link href="assets/css/apps/invoice.css" rel="stylesheet" type="text/css" />
     <!--  END CUSTOM STYLE FILE  -->
-
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+       https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-app.js"></script>
+    <link href="plugins/notification/snackbar/snackbar.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-analytics.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/aes.min.js"
+           integrity="sha512-eqbQu9UN8zs1GXYopZmnTFFtJxpZ03FHaBMoU3dwoKirgGRss9diYqVpecUgtqW2YRFkIVgkycGQV852cD46+w=="
+           crossorigin="anonymous"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.8/crypto-js.min.js"
+           integrity="sha512-8bz0OEA8e20ieAm3C/45WDqNoJjOPcewkIcO18VkZ+4kmaWaYQPjoclB/hxUQo3cwYQaiHiOANOD10/NUFQENA=="
+           crossorigin="anonymous"></script> -->
+    <script src="crypto-js.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyB5t5_CqA6dbRw8XMWLY9BR7UEWHwTvERs",
+            authDomain: "venbot-54314.firebaseapp.com",
+            databaseURL: "https://venbot-54314.firebaseio.com",
+            projectId: "venbot-54314",
+            storageBucket: "venbot-54314.appspot.com",
+            messagingSenderId: "256268954576",
+            appId: "1:256268954576:web:26faf7ebd4c224e1dbe7d5",
+            measurementId: "G-MHVM09N90D"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+    </script>
 </head>
 
 <body class="alt-menu sidebar-noneoverflow">
@@ -486,6 +514,27 @@
     <script src="assets/js/app.js"></script>
 
     <script>
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                // User is signed in.
+                var displayName = user.displayName;
+                var email = user.email;
+                var emailVerified = user.emailVerified;
+                var photoURL = user.photoURL;
+                var isAnonymous = user.isAnonymous;
+                var uid = user.uid;
+                var providerData = user.providerData;
+                // ...
+                console.log(user)
+                console.log(displayName)
+
+            } else {
+                // User is signed out.
+                // ...
+                window.location.href = "login"
+            }
+        });
+
         $(document).ready(function () {
             App.init();
         });
@@ -673,7 +722,7 @@
         }
 
         function genct() {
-            var temphtml = ''
+            var temphtml = cttemplate()
             document.getElementById('ct').innerHTML = temphtml
         }
     </script>
