@@ -1,23 +1,23 @@
 try {
-    const express = require('express')
+    const express = require("express");
     const bodyParser = require("body-parser");
-    const awsapi = require('./src/aws')
-    const igtoolsapi = require('./src/igtools')
+    const awsapi = require("./src/aws");
+    const igtoolsapi = require("./src/igtools");
     const CryptoJS = require("crypto-js");
-    const date = require('date-and-time');
+    const date = require("date-and-time");
     const rimraf = require("rimraf");
-    const fs = require('fs');
-    const localjson = require('./src/localjson')
-    const followUser = require('tools-for-instagram/src/followUser');
-    const getFollowers = require('tools-for-instagram/src/getFollowers');
-    const setAntiBanMode = require('tools-for-instagram/src/setAntiBanMode');
-    const logger = require('logger').createLogger('first_stage_testing.log');
-    const login_custom = require('./src/login_custom')
+    const fs = require("fs");
+    const localjson = require("./src/localjson");
+    const followUser = require("tools-for-instagram/src/followUser");
+    const getFollowers = require("tools-for-instagram/src/getFollowers");
+    const setAntiBanMode = require("tools-for-instagram/src/setAntiBanMode");
+    const logger = require("logger").createLogger("first_stage_testing.log");
+    const login_custom = require("./src/login_custom");
 
-    let tempigaclist = {}
+    let tempigaclist = {};
 
-    require('./src/schedule')
-    require('dotenv').config();
+    require("./src/schedule");
+    require("dotenv").config();
     // console.log(process.env);
     const port = process.env.PORT || 3000;
     const logincred = {
@@ -25,9 +25,7 @@ try {
         inputPassword: process.env.IGPW,
         inputProxy: false,
     };
-    const app = express()
-
-
+    const app = express();
 
     try {
         //log ip
@@ -36,180 +34,184 @@ try {
             //clear cookies
             rimraf("./cookies", async function () {
                 // try {
-                //     const defaultig = await login(logincred);
-                //     // await setAntiBanMode(defaultig);
-                //     igtoolsapi.setalllogin('default', defaultig) // alllogin.default = defaultig
-
+                const defaultig = await login(logincred);
+                // await setAntiBanMode(defaultig);
+                igtoolsapi.setalllogin("default", defaultig); // alllogin.default = defaultig
                 //     const defaultig2 = await login(logincred);
-
                 //     console.log(defaultig)
                 //     console.log(defaultig2)
                 // } catch (e) {
                 //     console.log(e)
                 // }
-
-
             });
-
         })();
     } catch (e) {
-        console.log(e)
-        logger.error(e)
+        console.log(e);
+        logger.error(e);
     }
 
-    app.use(bodyParser.urlencoded({
-        extended: false
-    }));
+    app.use(
+        bodyParser.urlencoded({
+            extended: false,
+        })
+    );
     app.use(bodyParser.json());
 
+    app.use(
+        express.static("public", {
+            root: __dirname,
+        })
+    );
 
-    app.use(express.static('public', {
-        root: __dirname
-    }))
-
-
-    app.get('/searchtag/:tag/:postnum', async (req, res) => {
+    app.get("/searchtag/:tag/:postnum", async (req, res) => {
         try {
             //alllogin.default
-            logger.info('get/searchtag/:tag/:postnum' + JSON.stringify(req.params))
-            await igtoolsapi.gethashtaglikers(igtoolsapi.getalllogin('default'), req.params.tag, req.params.postnum, function (result) {
-                res.send(result)
-            })
+            logger.info("get/searchtag/:tag/:postnum" + JSON.stringify(req.params));
+            await igtoolsapi.gethashtaglikers(
+                igtoolsapi.getalllogin("default"),
+                req.params.tag,
+                req.params.postnum,
+                function (result) {
+                    res.send(result);
+                }
+            );
         } catch (e) {
-            res.send(e)
-            logger.error(e)
+            res.send(e);
+            logger.error(e);
         }
+    });
 
-    })
-
-
-    app.get('/searchtagpost/:tag', async (req, res) => {
+    app.get("/searchtagpost/:tag", async (req, res) => {
         try {
             //alllogin.default
-            logger.info('get/searchtag/:tag' + JSON.stringify(req.params))
-            await igtoolsapi.gethashtagposts(igtoolsapi.getalllogin('default'), req.params.tag, function (data) {
-                res.send(data)
-            })
+            logger.info("get/searchtag/:tag" + JSON.stringify(req.params));
+            await igtoolsapi.gethashtagposts(
+                igtoolsapi.getalllogin("default"),
+                req.params.tag,
+                function (data) {
+                    res.send(data);
+                }
+            );
         } catch (e) {
-            res.send(e)
-            logger.error(e)
+            res.send(e);
+            logger.error(e);
         }
+    });
 
-    })
-
-
-
-    app.post('/loginig', async (req, res) => {
+    app.post("/loginig", async (req, res) => {
         try {
-            logger.info('post/loginig' + JSON.stringify(req.body))
+            logger.info("post/loginig" + JSON.stringify(req.body));
             var myusername = req.body.username;
             var mypassword = req.body.password;
             // var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
-            var decrypted = CryptoJS.AES.decrypt(mypassword, myusername).toString(CryptoJS.enc.Utf8);
-            console.log(myusername)
-            console.log(mypassword)
-            console.log(decrypted)
-            rimraf("./cookies/" + myusername + '.json', async function () {
+            var decrypted = CryptoJS.AES.decrypt(mypassword, myusername).toString(
+                CryptoJS.enc.Utf8
+            );
+            console.log(myusername);
+            console.log(mypassword);
+            console.log(decrypted);
+            rimraf("./cookies/" + myusername + ".json", async function () {
                 try {
                     // const tempigac = await login({
 
                     login_custom.setsendcodecallback(function (ig) {
-                        tempigaclist[myusername] = ig
-                        res.send('verify')
-                    })
+                        tempigaclist[myusername] = ig;
+                        res.send("verify");
+                    });
                     const tempigac = await login_custom.login({
                         inputLogin: myusername,
                         inputPassword: decrypted,
                         inputProxy: false,
                         // verificationMode: 2
-                    });;
+                    });
                     // alllogin[myusername] = tempigac
-                    igtoolsapi.setalllogin(myusername, tempigac)
-                    awsapi.createitem('iguser', {
-                        username: myusername,
-                        password: mypassword
-                    }, undefined, undefined, function (data) {
-                        // loginfromaws(myusername)
-                        console.log('saved to aws')
-                    })
-                    res.send('ok')
+                    igtoolsapi.setalllogin(myusername, tempigac);
+                    awsapi.createitem(
+                        "iguser", {
+                            username: myusername,
+                            password: mypassword,
+                        },
+                        undefined,
+                        undefined,
+                        function (data) {
+                            // loginfromaws(myusername)
+                            console.log("saved to aws");
+                        }
+                    );
+                    res.send("ok");
                 } catch (e) {
-                    logger.error(e)
-                    console.log(e)
+                    logger.error(e);
+                    console.log(e);
                     // res.send(e)
                 }
-
-
             });
 
             // alllogin[myusername] = tempigac
-
-
         } catch (e) {
-            logger.error(e)
-            res.send(e)
+            logger.error(e);
+            res.send(e);
         }
-    })
+    });
 
-
-    app.post('/logindefaultig', async (req, res) => {
+    app.post("/logindefaultig", async (req, res) => {
         try {
-            logger.info('post/logindefaultig' + JSON.stringify(req.body))
+            logger.info("post/logindefaultig" + JSON.stringify(req.body));
             var myusername = req.body.username;
             var mypassword = req.body.password;
             // var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
-            var decrypted = CryptoJS.AES.decrypt(mypassword, myusername).toString(CryptoJS.enc.Utf8);
-            console.log(myusername)
-            console.log(mypassword)
-            console.log(decrypted)
-            rimraf("./cookies/" + myusername + '.json', async function () {
+            var decrypted = CryptoJS.AES.decrypt(mypassword, myusername).toString(
+                CryptoJS.enc.Utf8
+            );
+            console.log(myusername);
+            console.log(mypassword);
+            console.log(decrypted);
+            rimraf("./cookies/" + myusername + ".json", async function () {
                 try {
                     // const tempigac = await login({
 
                     login_custom.setsendcodecallback(function (ig) {
-                        tempigaclist[myusername] = ig
-                        res.send('verify')
-                    })
+                        tempigaclist[myusername] = ig;
+                        res.send("verify");
+                    });
                     const tempigac = await login_custom.login({
                         inputLogin: myusername,
                         inputPassword: decrypted,
                         inputProxy: false,
                         // verificationMode: 2
-                    });;
+                    });
                     // alllogin[myusername] = tempigac
-                    igtoolsapi.setalllogin("default", tempigac)
-                    awsapi.createitem('iguser', {
-                        username: myusername,
-                        password: mypassword
-                    }, undefined, undefined, function (data) {
-                        // loginfromaws(myusername)
-                        console.log('saved to aws')
-                    })
-                    res.send('ok')
+                    igtoolsapi.setalllogin("default", tempigac);
+                    awsapi.createitem(
+                        "iguser", {
+                            username: myusername,
+                            password: mypassword,
+                        },
+                        undefined,
+                        undefined,
+                        function (data) {
+                            // loginfromaws(myusername)
+                            console.log("saved to aws");
+                        }
+                    );
+                    res.send("ok");
                 } catch (e) {
-                    logger.error(e)
-                    console.log(e)
+                    logger.error(e);
+                    console.log(e);
                     // res.send(e)
                 }
-
-
             });
 
             // alllogin[myusername] = tempigac
-
-
         } catch (e) {
-            logger.error(e)
-            res.send(e)
+            logger.error(e);
+            res.send(e);
         }
-    })
+    });
 
-
-
-    app.post('/verifyig', async (req, res) => {
+    app.post("/verifyig", async (req, res) => {
         // try {
-        console.log('verifying!')
-        logger.info('post/verifyig' + JSON.stringify(req.body))
+        console.log("verifying!");
+        logger.info("post/verifyig" + JSON.stringify(req.body));
         var myusername = req.body.username;
         var mycode = req.body.code;
         // var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
@@ -218,69 +220,72 @@ try {
         // res.send('ok')
         // console.log('ok')
         login_custom.setrightcodecallback(function () {
-            console.log('rightcode')
-            res.send('rightcode')
-        })
+            console.log("rightcode");
+            res.send("rightcode");
+        });
         login_custom.setwrongcodecallback(function () {
-            console.log('wrong code')
-            res.send('wrongcode')
-        })
+            console.log("wrong code");
+            res.send("wrongcode");
+        });
 
-        login_custom.inputcode(tempigaclist[myusername], mycode)
+        login_custom.inputcode(tempigaclist[myusername], mycode);
         // } catch (e) {
         //     logger.error(e)
         //     res.send('error')
         //     console.log('not ok')
         // }
+    });
 
-    })
-
-    app.post('/sendverifycode', async (req, res) => {
+    app.post("/sendverifycode", async (req, res) => {
         // try {
-        console.log('send verify code!')
-        logger.info('post/sendverifycode' + JSON.stringify(req.body))
+        console.log("send verify code!");
+        logger.info("post/sendverifycode" + JSON.stringify(req.body));
         var myusername = req.body.username;
-        var mymode = req.body.mode
+        var mymode = req.body.mode;
         // var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
 
         // await igtoolsapi.enterverifycode(myusername, mycode)
         // res.send('ok')
         // console.log('ok')
 
-        login_custom.sendcode(tempigaclist[myusername], mymode)
+        login_custom.sendcode(tempigaclist[myusername], mymode);
         // } catch (e) {
         //     logger.error(e)
         //     res.send('error')
         //     console.log('not ok')
         // }
-    })
-
-
-
+    });
 
     function loginfromaws(username) {
-        logger.info('loginfromaws ' + username)
+        logger.info("loginfromaws " + username);
         const temppromise = new Promise(function (resolve, reject) {
-            awsapi.readitem('iguser', 'username', username, undefined, undefined, async function (data) {
-                var password = data.Item.password
-                var decrypted = CryptoJS.AES.decrypt(password, username).toString(CryptoJS.enc.Utf8);
-                const tempigac = await login({
-                    inputLogin: username,
-                    inputPassword: decrypted,
-                    inputProxy: false,
-                    // verificationMode: 2
-                });;
-                // alllogin[myusername] = tempigac
-                igtoolsapi.setalllogin(username, tempigac)
-                resolve('ok')
-            })
-        })
-        return temppromise
+            awsapi.readitem(
+                "iguser",
+                "username",
+                username,
+                undefined,
+                undefined,
+                async function (data) {
+                    var password = data.Item.password;
+                    var decrypted = CryptoJS.AES.decrypt(password, username).toString(
+                        CryptoJS.enc.Utf8
+                    );
+                    const tempigac = await login({
+                        inputLogin: username,
+                        inputPassword: decrypted,
+                        inputProxy: false,
+                        // verificationMode: 2
+                    });
+                    // alllogin[myusername] = tempigac
+                    igtoolsapi.setalllogin(username, tempigac);
+                    resolve("ok");
+                }
+            );
+        });
+        return temppromise;
     }
 
-
-
-    app.post('/follow', async (req, res) => {
+    app.post("/follow", async (req, res) => {
         try {
             var myusername = req.body.username;
             // var mypassword = req.body.password;
@@ -299,14 +304,14 @@ try {
                 // igtoolsapi.setalllogin(myusername, tempigac)
                 // // await setAntiBanMode(tempigac)
             }
-            await followUser(igtoolsapi.getalllogin(myusername), followuserid, true)
-            res.send('ok')
+            await followUser(igtoolsapi.getalllogin(myusername), followuserid, true);
+            res.send("ok");
         } catch (e) {
-            res.send(e)
+            res.send(e);
         }
-    })
+    });
 
-    app.post('/unfollow', async (req, res) => {
+    app.post("/unfollow", async (req, res) => {
         try {
             var myusername = req.body.username;
             // var mypassword = req.body.password;
@@ -315,7 +320,6 @@ try {
             // if (!alllogin.hasOwnProperty(myusername)) {
             if (!igtoolsapi.checkallloginuserexist(myusername)) {
                 // await loginfromaws(myusername)
-
                 // const tempigac = await login({
                 //     inputLogin: myusername,
                 //     inputPassword: mypassword,
@@ -325,17 +329,32 @@ try {
                 // igtoolsapi.setalllogin(myusername, tempigac)
                 // // await setAntiBanMode(tempigac)
             }
-            await unfollowUser(igtoolsapi.getalllogin(myusername), unfollowuserid, true)
-            res.send('ok')
+            await unfollowUser(
+                igtoolsapi.getalllogin(myusername),
+                unfollowuserid,
+                true
+            );
+            res.send("ok");
         } catch (e) {
-            res.send(e)
+            res.send(e);
         }
-    })
+    });
 
-
-    app.post('/follownow', async (req, res) => {
+    app.post("/getfollowrecord", async (req, res) => {
         try {
-            logger.info('post/follownow' + JSON.stringify(req.body))
+            var myusername = req.body.username;
+
+            awsapi.scandata("followrecord", "username", myusername, function (result) {
+                res.send(result)
+            })
+        } catch (e) {
+            // res.send(e);
+        }
+    });
+
+    app.post("/follownow", async (req, res) => {
+        try {
+            logger.info("post/follownow" + JSON.stringify(req.body));
             var myusername = req.body.username;
             // var mypassword = req.body.password;
             var followuserlist = req.body.followuserlist;
@@ -343,11 +362,11 @@ try {
             // var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
             // if (!alllogin.hasOwnProperty(myusername)) {
             if (!igtoolsapi.checkallloginuserexist(myusername)) {
-                await loginfromaws(myusername)
+                await loginfromaws(myusername);
             }
             // console.log(followuserlist)
             const now = new Date();
-            const nowtime = now.getTime()
+            const nowtime = now.getTime();
             // awsapi.uploadJSONToS3(myusername + '-' + tag + '-' + nowtime, followuserlist, function (data) {
             //     awsapi.createitem('followrecord', {
             //         username: myusername,
@@ -355,41 +374,56 @@ try {
             //         filename: myusername + '-' + tag + '-' + nowtime
             //     })
             // })
-            awsapi.createitem('followrecord', {
-                recordid: myusername + '-' + nowtime,
-                username: myusername,
-                data: followuserlist
-            }, undefined, undefined, undefined)
+            awsapi.createitem(
+                "followrecord", {
+                    recordid: myusername + "-" + nowtime,
+                    username: myusername,
+                    data: followuserlist,
+                    tag: tag
+                },
+                undefined,
+                undefined,
+                undefined
+            );
 
-            res.send('start')
+            res.send("start");
 
             for (var j = 0; j < followuserlist.length; j++) {
-                console.log(myusername + ' following ' + followuserlist[j])
-                await followUser(igtoolsapi.getalllogin(myusername), followuserlist[j], true)
-                await igtoolsapi.timeout(1000)
+                console.log(myusername + " following " + followuserlist[j]);
+                await followUser(
+                    igtoolsapi.getalllogin(myusername),
+                    followuserlist[j],
+                    true
+                );
+                await igtoolsapi.timeout(1000);
             }
 
-
-
             followuserlist.map((x, index) => {
-                const tempdayadd = parseInt(index / 100)
-                const tempdate = date.format(date.addDays(now, tempdayadd + 5), 'DD/MM/YYYY');
+                const tempdayadd = parseInt(index / 100);
+                const tempdate = date.format(
+                    date.addDays(now, tempdayadd + 5),
+                    "DD/MM/YYYY"
+                );
                 // console.log(tempdate.toString(), myusername.toString(), x.toString())
-                localjson.pushunfollowtask(tempdate.toString(), myusername.toString(), x.toString())
-            })
+                localjson.pushunfollowtask(
+                    tempdate.toString(),
+                    myusername.toString(),
+                    x.toString()
+                );
+            });
 
-            console.log('follow finish')
+            console.log("follow finish");
 
             // await followUser(igtoolsapi.getalllogin(myusername), followuserid, true)
             // res.send('ok')
         } catch (e) {
-            console.log(e)
-            logger.error(e)
-            res.send(e)
+            console.log(e);
+            logger.error(e);
+            res.send(e);
         }
-    })
+    });
 
-    app.post('/schedulefollow', async (req, res) => {
+    app.post("/schedulefollow", async (req, res) => {
         try {
             var myusername = req.body.username;
             // var mypassword = req.body.password;
@@ -398,7 +432,6 @@ try {
             // if (!alllogin.hasOwnProperty(myusername)) {
             if (!igtoolsapi.checkallloginuserexist(myusername)) {
                 // await loginfromaws(myusername)
-
                 // console.log('login')
                 // const tempigac = await login({
                 //     inputLogin: myusername,
@@ -410,22 +443,28 @@ try {
                 // // await setAntiBanMode(tempigac)
             }
             followuserlist.map((x, index) => {
-                const tempdayadd = parseInt(index / 100)
+                const tempdayadd = parseInt(index / 100);
                 const now = new Date();
-                const tempdate = date.format(date.addDays(now, tempdayadd), 'DD/MM/YYYY');
-                localjson.pushfollowtask(tempdate, myusername, x)
-                const tempdate2 = date.format(date.addDays(now, tempdayadd + 5), 'DD/MM/YYYY');
-                localjson.pushunfollowtask(tempdate2, myusername, x)
-            })
+                const tempdate = date.format(
+                    date.addDays(now, tempdayadd),
+                    "DD/MM/YYYY"
+                );
+                localjson.pushfollowtask(tempdate, myusername, x);
+                const tempdate2 = date.format(
+                    date.addDays(now, tempdayadd + 5),
+                    "DD/MM/YYYY"
+                );
+                localjson.pushunfollowtask(tempdate2, myusername, x);
+            });
 
             // await followUser(igtoolsapi.getalllogin(myusername), followuserid, true)
-            res.send('ok')
+            res.send("ok");
         } catch (e) {
-            res.send(e)
+            res.send(e);
         }
-    })
+    });
 
-    app.post('/scheduleunfollow', async (req, res) => {
+    app.post("/scheduleunfollow", async (req, res) => {
         try {
             var myusername = req.body.username;
             // var mypassword = req.body.password;
@@ -434,7 +473,6 @@ try {
             // if (!alllogin.hasOwnProperty(myusername)) {
             if (!igtoolsapi.checkallloginuserexist(myusername)) {
                 // await loginfromaws(myusername)
-
                 // console.log('login')
                 // const tempigac = await login({
                 //     inputLogin: myusername,
@@ -446,23 +484,25 @@ try {
                 // // await setAntiBanMode(tempigac)
             }
             unfollowuserlist.map((x, index) => {
-                const tempdayadd = parseInt(index / 100)
+                const tempdayadd = parseInt(index / 100);
                 const now = new Date();
-                const tempdate = date.format(date.addDays(now, tempdayadd + 5), 'DD/MM/YYYY');
-                localjson.pushunfollowtask(tempdate, myusername, x)
-            })
+                const tempdate = date.format(
+                    date.addDays(now, tempdayadd + 5),
+                    "DD/MM/YYYY"
+                );
+                localjson.pushunfollowtask(tempdate, myusername, x);
+            });
 
             // await followUser(igtoolsapi.getalllogin(myusername), followuserid, true)
-            res.send('ok')
+            res.send("ok");
         } catch (e) {
-            res.send(e)
+            res.send(e);
         }
-    })
+    });
 
-
-    app.post('/getfollower', async (req, res) => {
+    app.post("/getfollower", async (req, res) => {
         try {
-            logger.info('get/getfollower' + JSON.stringify(req.body))
+            logger.info("post/getfollower" + JSON.stringify(req.body));
             var myusername = req.body.username;
             // var mypassword = req.body.password;
             // var ciphertext = CryptoJS.AES.encrypt(myusername, mypassword).toString();
@@ -479,228 +519,228 @@ try {
             //     // // await setAntiBanMode(tempigac)
             // }
             await getFollowers(igtoolsapi.getalllogin("default"), myusername);
-            let followers = await readFollowers(igtoolsapi.getalllogin(myusername), myusername);
-            let followerslist = followers.map(x => x.username)
-            res.send(followerslist)
+            let followers = await readFollowers(
+                igtoolsapi.getalllogin(myusername),
+                myusername
+            );
+            let followerslist = followers.map((x) => x.username);
+            res.send(followerslist);
         } catch (e) {
-            console.log(e)
-            logger.error(e)
-            res.send(e)
+            console.log(e);
+            logger.error(e);
+            res.send(e);
         }
-    })
+    });
 
-
-    app.post('/addtocrm', async (req, res) => {
+    app.post("/addtocrm", async (req, res) => {
         try {
-            logger.info('post/addtocrm' + JSON.stringify(req.body))
+            logger.info("post/addtocrm" + JSON.stringify(req.body));
             const now = new Date();
-            const nowtime = now.getTime()
+            const nowtime = now.getTime();
             var myusername = req.body.username;
             var mydata = req.body.data;
             var myfrom = req.body.from;
-            awsapi.createitem('crm', {
-                recordid: myusername + '-' + nowtime,
-                username: myusername,
-                data: mydata,
-                from: myfrom
-            }, undefined, undefined, function () {
-                res.send('ok')
-            })
+            awsapi.createitem(
+                "crm", {
+                    recordid: myusername + "-" + nowtime,
+                    username: myusername,
+                    data: mydata,
+                    from: myfrom,
+                },
+                undefined,
+                undefined,
+                function () {
+                    res.send("ok");
+                }
+            );
         } catch (e) {
-            res.send(e)
+            res.send(e);
         }
-    })
-
-
-
+    });
 
     function uploadfollower(userid) {
         try {
-            fs.readFile('./../output/' + userid + '.json', (err, data) => {
+            fs.readFile("./../output/" + userid + ".json", (err, data) => {
                 if (err) throw err;
                 const filedata = {
-                    name: req.params.userid + '.json',
-                    data: JSON.stringify(data, null, 2)
+                    name: req.params.userid + ".json",
+                    data: JSON.stringify(data, null, 2),
                 };
                 awsapi.uploadToS3(filedata, res, function (x) {
-                    console.log('ok')
-                })
+                    console.log("ok");
+                });
             });
         } catch (e) {
-            res.send(e)
+            res.send(e);
         }
     }
 
-    function updatefollower(userid) {
-
-    }
+    function updatefollower(userid) {}
 
     function uploadtos3(filename, body) {
         try {
             const filedata = {
                 name: filename,
-                data: body
+                data: body,
             };
             awsapi.uploadToS3(filedata, undefined, function (x) {
-                console.log('ok')
-            })
+                console.log("ok");
+            });
         } catch (e) {
-            res.send(e)
+            res.send(e);
         }
     }
 
-
-    app.get('/getposts/:userid', (req, res) => {
+    app.get("/getposts/:userid", (req, res) => {
         try {
-            logger.info('get/getposts/:userid' + JSON.stringify(req.params))
-            console.log(req.params.userid)
-            igtoolsapi.getpost(igtoolsapi.getalllogin('default'), req.params.userid, function (data) {
-                data = data.map((x, index) => {
-                    if (x.carousel_media) {
-                        return {
-                            pk: index,
-                            image: x.carousel_media[0].image_versions2.candidates[0].url,
-                            caption: x.caption.text
+            logger.info("get/getposts/:userid" + JSON.stringify(req.params));
+            console.log(req.params.userid);
+            igtoolsapi.getpost(
+                igtoolsapi.getalllogin("default"),
+                req.params.userid,
+                function (data) {
+                    data = data.map((x, index) => {
+                        if (x.carousel_media) {
+                            return {
+                                pk: index,
+                                image: x.carousel_media[0].image_versions2.candidates[0].url,
+                                caption: x.caption.text,
+                            };
+                        } else if (x.image_versions2 && x.caption) {
+                            return {
+                                pk: index,
+                                image: x.image_versions2.candidates[0].url,
+                                caption: x.caption.text,
+                            };
+                        } else if (x.image_versions2) {
+                            return {
+                                pk: index,
+                                image: x.image_versions2.candidates[0].url,
+                                caption: "",
+                            };
+                        } else {
+                            return x;
                         }
-                    } else if (x.image_versions2 && x.caption) {
-                        return {
-                            pk: index,
-                            image: x.image_versions2.candidates[0].url,
-                            caption: x.caption.text
-                        }
-                    } else if (x.image_versions2) {
-                        return {
-                            pk: index,
-                            image: x.image_versions2.candidates[0].url,
-                            caption: ""
-                        }
-                    } else {
-                        return x
-                    }
-
-                })
-                res.send(data)
-            })
+                    });
+                    res.send(data);
+                }
+            );
         } catch (e) {
             // console.log(e)
-            res.send('error')
-            logger.error(e)
+            res.send("error");
+            logger.error(e);
         }
-    })
+    });
 
-
-    app.get('/getcls/:userid/:pk', (req, res) => {
+    app.get("/getcls/:userid/:pk", (req, res) => {
         try {
-            logger.info('get/getcls/:userid/:pk' + JSON.stringify(req.params))
-            igtoolsapi.getcls(igtoolsapi.getalllogin('default'), req.params.pk, req.params.userid, function (data) {
-                res.send(data)
-                uploadtos3(req.params.userid + '_post' + req.params.pk + '.json', JSON.stringify(data, null, 2))
-            })
+            logger.info("get/getcls/:userid/:pk" + JSON.stringify(req.params));
+            igtoolsapi.getcls(
+                igtoolsapi.getalllogin("default"),
+                req.params.pk,
+                req.params.userid,
+                function (data) {
+                    res.send(data);
+                    uploadtos3(
+                        req.params.userid + "_post" + req.params.pk + ".json",
+                        JSON.stringify(data, null, 2)
+                    );
+                }
+            );
         } catch (e) {
-            res.send(e)
-            logger.error(e)
+            res.send(e);
+            logger.error(e);
         }
-    })
+    });
 
-    app.get('/getcrm/:userid', (req, res) => {
-        logger.info('get/getcrm/:userid' + JSON.stringify(req.params))
-        awsapi.scandata('crm', 'username', req.params.userid, function (data) {
-            res.send(data)
-        })
-    })
+    app.get("/getcrm/:userid", (req, res) => {
+        logger.info("get/getcrm/:userid" + JSON.stringify(req.params));
+        awsapi.scandata("crm", "username", req.params.userid, function (data) {
+            res.send(data);
+        });
+    });
 
+    app.get("/posts", (req, res) => {
+        res.sendFile("public/posts.html", {
+            root: __dirname,
+        });
+    });
 
-    app.get('/posts', (req, res) => {
-        res.sendFile('public/posts.html', {
-            root: __dirname
-        })
-    })
+    app.get("/cls", (req, res) => {
+        res.sendFile("public/cls.html", {
+            root: __dirname,
+        });
+    });
 
-    app.get('/cls', (req, res) => {
-        res.sendFile('public/cls.html', {
-            root: __dirname
-        })
-    })
+    app.get("/", (req, res) => {
+        res.sendFile("public/login.html", {
+            root: __dirname,
+        });
+    });
 
+    app.get("/login", (req, res) => {
+        res.sendFile("public/login.html", {
+            root: __dirname,
+        });
+    });
 
-    app.get('/', (req, res) => {
-        res.sendFile('public/login.html', {
-            root: __dirname
-        })
-    })
+    app.get("/igsetup", (req, res) => {
+        res.sendFile("public/igsetup.html", {
+            root: __dirname,
+        });
+    });
 
-    app.get('/login', (req, res) => {
-        res.sendFile('public/login.html', {
-            root: __dirname
-        })
-    })
+    app.get("/register", (req, res) => {
+        res.sendFile("public/register.html", {
+            root: __dirname,
+        });
+    });
 
+    app.get("/searchtag", (req, res) => {
+        res.sendFile("public/searchtag.html", {
+            root: __dirname,
+        });
+    });
 
-    app.get('/igsetup', (req, res) => {
-        res.sendFile('public/igsetup.html', {
-            root: __dirname
-        })
-    })
+    app.get("/searchresult", (req, res) => {
+        res.sendFile("public/searchresult.html", {
+            root: __dirname,
+        });
+    });
 
+    app.get("/home", (req, res) => {
+        res.sendFile("public/dashboard.html", {
+            root: __dirname,
+        });
+    });
 
-    app.get('/register', (req, res) => {
-        res.sendFile('public/register.html', {
-            root: __dirname
-        })
-    })
+    app.get("/searchresult", (req, res) => {
+        res.sendFile("public/dashboard.html", {
+            root: __dirname,
+        });
+    });
 
-    app.get('/searchtag', (req, res) => {
-        res.sendFile('public/searchtag.html', {
-            root: __dirname
-        })
-    })
+    app.get("/invoice", (req, res) => {
+        res.sendFile("public/invoice.html", {
+            root: __dirname,
+        });
+    });
 
-    app.get('/searchresult', (req, res) => {
-        res.sendFile('public/searchresult.html', {
-            root: __dirname
-        })
-    })
+    app.get("/crm", (req, res) => {
+        res.sendFile("public/crm.html", {
+            root: __dirname,
+        });
+    });
 
-    app.get('/home', (req, res) => {
-        res.sendFile('public/dashboard.html', {
-            root: __dirname
-        })
-    })
+    app.get("/mainigsetup", (req, res) => {
+        res.sendFile("public/mainigsetup.html", {
+            root: __dirname,
+        });
+    });
 
-
-    app.get('/searchresult', (req, res) => {
-        res.sendFile('public/dashboard.html', {
-            root: __dirname
-        })
-    })
-
-    app.get('/invoice', (req, res) => {
-        res.sendFile('public/invoice.html', {
-            root: __dirname
-        })
-    })
-
-    app.get('/crm', (req, res) => {
-        res.sendFile('public/crm.html', {
-            root: __dirname
-        })
-    })
-
-    app.get('/mainigsetup', (req, res) => {
-        res.sendFile('public/mainigsetup.html', {
-            root: __dirname
-        })
-    })
-
-
-
-
-
-
-
-
-    app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
-
+    app.listen(port, () =>
+        console.log(`Example app listening at http://localhost:${port}`)
+    );
 } catch (e) {
-    console.log(e)
+    console.log(e);
 }

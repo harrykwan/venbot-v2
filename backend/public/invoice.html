@@ -2,547 +2,629 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title>Venbot</title>
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
-    <!-- BEGIN GLOBAL MANDATORY STYLES -->
-    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/plugins.css" rel="stylesheet" type="text/css" />
-    <link href="plugins/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" type="text/css" />
-    <!-- END GLOBAL MANDATORY STYLES -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+  <title>Venbot</title>
+  <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+  <!-- BEGIN GLOBAL MANDATORY STYLES -->
+  <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&display=swap" rel="stylesheet">
+  <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <link href="assets/css/plugins.css" rel="stylesheet" type="text/css" />
+  <link href="plugins/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" type="text/css" />
+  <!-- END GLOBAL MANDATORY STYLES -->
 
-    <!--  BEGIN CUSTOM STYLE FILE  -->
-    <link href="assets/css/apps/invoice.css" rel="stylesheet" type="text/css" />
-    <!--  END CUSTOM STYLE FILE  -->
-    <!-- TODO: Add SDKs for Firebase products that you want to use
+  <!--  BEGIN CUSTOM STYLE FILE  -->
+  <link href="assets/css/apps/invoice.css" rel="stylesheet" type="text/css" />
+  <!--  END CUSTOM STYLE FILE  -->
+  <!-- TODO: Add SDKs for Firebase products that you want to use
        https://firebase.google.com/docs/web/setup#available-libraries -->
-    <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-app.js"></script>
-    <link href="plugins/notification/snackbar/snackbar.min.css" rel="stylesheet" type="text/css" />
-    <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-analytics.js"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/aes.min.js"
+  <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-app.js"></script>
+  <link href="plugins/notification/snackbar/snackbar.min.css" rel="stylesheet" type="text/css" />
+  <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-analytics.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/aes.min.js"
            integrity="sha512-eqbQu9UN8zs1GXYopZmnTFFtJxpZ03FHaBMoU3dwoKirgGRss9diYqVpecUgtqW2YRFkIVgkycGQV852cD46+w=="
            crossorigin="anonymous"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.8/crypto-js.min.js"
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.8/crypto-js.min.js"
            integrity="sha512-8bz0OEA8e20ieAm3C/45WDqNoJjOPcewkIcO18VkZ+4kmaWaYQPjoclB/hxUQo3cwYQaiHiOANOD10/NUFQENA=="
            crossorigin="anonymous"></script> -->
-    <script src="crypto-js.js"></script>
-    <script>
-        // Your web app's Firebase configuration
-        var firebaseConfig = {
-            apiKey: "AIzaSyB5t5_CqA6dbRw8XMWLY9BR7UEWHwTvERs",
-            authDomain: "venbot-54314.firebaseapp.com",
-            databaseURL: "https://venbot-54314.firebaseio.com",
-            projectId: "venbot-54314",
-            storageBucket: "venbot-54314.appspot.com",
-            messagingSenderId: "256268954576",
-            appId: "1:256268954576:web:26faf7ebd4c224e1dbe7d5",
-            measurementId: "G-MHVM09N90D"
-        };
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        firebase.analytics();
-    </script>
+  <script src="crypto-js.js"></script>
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyB5t5_CqA6dbRw8XMWLY9BR7UEWHwTvERs",
+      authDomain: "venbot-54314.firebaseapp.com",
+      databaseURL: "https://venbot-54314.firebaseio.com",
+      projectId: "venbot-54314",
+      storageBucket: "venbot-54314.appspot.com",
+      messagingSenderId: "256268954576",
+      appId: "1:256268954576:web:26faf7ebd4c224e1dbe7d5",
+      measurementId: "G-MHVM09N90D"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
 </head>
 
 <body class="alt-menu sidebar-noneoverflow">
 
-    <!--  BEGIN NAVBAR  -->
-    <div class="header-container">
-        <header class="header navbar navbar-expand-sm">
+  <!--  BEGIN NAVBAR  -->
+  <div class="header-container">
+    <header class="header navbar navbar-expand-sm">
 
-            <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom"><svg
-                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+      <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom"><svg
+          xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          class="feather feather-menu">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg></a>
+
+      <div class="nav-logo align-self-center">
+        <a class="navbar-brand" href="index.html"><img alt="logo" src="assets/img/90x90.jpg"> <span
+            class="navbar-brand-name">CORK</span></a>
+      </div>
+
+      <ul class="navbar-item flex-row mr-auto">
+        <li class="nav-item align-self-center search-animated">
+          <form class="form-inline search-full form-inline search" role="search">
+            <div class="search-bar">
+              <input type="text" class="form-control search-form-control  ml-lg-auto" placeholder="Search...">
+            </div>
+          </form>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="feather feather-search toggle-search">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </li>
+      </ul>
+
+      <ul class="navbar-item flex-row nav-dropdowns">
+        <li class="nav-item dropdown language-dropdown more-dropdown">
+          <div class="dropdown custom-dropdown-icon">
+            <a class="dropdown-toggle btn" href="#" role="button" id="customDropdown" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false"><img src="assets/img/ca.png" class="flag-width" alt="flag"><svg
+                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-chevron-down">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg></a>
+
+            <div class="dropdown-menu dropdown-menu-right animated fadeInUp" aria-labelledby="customDropdown">
+              <a class="dropdown-item" data-img-value="de" data-value="de" href="javascript:void(0);"><img
+                  src="assets/img/de.png" class="flag-width" alt="flag"> German</a>
+              <a class="dropdown-item" data-img-value="jp" data-value="jp" href="javascript:void(0);"><img
+                  src="assets/img/jp.png" class="flag-width" alt="flag"> Japanese</a>
+              <a class="dropdown-item" data-img-value="fr" data-value="fr" href="javascript:void(0);"><img
+                  src="assets/img/fr.png" class="flag-width" alt="flag"> French</a>
+              <a class="dropdown-item" data-img-value="ca" data-value="en" href="javascript:void(0);"><img
+                  src="assets/img/ca.png" class="flag-width" alt="flag"> English</a>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-item dropdown message-dropdown">
+          <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="messageDropdown" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="feather feather-message-circle">
+              <path
+                d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+              </path>
+            </svg><span class="badge badge-success"></span>
+          </a>
+          <div class="dropdown-menu p-0 position-absolute animated fadeInUp" aria-labelledby="messageDropdown">
+            <div class="">
+              <a class="dropdown-item">
+                <div class="">
+
+                  <div class="media">
+                    <div class="user-img">
+                      <div class="avatar avatar-xl">
+                        <span class="avatar-title rounded-circle">KY</span>
+                      </div>
+                    </div>
+                    <div class="media-body">
+                      <div class="">
+                        <h5 class="usr-name">Kara Young</h5>
+                        <p class="msg-title">ACCOUNT UPDATE</p>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </a>
+              <a class="dropdown-item">
+                <div class="">
+                  <div class="media">
+                    <div class="user-img">
+                      <div class="avatar avatar-xl">
+                        <span class="avatar-title rounded-circle">DA</span>
+                      </div>
+                    </div>
+                    <div class="media-body">
+                      <div class="">
+                        <h5 class="usr-name">Daisy Anderson</h5>
+                        <p class="msg-title">ACCOUNT UPDATE</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <a class="dropdown-item">
+                <div class="">
+
+                  <div class="media">
+                    <div class="user-img">
+                      <div class="avatar avatar-xl">
+                        <span class="avatar-title rounded-circle">OG</span>
+                      </div>
+                    </div>
+                    <div class="media-body">
+                      <div class="">
+                        <h5 class="usr-name">Oscar Garner</h5>
+                        <p class="msg-title">ACCOUNT UPDATE</p>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </a>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-item dropdown notification-dropdown">
+          <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="notificationDropdown"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="feather feather-bell">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg><span class="badge badge-success"></span>
+          </a>
+          <div class="dropdown-menu position-absolute animated fadeInUp" aria-labelledby="notificationDropdown">
+            <div class="notification-scroll">
+
+              <div class="dropdown-item">
+                <div class="media server-log">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="feather feather-menu">
-                    <line x1="3" y1="12" x2="21" y2="12"></line>
-                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                    <line x1="3" y1="18" x2="21" y2="18"></line>
-                </svg></a>
+                    class="feather feather-server">
+                    <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                    <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                    <line x1="6" y1="6" x2="6" y2="6"></line>
+                    <line x1="6" y1="18" x2="6" y2="18"></line>
+                  </svg>
+                  <div class="media-body">
+                    <div class="data-info">
+                      <h6 class="">Server Rebooted</h6>
+                      <p class="">45 min ago</p>
+                    </div>
 
-            <div class="nav-logo align-self-center">
-                <a class="navbar-brand" href="index.html"><img alt="logo" src="assets/img/90x90.jpg"> <span
-                        class="navbar-brand-name">CORK</span></a>
-            </div>
-
-            <ul class="navbar-item flex-row mr-auto">
-                <li class="nav-item align-self-center search-animated">
-                    <form class="form-inline search-full form-inline search" role="search">
-                        <div class="search-bar">
-                            <input type="text" class="form-control search-form-control  ml-lg-auto"
-                                placeholder="Search...">
-                        </div>
-                    </form>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    <div class="icon-status">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="feather feather-search toggle-search">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                </li>
-            </ul>
-
-            <ul class="navbar-item flex-row nav-dropdowns">
-                <li class="nav-item dropdown language-dropdown more-dropdown">
-                    <div class="dropdown custom-dropdown-icon">
-                        <a class="dropdown-toggle btn" href="#" role="button" id="customDropdown" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false"><img src="assets/img/ca.png" class="flag-width"
-                                alt="flag"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg></a>
-
-                        <div class="dropdown-menu dropdown-menu-right animated fadeInUp"
-                            aria-labelledby="customDropdown">
-                            <a class="dropdown-item" data-img-value="de" data-value="de" href="javascript:void(0);"><img
-                                    src="assets/img/de.png" class="flag-width" alt="flag"> German</a>
-                            <a class="dropdown-item" data-img-value="jp" data-value="jp" href="javascript:void(0);"><img
-                                    src="assets/img/jp.png" class="flag-width" alt="flag"> Japanese</a>
-                            <a class="dropdown-item" data-img-value="fr" data-value="fr" href="javascript:void(0);"><img
-                                    src="assets/img/fr.png" class="flag-width" alt="flag"> French</a>
-                            <a class="dropdown-item" data-img-value="ca" data-value="en" href="javascript:void(0);"><img
-                                    src="assets/img/ca.png" class="flag-width" alt="flag"> English</a>
-                        </div>
+                        class="feather feather-x">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                      </svg>
                     </div>
-                </li>
-
-                <li class="nav-item dropdown message-dropdown">
-                    <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="messageDropdown"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="feather feather-message-circle">
-                            <path
-                                d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
-                            </path>
-                        </svg><span class="badge badge-success"></span>
-                    </a>
-                    <div class="dropdown-menu p-0 position-absolute animated fadeInUp"
-                        aria-labelledby="messageDropdown">
-                        <div class="">
-                            <a class="dropdown-item">
-                                <div class="">
-
-                                    <div class="media">
-                                        <div class="user-img">
-                                            <div class="avatar avatar-xl">
-                                                <span class="avatar-title rounded-circle">KY</span>
-                                            </div>
-                                        </div>
-                                        <div class="media-body">
-                                            <div class="">
-                                                <h5 class="usr-name">Kara Young</h5>
-                                                <p class="msg-title">ACCOUNT UPDATE</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </a>
-                            <a class="dropdown-item">
-                                <div class="">
-                                    <div class="media">
-                                        <div class="user-img">
-                                            <div class="avatar avatar-xl">
-                                                <span class="avatar-title rounded-circle">DA</span>
-                                            </div>
-                                        </div>
-                                        <div class="media-body">
-                                            <div class="">
-                                                <h5 class="usr-name">Daisy Anderson</h5>
-                                                <p class="msg-title">ACCOUNT UPDATE</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item">
-                                <div class="">
-
-                                    <div class="media">
-                                        <div class="user-img">
-                                            <div class="avatar avatar-xl">
-                                                <span class="avatar-title rounded-circle">OG</span>
-                                            </div>
-                                        </div>
-                                        <div class="media-body">
-                                            <div class="">
-                                                <h5 class="usr-name">Oscar Garner</h5>
-                                                <p class="msg-title">ACCOUNT UPDATE</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </li>
-
-                <li class="nav-item dropdown notification-dropdown">
-                    <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="notificationDropdown"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="feather feather-bell">
-                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                        </svg><span class="badge badge-success"></span>
-                    </a>
-                    <div class="dropdown-menu position-absolute animated fadeInUp"
-                        aria-labelledby="notificationDropdown">
-                        <div class="notification-scroll">
-
-                            <div class="dropdown-item">
-                                <div class="media server-log">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" class="feather feather-server">
-                                        <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
-                                        <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
-                                        <line x1="6" y1="6" x2="6" y2="6"></line>
-                                        <line x1="6" y1="18" x2="6" y2="18"></line>
-                                    </svg>
-                                    <div class="media-body">
-                                        <div class="data-info">
-                                            <h6 class="">Server Rebooted</h6>
-                                            <p class="">45 min ago</p>
-                                        </div>
-
-                                        <div class="icon-status">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round"
-                                                class="feather feather-x">
-                                                <line x1="18" y1="6" x2="6" y2="18"></line>
-                                                <line x1="6" y1="6" x2="18" y2="18"></line>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="dropdown-item">
-                                <div class="media ">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" class="feather feather-heart">
-                                        <path
-                                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
-                                        </path>
-                                    </svg>
-                                    <div class="media-body">
-                                        <div class="data-info">
-                                            <h6 class="">Licence Expiring Soon</h6>
-                                            <p class="">8 hrs ago</p>
-                                        </div>
-
-                                        <div class="icon-status">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round"
-                                                class="feather feather-x">
-                                                <line x1="18" y1="6" x2="6" y2="18"></line>
-                                                <line x1="6" y1="6" x2="18" y2="18"></line>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="dropdown-item">
-                                <div class="media file-upload">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" class="feather feather-file-text">
-                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                        <polyline points="14 2 14 8 20 8"></polyline>
-                                        <line x1="16" y1="13" x2="8" y2="13"></line>
-                                        <line x1="16" y1="17" x2="8" y2="17"></line>
-                                        <polyline points="10 9 9 9 8 9"></polyline>
-                                    </svg>
-                                    <div class="media-body">
-                                        <div class="data-info">
-                                            <h6 class="">Kelly Portfolio.pdf</h6>
-                                            <p class="">670 kb</p>
-                                        </div>
-
-                                        <div class="icon-status">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round"
-                                                class="feather feather-check">
-                                                <polyline points="20 6 9 17 4 12"></polyline>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-
-                <li class="nav-item dropdown user-profile-dropdown order-lg-0 order-1">
-                    <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="user-profile-dropdown"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <div class="media">
-                            <img src="assets/img/90x90.jpg" class="img-fluid" alt="admin-profile">
-                            <div class="media-body align-self-center">
-                                <h6><span>Hi,</span> Alan</h6>
-                            </div>
-                        </div>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="feather feather-chevron-down">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </a>
-                    <div class="dropdown-menu position-absolute animated fadeInUp"
-                        aria-labelledby="user-profile-dropdown">
-                        <div class="">
-                            <div class="dropdown-item">
-                                <a class="" href="user_profile.html"><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                        class="feather feather-user">
-                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                        <circle cx="12" cy="7" r="4"></circle>
-                                    </svg> My Profile</a>
-                            </div>
-                            <div class="dropdown-item">
-                                <a class="" href="apps_mailbox.html"><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                        class="feather feather-inbox">
-                                        <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline>
-                                        <path
-                                            d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z">
-                                        </path>
-                                    </svg> Inbox</a>
-                            </div>
-                            <div class="dropdown-item">
-                                <a class="" href="auth_lockscreen.html"><svg xmlns="http://www.w3.org/2000/svg"
-                                        width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                        class="feather feather-lock">
-                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                                    </svg> Lock Screen</a>
-                            </div>
-                            <div class="dropdown-item">
-                                <a class="" href="auth_login.html"><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                        class="feather feather-log-out">
-                                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                                        <polyline points="16 17 21 12 16 7"></polyline>
-                                        <line x1="21" y1="12" x2="9" y2="12"></line>
-                                    </svg> Sign Out</a>
-                            </div>
-                        </div>
-                    </div>
-
-                </li>
-            </ul>
-        </header>
-    </div>
-    <!--  END NAVBAR  -->
-
-    <!--  BEGIN MAIN CONTAINER  -->
-    <div class="main-container" id="container">
-
-        <div class="overlay"></div>
-        <div class="search-overlay"></div>
-
-        <!--  BEGIN TOPBAR  -->
-        <div class="topbar-nav header navbar" role="banner">
-            <nav id="topbar">
-                <ul class="navbar-nav theme-brand flex-row  text-center">
-                    <li class="nav-item theme-logo">
-                        <a href="index.html">
-                            <img src="assets/img/90x90.jpg" class="navbar-logo" alt="logo">
-                        </a>
-                    </li>
-                    <li class="nav-item theme-text">
-                        <a href="index.html" class="nav-link"> Venbot </a>
-                    </li>
-                </ul>
-
-                <ul class="list-unstyled menu-categories" id="topAccordion">
-
-                    <li class="menu single-menu">
-                        <a href="#dashboard" data-toggle="collapse" aria-expanded="false"
-                            class="dropdown-toggle autodroprown">
-                            <div class="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-home">
-                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                                </svg>
-                                <span>Dashboard</span>
-                            </div>
-
-                        </a>
-
-                    </li>
-
-
-                    <li class="menu single-menu active">
-                        <a href="#tables" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle">
-                            <div class="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-layout">
-                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                                    <line x1="3" y1="9" x2="21" y2="9"></line>
-                                    <line x1="9" y1="21" x2="9" y2="9"></line>
-                                </svg>
-                                <span>Lead Retrieval</span>
-                            </div>
-
-                        </a>
-
-                    </li>
-
-
-                </ul>
-            </nav>
-        </div>
-        <!--  END TOPBAR  -->
-
-        <!--  BEGIN CONTENT AREA  -->
-        <div id="content" class="main-content">
-            <div class="layout-px-spacing">
-                <div class="row invoice layout-top-spacing">
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                        <div class="app-hamburger-container">
-                            <div class="hamburger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="feather feather-menu chat-menu d-xl-none">
-                                    <line x1="3" y1="12" x2="21" y2="12"></line>
-                                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                                    <line x1="3" y1="18" x2="21" y2="18"></line>
-                                </svg></div>
-                        </div>
-                        <div class="doc-container">
-                            <div class="tab-title">
-                                <div class="row">
-                                    <div class="col-md-12 col-sm-12 col-12">
-                                        <div class="search">
-                                            <input type="text" class="form-control" placeholder="Search">
-                                        </div>
-                                        <ul class="nav nav-pills inv-list-container d-block" id="pills-tab"
-                                            role="tablist">
-
-
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="invoice-container">
-                                <div class="invoice-inbox">
-
-                                    <div class="inv-not-selected">
-                                        <p>Open an invoice from the list.</p>
-                                    </div>
-
-                                    <div class="invoice-header-section">
-                                        <h4 class="inv-number"></h4>
-                                        <div class="invoice-action">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round"
-                                                class="feather feather-printer action-print" data-toggle="tooltip"
-                                                data-placement="top" data-original-title="Reply">
-                                                <polyline points="6 9 6 2 18 2 18 9"></polyline>
-                                                <path
-                                                    d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2">
-                                                </path>
-                                                <rect x="6" y="14" width="12" height="8"></rect>
-                                            </svg>
-                                        </div>
-                                    </div>
-
-                                    <div id="ct" class="">
-
-
-                                    </div>
-
-
-                                </div>
-
-                                <div class="inv--thankYou">
-                                    <div class="row">
-                                        <div class="col-sm-12 col-12">
-                                            <p class="">Thank you for doing Business with us.</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
+                  </div>
                 </div>
-            </div>
-            <div class="footer-wrapper">
-                <div class="footer-section f-section-1">
-                    <p class="">Copyright © 2020 Venbot
-                    </p>
+              </div>
+
+              <div class="dropdown-item">
+                <div class="media ">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="feather feather-heart">
+                    <path
+                      d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                    </path>
+                  </svg>
+                  <div class="media-body">
+                    <div class="data-info">
+                      <h6 class="">Licence Expiring Soon</h6>
+                      <p class="">8 hrs ago</p>
+                    </div>
+
+                    <div class="icon-status">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-x">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                      </svg>
+                    </div>
+                  </div>
                 </div>
+              </div>
+
+              <div class="dropdown-item">
+                <div class="media file-upload">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="feather feather-file-text">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                  </svg>
+                  <div class="media-body">
+                    <div class="data-info">
+                      <h6 class="">Kelly Portfolio.pdf</h6>
+                      <p class="">670 kb</p>
+                    </div>
+
+                    <div class="icon-status">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-check">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-        </div>
-        <!--  END CONTENT AREA  -->
+          </div>
+        </li>
+
+        <li class="nav-item dropdown user-profile-dropdown order-lg-0 order-1">
+          <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="user-profile-dropdown"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="media">
+              <img src="assets/img/90x90.jpg" class="img-fluid" alt="admin-profile">
+              <div class="media-body align-self-center">
+                <h6><span>Hi,</span> Alan</h6>
+              </div>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="feather feather-chevron-down">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </a>
+          <div class="dropdown-menu position-absolute animated fadeInUp" aria-labelledby="user-profile-dropdown">
+            <div class="">
+              <div class="dropdown-item">
+                <a class="" href="user_profile.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" class="feather feather-user">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg> My Profile</a>
+              </div>
+              <div class="dropdown-item">
+                <a class="" href="apps_mailbox.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" class="feather feather-inbox">
+                    <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline>
+                    <path
+                      d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z">
+                    </path>
+                  </svg> Inbox</a>
+              </div>
+              <div class="dropdown-item">
+                <a class="" href="auth_lockscreen.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" class="feather feather-lock">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                  </svg> Lock Screen</a>
+              </div>
+              <div class="dropdown-item">
+                <a class="" href="auth_login.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" class="feather feather-log-out">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                  </svg> Sign Out</a>
+              </div>
+            </div>
+          </div>
+
+        </li>
+      </ul>
+    </header>
+  </div>
+  <!--  END NAVBAR  -->
+
+  <!--  BEGIN MAIN CONTAINER  -->
+  <div class="main-container" id="container">
+
+    <div class="overlay"></div>
+    <div class="search-overlay"></div>
+
+    <!--  BEGIN TOPBAR  -->
+    <div class="topbar-nav header navbar" role="banner">
+      <nav id="topbar">
+        <ul class="navbar-nav theme-brand flex-row  text-center">
+          <li class="nav-item theme-logo">
+            <a href="index.html">
+              <img src="assets/img/90x90.jpg" class="navbar-logo" alt="logo">
+            </a>
+          </li>
+          <li class="nav-item theme-text">
+            <a href="index.html" class="nav-link"> Venbot </a>
+          </li>
+        </ul>
+
+        <ul class="list-unstyled menu-categories" id="topAccordion">
+
+          <li class="menu single-menu">
+            <a href="#dashboard" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle autodroprown">
+              <div class="">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-home">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <span>Dashboard</span>
+              </div>
+
+            </a>
+
+          </li>
 
 
+          <li class="menu single-menu active">
+            <a href="#tables" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle">
+              <div class="">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-layout">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="3" y1="9" x2="21" y2="9"></line>
+                  <line x1="9" y1="21" x2="9" y2="9"></line>
+                </svg>
+                <span>Lead Retrieval</span>
+              </div>
+
+            </a>
+
+          </li>
+
+
+        </ul>
+      </nav>
     </div>
-    <!-- END MAIN CONTAINER -->
+    <!--  END TOPBAR  -->
 
-    <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
-    <script src="assets/js/libs/jquery-3.1.1.min.js"></script>
-    <script src="bootstrap/js/popper.min.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
-    <script src="plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <script src="assets/js/app.js"></script>
+    <!--  BEGIN CONTENT AREA  -->
+    <div id="content" class="main-content">
+      <div class="layout-px-spacing">
+        <div class="row invoice layout-top-spacing">
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="app-hamburger-container">
+              <div class="hamburger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-menu chat-menu d-xl-none">
+                  <line x1="3" y1="12" x2="21" y2="12"></line>
+                  <line x1="3" y1="6" x2="21" y2="6"></line>
+                  <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg></div>
+            </div>
+            <div class="doc-container">
+              <div class="tab-title">
+                <div class="row">
+                  <div class="col-md-12 col-sm-12 col-12">
+                    <div class="search">
+                      <input type="text" class="form-control" placeholder="Search">
+                    </div>
+                    <ul class="nav nav-pills inv-list-container d-block" id="pills-tab" role="tablist">
 
-    <script>
-        firebase.auth().onAuthStateChanged(function (user) {
-            if (user) {
-                // User is signed in.
-                var displayName = user.displayName;
-                var email = user.email;
-                var emailVerified = user.emailVerified;
-                var photoURL = user.photoURL;
-                var isAnonymous = user.isAnonymous;
-                var uid = user.uid;
-                var providerData = user.providerData;
-                // ...
-                console.log(user)
-                console.log(displayName)
 
-            } else {
-                // User is signed out.
-                // ...
-                window.location.href = "login"
-            }
-        });
+                    </ul>
+                  </div>
+                </div>
+              </div>
 
-        $(document).ready(function () {
-            App.init();
-        });
+              <div class="invoice-container">
+                <div class="invoice-inbox">
 
-        function menutemplate(data) {
-            var template = `  <li class="nav-item">
+                  <div class="inv-not-selected">
+                    <p>Open an invoice from the list.</p>
+                  </div>
+
+                  <div class="invoice-header-section">
+                    <h4 class="inv-number"></h4>
+                    <div class="invoice-action">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-printer action-print" data-toggle="tooltip" data-placement="top"
+                        data-original-title="Reply">
+                        <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2">
+                        </path>
+                        <rect x="6" y="14" width="12" height="8"></rect>
+                      </svg>
+                    </div>
+                  </div>
+
+                  <div id="ct" class="">
+
+
+                  </div>
+
+
+                </div>
+
+                <div class="inv--thankYou">
+                  <div class="row">
+                    <div class="col-sm-12 col-12">
+                      <p class="">Thank you for doing Business with us.</p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="footer-wrapper">
+        <div class="footer-section f-section-1">
+          <p class="">Copyright © 2020 Venbot
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--  END CONTENT AREA  -->
+
+
+  </div>
+  <!-- END MAIN CONTAINER -->
+
+  <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
+  <script src="assets/js/libs/jquery-3.1.1.min.js"></script>
+  <script src="bootstrap/js/popper.min.js"></script>
+  <script src="bootstrap/js/bootstrap.min.js"></script>
+  <script src="plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+  <script src="assets/js/app.js"></script>
+
+  <script>
+    var myusername;
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        // User is signed in.
+        var displayName = user.displayName;
+        var email = user.email;
+        var emailVerified = user.emailVerified;
+        var photoURL = user.photoURL;
+        var isAnonymous = user.isAnonymous;
+        var uid = user.uid;
+        var providerData = user.providerData;
+        // ...
+        console.log(user)
+        console.log(displayName)
+        myusername = displayName
+        // getfollower(myusername)
+        getfollowrecord(myusername, function (follwerresult) {
+          getfollower(myusername, function (recordresult) {
+            console.log(follwerresult)
+            console.log(recordresult)
+            const nowmenudata = follwerresult.map((x, index) => {
+              var tempinvocienum = (index+1)+''
+              tempinvocienum = tempinvocienum.padStart(5,'0')
+              const tempjson = {
+                id: 'invoice-'+tempinvocienum, //x.recordid,
+                dataid: tempinvocienum, //x.recordid.split('-')[1],
+                title: x.tag,
+                subtitle: x.data.length,
+                index: index
+              }
+              return tempjson
+            })
+
+          
+            const tablebodydata = follwerresult.map(x=>{
+              var tempdata = x.data
+              var followedct = 0;
+              tempdata = tempdata.map(y=>{
+                var tempjson = {
+                  username: y,
+                  followed: 'no'
+                }
+                if (recordresult.includes(y)){
+                  tempjson.followed = 'yes'
+                  followedct++
+                }
+                
+                return tempjson
+              })
+              tempdata = {
+                body: tempdata, 
+                followedct: followedct
+              }
+              return tempdata
+            })
+            // console.log(tablebodydata)
+            genct(tablebodydata)
+            genmenu(nowmenudata)
+            appendscript('assets/js/apps/invoice.js')
+          })
+        })
+
+
+
+      } else {
+        // User is signed out.
+        // ...
+        window.location.href = "login"
+      }
+    });
+
+    $(document).ready(function () {
+      App.init();
+    });
+
+    function appendscript(src) {
+      var s = document.createElement("script");
+      s.type = "text/javascript";
+      s.src = src;
+      $("head").append(s);
+    }
+
+    function getfollower(username, callback) {
+      var data = JSON.stringify({
+        "username": username
+      });
+
+      var xhr = new XMLHttpRequest();
+      xhr.withCredentials = true;
+
+      xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+          console.log(this.responseText);
+          callback(JSON.parse(this.responseText))
+        }
+      });
+
+      xhr.open("POST", "getfollower");
+      xhr.setRequestHeader("Content-Type", "application/json");
+
+      xhr.send(data);
+    }
+
+    function getfollowrecord(username, callback) {
+      var data = JSON.stringify({
+        "username": username
+      });
+
+      var xhr = new XMLHttpRequest();
+      xhr.withCredentials = true;
+
+      xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+          // console.log(this.responseText);
+          callback(JSON.parse(this.responseText))
+        }
+      });
+
+      xhr.open("POST", "getfollowrecord");
+      xhr.setRequestHeader("Content-Type", "application/json");
+
+      xhr.send(data);
+    }
+
+    function menutemplate(data) {
+      var template = `  <li class="nav-item">
                                                 <div class="nav-link list-actions" id="` + data.id +
-                `" data-invoice-id="` + data.dataid + `">
+        `" data-invoice-id="` + data.dataid + `">
                                                     <div class="f-m-body">
                                                         <div class="f-head">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
@@ -555,25 +637,36 @@
                                                     </div>
                                                 </div>
                                             </li>`
-            return template
-        }
+      return template
+    }
 
-        function genmenu(datalist) {
-            var temphtml = ''
-            datalist.map(x => {
-                temphtml += menutemplate(x)
-            })
-            document.getElementById('pills-tab').innerHTML = temphtml
-        }
 
-        function cttemplate() {
-            var template = `<div class="invoice-00001">
+
+    function genmenu(datalist) {
+      var temphtml = ''
+      datalist.map(x => {
+        temphtml += menutemplate(x)
+      })
+      document.getElementById('pills-tab').innerHTML = temphtml
+    }
+
+    function cttemplate(data) {
+      console.log(data)
+      var tablebody = ''
+      for (var j=0; j<data.body.length; j++){
+        tablebody+='<tr>'
+        tablebody+='<td>'+data.body[j].username+'</td>'
+        tablebody+='<td>'+data.body[j].followed+'</td>'
+        tablebody+='</tr>'
+      }
+      //invoice-00001
+      var template = `<div class="` + data.id + `">
                                             <div class="content-section  animated animatedFadeInUp fadeInUp">
 
                                                 <div class="row inv--head-section">
 
                                                     <div class="col-sm-6 col-12">
-                                                        <h3 class="in-heading">INVOICE</h3>
+                                                        <h3 class="in-heading">Follow Report</h3>
                                                     </div>
                                                     <div class="col-sm-6 col-12 align-self-center text-sm-right">
                                                         <div class="company-info">
@@ -583,10 +676,10 @@
                                                                 stroke-linecap="round" stroke-linejoin="round"
                                                                 class="feather feather-hexagon">
                                                                 <path
-                                                                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                                                                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 /3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
                                                                 </path>
                                                             </svg>
-                                                            <h5 class="inv-brand-name">CORK</h5>
+                                                            <h5 class="inv-brand-name">Venbot</h5>
                                                         </div>
                                                     </div>
 
@@ -594,29 +687,7 @@
 
                                                 <div class="row inv--detail-section">
 
-                                                    <div class="col-sm-7 align-self-center">
-                                                        <p class="inv-to">Invoice To</p>
-                                                    </div>
-                                                    <div
-                                                        class="col-sm-5 align-self-center  text-sm-right order-sm-0 order-1">
-                                                        <p class="inv-detail-title">From : XYZ Company</p>
-                                                    </div>
-
-                                                    <div class="col-sm-7 align-self-center">
-                                                        <p class="inv-customer-name">Jesse Cory</p>
-                                                        <p class="inv-street-addr">405 Mulberry Rd. Mc Grady, NC, 28649
-                                                        </p>
-                                                        <p class="inv-email-address">redq@company.com</p>
-                                                    </div>
-                                                    <div class="col-sm-5 align-self-center  text-sm-right order-2">
-                                                        <p class="inv-list-number"><span class="inv-title">Invoice
-                                                                Number : </span> <span class="inv-number">[invoice
-                                                                number]</span></p>
-                                                        <p class="inv-created-date"><span class="inv-title">Invoice Date
-                                                                : </span> <span class="inv-date">20 Aug 2019</span></p>
-                                                        <p class="inv-due-date"><span class="inv-title">Due Date :
-                                                            </span> <span class="inv-date">26 Aug 2019</span></p>
-                                                    </div>
+                                                  
                                                 </div>
 
                                                 <div class="row inv--product-table-section">
@@ -625,36 +696,13 @@
                                                             <table class="table">
                                                                 <thead class="">
                                                                     <tr>
-                                                                        <th scope="col">S.No</th>
-                                                                        <th scope="col">Items</th>
-                                                                        <th class="text-right" scope="col">Qty</th>
-                                                                        <th class="text-right" scope="col">Unit Price
-                                                                        </th>
-                                                                        <th class="text-right" scope="col">Amount</th>
+                                                                        <th scope="col">username</th>
+                                                                        <th scope="col">followed</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <tr>
-                                                                        <td>1</td>
-                                                                        <td>Electric Shaver</td>
-                                                                        <td class="text-right">20</td>
-                                                                        <td class="text-right">$300</td>
-                                                                        <td class="text-right">$2800</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>2</td>
-                                                                        <td>Earphones</td>
-                                                                        <td class="text-right">49</td>
-                                                                        <td class="text-right">$500</td>
-                                                                        <td class="text-right">$7000</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>3</td>
-                                                                        <td>Wireless Router</td>
-                                                                        <td class="text-right">30</td>
-                                                                        <td class="text-right">$500</td>
-                                                                        <td class="text-right">$3500</td>
-                                                                    </tr>
+                                                                   `+tablebody+`
+                                                                    
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -666,24 +714,24 @@
                                                         <div class="inv--payment-info">
                                                             <div class="row">
                                                                 <div class="col-sm-12 col-12">
-                                                                    <h6 class=" inv-title">Payment Info:</h6>
+                                                                    <h6 class=" inv-title">Result:</h6>
                                                                 </div>
                                                                 <div class="col-sm-4 col-12">
-                                                                    <p class=" inv-subtitle">Bank Name: </p>
+                                                                    <p class=" inv-subtitle">followed: </p>
                                                                 </div>
                                                                 <div class="col-sm-8 col-12">
-                                                                    <p class="">Bank of America</p>
+                                                                    <p class="">`+data.followedct+`</p>
                                                                 </div>
                                                                 <div class="col-sm-4 col-12">
-                                                                    <p class=" inv-subtitle">Account Number : </p>
+                                                                    <p class="inv-subtitle">Complete percentage: </p>
                                                                 </div>
                                                                 <div class="col-sm-8 col-12">
-                                                                    <p class="">1234567890</p>
+                                                                    <p class="">`+data.followedct/data.body.length*100+`%</p>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-7 col-12 order-sm-1 order-0">
+                                                    <div class="col-sm-7 col-12 order-sm-1 order-0" hidden>
                                                         <div class="inv--total-amounts text-sm-right">
                                                             <div class="row">
                                                                 <div class="col-sm-8 col-7">
@@ -718,17 +766,27 @@
 
                                             </div>
                                         </div>`
-            return template
-        }
+      return template
+    }
 
-        function genct() {
-            var temphtml = cttemplate()
-            document.getElementById('ct').innerHTML = temphtml
+    function genct(x) {
+      var temphtml = ''
+      for (var j=0; j<x.length; j++){
+        var tempinvocienum = ''+(j+1)
+        tempinvocienum = tempinvocienum.padStart(5,'0')
+        const tempjson = {
+          id:"invoice-"+tempinvocienum,
+          body:x[j].body,
+          followedct: x[j].followedct
         }
-    </script>
-    <script src="assets/js/custom.js"></script>
-    <!-- END GLOBAL MANDATORY SCRIPTS -->
-    <script src="assets/js/apps/invoice.js"></script>
+        temphtml += cttemplate(tempjson)
+      }      
+      document.getElementById('ct').innerHTML = temphtml
+    }
+  </script>
+  <script src="assets/js/custom.js"></script>
+  <!-- END GLOBAL MANDATORY SCRIPTS -->
+  <!-- <script src="assets/js/apps/invoice.js"></script> -->
 </body>
 
 </html>
